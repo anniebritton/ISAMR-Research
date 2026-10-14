@@ -24,7 +24,7 @@ plt.rcParams.update({
     "axes.edgecolor": GRID, "axes.labelcolor": INK_2, "xtick.color": INK_2, "ytick.color": INK_2,
     "text.color": INK, "axes.grid": True, "grid.color": GRID, "grid.linewidth": 0.8,
     "axes.spines.top": False, "axes.spines.right": False, "lines.linewidth": 2,
-    "font.size": 10, "axes.titlesize": 11, "axes.titleweight": "semibold", "axes.titlelocation": "left",
+    "font.size": 10, "axes.titlesize": 11, "axes.titleweight": "bold", "axes.titlelocation": "left",
     "figure.dpi": 150,
 })
 
@@ -48,7 +48,7 @@ def study_area() -> None:
     ax.set_xlabel("Longitude")
     ax.set_ylabel("Latitude")
     ax.set_title("Wapusk National Park and the 300 sample pixels")
-    ax.legend(frameon=False, loc="lower left")
+    ax.legend(frameon=False, loc="upper left", bbox_to_anchor=(1.02, 1), markerscale=1.6, title="Stratum")
     _save(fig, "study_area")
 
 
@@ -78,14 +78,17 @@ def example_fits(n: int = 3, seed: int = 7) -> None:
         ax.scatter(g.loc[g["snow"] == 1, "doy"], np.full((g["snow"] == 1).sum(), b), s=8, marker="x",
                    color=SERIES[3], label="Snow flag (baseline anchor)")
         ax.plot(grid, curve, color=SERIES[0], label="Savitzky-Golay fit")
-        ax.axvline(d, color=SERIES[1], lw=1.5, ls="--", label=f"Mid-green-up DOY {d:.0f}")
+        ax.axvline(d, color=SERIES[1], lw=1.5, ls="--", label="Mid-green-up")
+        ax.annotate(f"DOY {d:.0f}", (d, ax.get_ylim()[1]), xytext=(4, -12), textcoords="offset points",
+                     color=INK_2, fontsize=8)
         ax.set_title(f"Pixel {pid}, {year}")
         ax.set_ylabel("NDVI")
-        ax.legend(frameon=False, fontsize=8, loc="upper right")
         shown += 1
         if shown == n:
             break
     axes[-1].set_xlabel("Day of year")
+    handles, labels = axes[0].get_legend_handles_labels()
+    fig.legend(handles, labels, loc="upper center", ncol=4, frameon=False, bbox_to_anchor=(0.5, 1.0), fontsize=8)
     _save(fig, "example_fits")
 
 
@@ -120,7 +123,7 @@ def validation_scatter(pix: pd.DataFrame) -> None:
 def drivers_scatter(series: pd.DataFrame, drv: pd.DataFrame) -> None:
     d = series.merge(drv, on="year")
     fig, axes = plt.subplots(1, 2, figsize=(8, 3.4), sharey=True)
-    for ax, col, label in zip(axes, ["snow_off", "tdd"], ["Snow-off (DOY, Churchill)", "Thawing degree days, Apr-May"]):
+    for ax, col, label in zip(axes, ["snow_off", "tdd"], ["Snow-off (DOY, ERA5-Land park mean)", "Thawing degree days, Apr-May (Churchill)"]):
         ok = d[[col, "greenup_doy"]].dropna()
         ax.scatter(ok[col], ok["greenup_doy"], s=30, color=SERIES[0], edgecolor=SURFACE, linewidth=1)
         b = np.polyfit(ok[col], ok["greenup_doy"], 1)
