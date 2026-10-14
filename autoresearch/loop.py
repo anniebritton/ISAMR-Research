@@ -56,7 +56,7 @@ def ledger_tail(n: int = 15) -> str:
         return "(no earlier iterations)"
     rows = [json.loads(line) for line in LEDGER.read_text().splitlines()][-n:]
     return "\n".join(
-        f"iter {r['iteration']}: score {r['score']:.3f} ({'kept' if r['kept'] else 'reverted'}) - {r['rationale'][:300]}"
+        f"iter {r['iteration']}: score {r['score'] if r['score'] is None else round(r['score'], 3)} ({'kept' if r['kept'] else 'reverted'}) - {r['rationale'][:300]}"
         for r in rows
     )
 
@@ -144,7 +144,7 @@ def main() -> None:
             "iteration": i,
             "utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
             "diff_sha256": hashlib.sha256(diff.encode()).hexdigest() if diff else None,
-            "score": result["score"],
+            "score": result["score"] if result["score"] != float("inf") else None,
             "visible": result.get("visible"),
             "kept": kept,
             "stray_edits": stray,
