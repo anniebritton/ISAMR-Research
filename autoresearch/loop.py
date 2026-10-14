@@ -38,8 +38,10 @@ def verify_lock() -> None:
 
 
 def changed_files() -> list[str]:
-    out = sh("git", "status", "--porcelain")
-    return [line[3:] for line in out.splitlines() if line]
+    """Tracked files with changes plus untracked, non-ignored files."""
+    tracked = sh("git", "diff", "--name-only", "HEAD").splitlines()
+    untracked = sh("git", "ls-files", "--others", "--exclude-standard").splitlines()
+    return sorted({f for f in tracked + untracked if f})
 
 
 def evaluate() -> dict:
@@ -107,8 +109,15 @@ def main() -> None:
         changed = changed_files()
         stray = [f for f in changed if f != METHOD]
         if stray:
-            sh("git", "checkout", "--", *stray)
-            sh("git", "checkout", "--", METHOD, check=False)
+            tracked = set(sh("git", "ls-files", "--", *stray).splitlines())
+            for f in stray:
+                if f in tracked:
+                    sh("git", "checkout", "--", f)
+                else:
+                    (ROOT / f).unlink(missing_ok=True)
+            sh("git", "checkout", "--", METHOD)
+            if changed_files():
+                raise SystemExit(f"Could not restore a clean tree after stray edits: {changed_files()}")
         verify_lock()
 
         diff = sh("git", "diff", "--", METHOD)
