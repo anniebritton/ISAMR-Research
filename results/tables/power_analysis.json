@@ -1,0 +1,9 @@
+{
+  "reference": "MCD12Q2 MidGreenup_1, area-weighted median, detrended",
+  "sd_days": 9.194666423834326,
+  "lag1": 0.0,
+  "n_years": 24,
+  "power": 0.8,
+  "alpha": 0.05,
+  "minimum_detectable_trend_days_per_year": 0.9
+}
