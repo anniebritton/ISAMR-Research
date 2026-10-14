@@ -1,0 +1,5422 @@
+{
+ "type": "FeatureCollection",
+ "metadata": {
+  "n_grid_pixels": 53164,
+  "n_candidates": 6000,
+  "candidates_by_stratum": {
+   "forest": 85,
+   "shrub_grass": 1582,
+   "wetland": 2981,
+   "moss_lichen": 394
+  },
+  "dry_area_share": {
+   "forest": 0.0191,
+   "shrub_grass": 0.3343,
+   "wetland": 0.5731,
+   "moss_lichen": 0.0735
+  },
+  "candidates_too_wet": 1701
+ },
+ "features": [
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 0,
+    "stratum": "forest",
+    "landcover": 10,
+    "water_fraction": 0,
+    "col": 31113,
+    "row": 7868
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.002681,
+     57.214583
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 1,
+    "stratum": "forest",
+    "landcover": 10,
+    "water_fraction": 0,
+    "col": 31179,
+    "row": 7785
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.371523,
+     57.560417
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 2,
+    "stratum": "forest",
+    "landcover": 10,
+    "water_fraction": 0,
+    "col": 31259,
+    "row": 7780
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -92.803205,
+     57.58125
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 3,
+    "stratum": "forest",
+    "landcover": 10,
+    "water_fraction": 0.0605,
+    "col": 31294,
+    "row": 7730
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.06463,
+     57.789583
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 4,
+    "stratum": "forest",
+    "landcover": 10,
+    "water_fraction": 0,
+    "col": 31329,
+    "row": 7718
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -92.919786,
+     57.839583
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 5,
+    "stratum": "forest",
+    "landcover": 10,
+    "water_fraction": 0,
+    "col": 31294,
+    "row": 7732
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.04315,
+     57.78125
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 6,
+    "stratum": "forest",
+    "landcover": 10,
+    "water_fraction": 0.0522,
+    "col": 31334,
+    "row": 7722
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -92.837701,
+     57.822917
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 7,
+    "stratum": "forest",
+    "landcover": 10,
+    "water_fraction": 0.0371,
+    "col": 31371,
+    "row": 7663
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.184526,
+     58.06875
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 8,
+    "stratum": "forest",
+    "landcover": 10,
+    "water_fraction": 0,
+    "col": 31336,
+    "row": 7711
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -92.940248,
+     57.86875
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 9,
+    "stratum": "forest",
+    "landcover": 10,
+    "water_fraction": 0,
+    "col": 31332,
+    "row": 7683
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.27418,
+     57.985417
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 10,
+    "stratum": "forest",
+    "landcover": 10,
+    "water_fraction": 0,
+    "col": 31335,
+    "row": 7716
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -92.894308,
+     57.847917
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 11,
+    "stratum": "forest",
+    "landcover": 10,
+    "water_fraction": 0,
+    "col": 31324,
+    "row": 7693
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.228644,
+     57.94375
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 12,
+    "stratum": "forest",
+    "landcover": 10,
+    "water_fraction": 0,
+    "col": 31114,
+    "row": 7876
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -92.911081,
+     57.18125
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 13,
+    "stratum": "forest",
+    "landcover": 10,
+    "water_fraction": 0,
+    "col": 31145,
+    "row": 7877
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -92.66231,
+     57.177083
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 14,
+    "stratum": "forest",
+    "landcover": 10,
+    "water_fraction": 0.0067,
+    "col": 31371,
+    "row": 7665
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.162784,
+     58.060417
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 15,
+    "stratum": "forest",
+    "landcover": 10,
+    "water_fraction": 0.0002,
+    "col": 31307,
+    "row": 7683
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.470671,
+     57.985417
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 16,
+    "stratum": "forest",
+    "landcover": 10,
+    "water_fraction": 0,
+    "col": 31217,
+    "row": 7834
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -92.55802,
+     57.35625
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 17,
+    "stratum": "forest",
+    "landcover": 10,
+    "water_fraction": 0,
+    "col": 31223,
+    "row": 7781
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.072345,
+     57.577083
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 18,
+    "stratum": "forest",
+    "landcover": 10,
+    "water_fraction": 0.0009,
+    "col": 31371,
+    "row": 7664
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.173653,
+     58.064583
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 19,
+    "stratum": "forest",
+    "landcover": 10,
+    "water_fraction": 0,
+    "col": 31338,
+    "row": 7713
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -92.903067,
+     57.860417
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 20,
+    "stratum": "forest",
+    "landcover": 10,
+    "water_fraction": 0,
+    "col": 31200,
+    "row": 7820
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -92.836929,
+     57.414583
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 21,
+    "stratum": "forest",
+    "landcover": 10,
+    "water_fraction": 0.0064,
+    "col": 31112,
+    "row": 7869
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -92.999876,
+     57.210417
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 22,
+    "stratum": "forest",
+    "landcover": 10,
+    "water_fraction": 0,
+    "col": 31070,
+    "row": 7814
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.906819,
+     57.439583
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 23,
+    "stratum": "forest",
+    "landcover": 10,
+    "water_fraction": 0,
+    "col": 31150,
+    "row": 7875
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -92.644766,
+     57.185417
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 24,
+    "stratum": "forest",
+    "landcover": 10,
+    "water_fraction": 0,
+    "col": 31225,
+    "row": 7810
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -92.749061,
+     57.45625
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 25,
+    "stratum": "forest",
+    "landcover": 10,
+    "water_fraction": 0,
+    "col": 31389,
+    "row": 7621
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.50141,
+     58.24375
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 26,
+    "stratum": "forest",
+    "landcover": 10,
+    "water_fraction": 0,
+    "col": 31329,
+    "row": 7717
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -92.930534,
+     57.84375
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 27,
+    "stratum": "forest",
+    "landcover": 10,
+    "water_fraction": 0.0401,
+    "col": 31412,
+    "row": 7652
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -92.980909,
+     58.114583
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 28,
+    "stratum": "forest",
+    "landcover": 10,
+    "water_fraction": 0,
+    "col": 31036,
+    "row": 7856
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.722194,
+     57.264583
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 29,
+    "stratum": "forest",
+    "landcover": 10,
+    "water_fraction": 0,
+    "col": 31291,
+    "row": 7756
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -92.809698,
+     57.68125
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 30,
+    "stratum": "forest",
+    "landcover": 10,
+    "water_fraction": 0,
+    "col": 31168,
+    "row": 7855
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -92.715596,
+     57.26875
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 31,
+    "stratum": "forest",
+    "landcover": 10,
+    "water_fraction": 0.0151,
+    "col": 31312,
+    "row": 7691
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.344531,
+     57.952083
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 32,
+    "stratum": "forest",
+    "landcover": 10,
+    "water_fraction": 0.0273,
+    "col": 31212,
+    "row": 7804
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -92.913292,
+     57.48125
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 33,
+    "stratum": "forest",
+    "landcover": 10,
+    "water_fraction": 0,
+    "col": 31232,
+    "row": 7782
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -92.991757,
+     57.572917
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 34,
+    "stratum": "forest",
+    "landcover": 10,
+    "water_fraction": 0,
+    "col": 31300,
+    "row": 7731
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.006993,
+     57.785417
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 35,
+    "stratum": "forest",
+    "landcover": 10,
+    "water_fraction": 0,
+    "col": 31112,
+    "row": 7807
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.656329,
+     57.46875
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 36,
+    "stratum": "forest",
+    "landcover": 10,
+    "water_fraction": 0,
+    "col": 31041,
+    "row": 7859
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.651888,
+     57.252083
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 37,
+    "stratum": "forest",
+    "landcover": 10,
+    "water_fraction": 0,
+    "col": 31382,
+    "row": 7640
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.348536,
+     58.164583
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 38,
+    "stratum": "forest",
+    "landcover": 10,
+    "water_fraction": 0.0127,
+    "col": 31254,
+    "row": 7747
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.194496,
+     57.71875
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 39,
+    "stratum": "forest",
+    "landcover": 10,
+    "water_fraction": 0,
+    "col": 31288,
+    "row": 7717
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.251511,
+     57.84375
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 40,
+    "stratum": "forest",
+    "landcover": 10,
+    "water_fraction": 0.0068,
+    "col": 31385,
+    "row": 7659
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.117702,
+     58.085417
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 41,
+    "stratum": "forest",
+    "landcover": 10,
+    "water_fraction": 0,
+    "col": 31189,
+    "row": 7811
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.017301,
+     57.452083
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 42,
+    "stratum": "forest",
+    "landcover": 10,
+    "water_fraction": 0,
+    "col": 31258,
+    "row": 7783
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -92.779107,
+     57.56875
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 43,
+    "stratum": "forest",
+    "landcover": 10,
+    "water_fraction": 0.0086,
+    "col": 31371,
+    "row": 7662
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.195401,
+     58.072917
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 44,
+    "stratum": "forest",
+    "landcover": 10,
+    "water_fraction": 0.0992,
+    "col": 31193,
+    "row": 7787
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.241439,
+     57.552083
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 45,
+    "stratum": "forest",
+    "landcover": 10,
+    "water_fraction": 0.0026,
+    "col": 31293,
+    "row": 7756
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -92.794111,
+     57.68125
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 46,
+    "stratum": "forest",
+    "landcover": 10,
+    "water_fraction": 0,
+    "col": 31235,
+    "row": 7793
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -92.851558,
+     57.527083
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 47,
+    "stratum": "forest",
+    "landcover": 10,
+    "water_fraction": 0,
+    "col": 31265,
+    "row": 7776
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -92.799081,
+     57.597917
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 48,
+    "stratum": "forest",
+    "landcover": 10,
+    "water_fraction": 0,
+    "col": 31227,
+    "row": 7795
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -92.892414,
+     57.51875
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 49,
+    "stratum": "forest",
+    "landcover": 10,
+    "water_fraction": 0,
+    "col": 31140,
+    "row": 7852
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -92.962922,
+     57.28125
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 50,
+    "stratum": "forest",
+    "landcover": 10,
+    "water_fraction": 0,
+    "col": 31319,
+    "row": 7731
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -92.858488,
+     57.785417
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 51,
+    "stratum": "forest",
+    "landcover": 10,
+    "water_fraction": 0,
+    "col": 31262,
+    "row": 7783
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -92.748029,
+     57.56875
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 52,
+    "stratum": "forest",
+    "landcover": 10,
+    "water_fraction": 0,
+    "col": 31271,
+    "row": 7740
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.136933,
+     57.747917
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 53,
+    "stratum": "forest",
+    "landcover": 10,
+    "water_fraction": 0,
+    "col": 31188,
+    "row": 7856
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -92.551004,
+     57.264583
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 54,
+    "stratum": "forest",
+    "landcover": 10,
+    "water_fraction": 0.0288,
+    "col": 31302,
+    "row": 7728
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.023572,
+     57.797917
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 55,
+    "stratum": "forest",
+    "landcover": 10,
+    "water_fraction": 0,
+    "col": 31284,
+    "row": 7756
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -92.864253,
+     57.68125
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 56,
+    "stratum": "forest",
+    "landcover": 10,
+    "water_fraction": 0,
+    "col": 31342,
+    "row": 7708
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -92.925525,
+     57.88125
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 57,
+    "stratum": "forest",
+    "landcover": 10,
+    "water_fraction": 0,
+    "col": 31282,
+    "row": 7730
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.158433,
+     57.789583
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 58,
+    "stratum": "forest",
+    "landcover": 10,
+    "water_fraction": 0,
+    "col": 31283,
+    "row": 7756
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -92.872047,
+     57.68125
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 59,
+    "stratum": "forest",
+    "landcover": 10,
+    "water_fraction": 0,
+    "col": 31042,
+    "row": 7859
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.644186,
+     57.252083
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 60,
+    "stratum": "forest",
+    "landcover": 10,
+    "water_fraction": 0,
+    "col": 31277,
+    "row": 7779
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -92.673919,
+     57.585417
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 61,
+    "stratum": "forest",
+    "landcover": 10,
+    "water_fraction": 0,
+    "col": 31167,
+    "row": 7857
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -92.702327,
+     57.260417
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 62,
+    "stratum": "forest",
+    "landcover": 10,
+    "water_fraction": 0,
+    "col": 31038,
+    "row": 7860
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.664406,
+     57.247917
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 63,
+    "stratum": "forest",
+    "landcover": 10,
+    "water_fraction": 0,
+    "col": 31196,
+    "row": 7821
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -92.857311,
+     57.410417
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 64,
+    "stratum": "forest",
+    "landcover": 10,
+    "water_fraction": 0.0029,
+    "col": 31364,
+    "row": 7661
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.261438,
+     58.077083
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 65,
+    "stratum": "forest",
+    "landcover": 10,
+    "water_fraction": 0,
+    "col": 31082,
+    "row": 7808
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.878072,
+     57.464583
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 66,
+    "stratum": "forest",
+    "landcover": 10,
+    "water_fraction": 0,
+    "col": 31297,
+    "row": 7729
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.051921,
+     57.79375
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 67,
+    "stratum": "forest",
+    "landcover": 10,
+    "water_fraction": 0,
+    "col": 31230,
+    "row": 7785
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -92.975371,
+     57.560417
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 68,
+    "stratum": "forest",
+    "landcover": 10,
+    "water_fraction": 0,
+    "col": 31112,
+    "row": 7808
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.645653,
+     57.464583
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 69,
+    "stratum": "forest",
+    "landcover": 10,
+    "water_fraction": 0,
+    "col": 31225,
+    "row": 7815
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -92.69625,
+     57.435417
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 70,
+    "stratum": "forest",
+    "landcover": 10,
+    "water_fraction": 0,
+    "col": 31299,
+    "row": 7731
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.014809,
+     57.785417
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 71,
+    "stratum": "forest",
+    "landcover": 10,
+    "water_fraction": 0,
+    "col": 31332,
+    "row": 7713
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -92.950061,
+     57.860417
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 72,
+    "stratum": "forest",
+    "landcover": 10,
+    "water_fraction": 0,
+    "col": 31228,
+    "row": 7795
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -92.884655,
+     57.51875
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 73,
+    "stratum": "forest",
+    "landcover": 10,
+    "water_fraction": 0,
+    "col": 31289,
+    "row": 7732
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.082226,
+     57.78125
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 74,
+    "stratum": "forest",
+    "landcover": 10,
+    "water_fraction": 0.0035,
+    "col": 31285,
+    "row": 7718
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.264209,
+     57.839583
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 75,
+    "stratum": "shrub_grass",
+    "landcover": 30,
+    "water_fraction": 0,
+    "col": 31217,
+    "row": 7797
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -92.948767,
+     57.510417
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 76,
+    "stratum": "shrub_grass",
+    "landcover": 30,
+    "water_fraction": 0,
+    "col": 31276,
+    "row": 7780
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -92.671079,
+     57.58125
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 77,
+    "stratum": "shrub_grass",
+    "landcover": 20,
+    "water_fraction": 0,
+    "col": 31279,
+    "row": 7780
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -92.647762,
+     57.58125
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 78,
+    "stratum": "shrub_grass",
+    "landcover": 30,
+    "water_fraction": 0,
+    "col": 31086,
+    "row": 7823
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.686941,
+     57.402083
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 79,
+    "stratum": "shrub_grass",
+    "landcover": 30,
+    "water_fraction": 0,
+    "col": 31326,
+    "row": 7719
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -92.932521,
+     57.835417
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 80,
+    "stratum": "shrub_grass",
+    "landcover": 20,
+    "water_fraction": 0.0261,
+    "col": 31040,
+    "row": 7855
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.701973,
+     57.26875
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 81,
+    "stratum": "shrub_grass",
+    "landcover": 30,
+    "water_fraction": 0,
+    "col": 31230,
+    "row": 7809
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -92.7209,
+     57.460417
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 82,
+    "stratum": "shrub_grass",
+    "landcover": 20,
+    "water_fraction": 0,
+    "col": 31175,
+    "row": 7870
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -92.504719,
+     57.20625
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 83,
+    "stratum": "shrub_grass",
+    "landcover": 30,
+    "water_fraction": 0,
+    "col": 31287,
+    "row": 7730
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.119349,
+     57.789583
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 84,
+    "stratum": "shrub_grass",
+    "landcover": 30,
+    "water_fraction": 0,
+    "col": 31150,
+    "row": 7881
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -92.582127,
+     57.160417
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 85,
+    "stratum": "shrub_grass",
+    "landcover": 30,
+    "water_fraction": 0,
+    "col": 31190,
+    "row": 7862
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -92.472838,
+     57.239583
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 86,
+    "stratum": "shrub_grass",
+    "landcover": 20,
+    "water_fraction": 0,
+    "col": 31155,
+    "row": 7881
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -92.54371,
+     57.160417
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 87,
+    "stratum": "shrub_grass",
+    "landcover": 30,
+    "water_fraction": 0,
+    "col": 31310,
+    "row": 7757
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -92.650971,
+     57.677083
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 88,
+    "stratum": "shrub_grass",
+    "landcover": 20,
+    "water_fraction": 0,
+    "col": 31031,
+    "row": 7851
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.813789,
+     57.285417
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 89,
+    "stratum": "shrub_grass",
+    "landcover": 30,
+    "water_fraction": 0,
+    "col": 31336,
+    "row": 7690
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.166898,
+     57.95625
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 90,
+    "stratum": "shrub_grass",
+    "landcover": 30,
+    "water_fraction": 0,
+    "col": 31095,
+    "row": 7815
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.702598,
+     57.435417
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 91,
+    "stratum": "shrub_grass",
+    "landcover": 30,
+    "water_fraction": 0.0192,
+    "col": 31406,
+    "row": 7595
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.653075,
+     58.352083
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 92,
+    "stratum": "shrub_grass",
+    "landcover": 20,
+    "water_fraction": 0.0369,
+    "col": 31113,
+    "row": 7869
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -92.992182,
+     57.210417
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 93,
+    "stratum": "shrub_grass",
+    "landcover": 30,
+    "water_fraction": 0,
+    "col": 31051,
+    "row": 7838
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.797688,
+     57.339583
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 94,
+    "stratum": "shrub_grass",
+    "landcover": 30,
+    "water_fraction": 0,
+    "col": 31143,
+    "row": 7873
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -92.719502,
+     57.19375
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 95,
+    "stratum": "shrub_grass",
+    "landcover": 30,
+    "water_fraction": 0.0557,
+    "col": 31070,
+    "row": 7815
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.896126,
+     57.435417
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 96,
+    "stratum": "shrub_grass",
+    "landcover": 30,
+    "water_fraction": 0,
+    "col": 31262,
+    "row": 7752
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.078514,
+     57.697917
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 97,
+    "stratum": "shrub_grass",
+    "landcover": 30,
+    "water_fraction": 0,
+    "col": 31308,
+    "row": 7737
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -92.880154,
+     57.760417
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 98,
+    "stratum": "shrub_grass",
+    "landcover": 30,
+    "water_fraction": 0,
+    "col": 31179,
+    "row": 7814
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.062939,
+     57.439583
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 99,
+    "stratum": "shrub_grass",
+    "landcover": 30,
+    "water_fraction": 0,
+    "col": 31531,
+    "row": 7524
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.444473,
+     58.647917
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 100,
+    "stratum": "shrub_grass",
+    "landcover": 30,
+    "water_fraction": 0.0771,
+    "col": 31336,
+    "row": 7723
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -92.811326,
+     57.81875
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 101,
+    "stratum": "shrub_grass",
+    "landcover": 30,
+    "water_fraction": 0,
+    "col": 31455,
+    "row": 7603
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.176029,
+     58.31875
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 102,
+    "stratum": "shrub_grass",
+    "landcover": 30,
+    "water_fraction": 0,
+    "col": 31204,
+    "row": 7836
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -92.637406,
+     57.347917
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 103,
+    "stratum": "shrub_grass",
+    "landcover": 30,
+    "water_fraction": 0,
+    "col": 31094,
+    "row": 7833
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.518742,
+     57.360417
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 104,
+    "stratum": "shrub_grass",
+    "landcover": 30,
+    "water_fraction": 0.0342,
+    "col": 31310,
+    "row": 7700
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.262752,
+     57.914583
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 105,
+    "stratum": "shrub_grass",
+    "landcover": 30,
+    "water_fraction": 0,
+    "col": 31312,
+    "row": 7723
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -92.999084,
+     57.81875
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 106,
+    "stratum": "shrub_grass",
+    "landcover": 30,
+    "water_fraction": 0.0505,
+    "col": 31090,
+    "row": 7803
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.869603,
+     57.485417
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 107,
+    "stratum": "shrub_grass",
+    "landcover": 30,
+    "water_fraction": 0,
+    "col": 31496,
+    "row": 7563
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.290857,
+     58.485417
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 108,
+    "stratum": "shrub_grass",
+    "landcover": 20,
+    "water_fraction": 0,
+    "col": 31208,
+    "row": 7836
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -92.606515,
+     57.347917
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 109,
+    "stratum": "shrub_grass",
+    "landcover": 30,
+    "water_fraction": 0.0392,
+    "col": 31023,
+    "row": 7855
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.832977,
+     57.26875
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 110,
+    "stratum": "shrub_grass",
+    "landcover": 30,
+    "water_fraction": 0.0017,
+    "col": 31319,
+    "row": 7694
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.257067,
+     57.939583
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 111,
+    "stratum": "shrub_grass",
+    "landcover": 30,
+    "water_fraction": 0.0387,
+    "col": 31420,
+    "row": 7652
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -92.917804,
+     58.114583
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 112,
+    "stratum": "shrub_grass",
+    "landcover": 30,
+    "water_fraction": 0.0125,
+    "col": 31367,
+    "row": 7673
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.107414,
+     58.027083
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 113,
+    "stratum": "shrub_grass",
+    "landcover": 20,
+    "water_fraction": 0,
+    "col": 31031,
+    "row": 7869
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.623081,
+     57.210417
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 114,
+    "stratum": "shrub_grass",
+    "landcover": 30,
+    "water_fraction": 0,
+    "col": 31054,
+    "row": 7837
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.785165,
+     57.34375
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 115,
+    "stratum": "shrub_grass",
+    "landcover": 30,
+    "water_fraction": 0,
+    "col": 31325,
+    "row": 7736
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -92.758069,
+     57.764583
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 116,
+    "stratum": "shrub_grass",
+    "landcover": 30,
+    "water_fraction": 0,
+    "col": 31311,
+    "row": 7703
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.22247,
+     57.902083
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 117,
+    "stratum": "shrub_grass",
+    "landcover": 30,
+    "water_fraction": 0,
+    "col": 31500,
+    "row": 7548
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.425237,
+     58.547917
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 118,
+    "stratum": "shrub_grass",
+    "landcover": 30,
+    "water_fraction": 0.0034,
+    "col": 31269,
+    "row": 7693
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.660422,
+     57.94375
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 119,
+    "stratum": "shrub_grass",
+    "landcover": 30,
+    "water_fraction": 0.0022,
+    "col": 31368,
+    "row": 7637
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.491978,
+     58.177083
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 120,
+    "stratum": "shrub_grass",
+    "landcover": 30,
+    "water_fraction": 0,
+    "col": 31045,
+    "row": 7840
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.822726,
+     57.33125
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 121,
+    "stratum": "shrub_grass",
+    "landcover": 30,
+    "water_fraction": 0.0063,
+    "col": 31041,
+    "row": 7855
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.694267,
+     57.26875
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 122,
+    "stratum": "shrub_grass",
+    "landcover": 30,
+    "water_fraction": 0,
+    "col": 31439,
+    "row": 7609
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.237057,
+     58.29375
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 123,
+    "stratum": "shrub_grass",
+    "landcover": 30,
+    "water_fraction": 0,
+    "col": 31071,
+    "row": 7838
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.643269,
+     57.339583
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 124,
+    "stratum": "shrub_grass",
+    "landcover": 30,
+    "water_fraction": 0,
+    "col": 31375,
+    "row": 7601
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.832831,
+     58.327083
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 125,
+    "stratum": "shrub_grass",
+    "landcover": 30,
+    "water_fraction": 0,
+    "col": 31268,
+    "row": 7781
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -92.722639,
+     57.577083
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 126,
+    "stratum": "shrub_grass",
+    "landcover": 30,
+    "water_fraction": 0,
+    "col": 31241,
+    "row": 7753
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.23153,
+     57.69375
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 127,
+    "stratum": "shrub_grass",
+    "landcover": 30,
+    "water_fraction": 0.0674,
+    "col": 31460,
+    "row": 7579
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.40064,
+     58.41875
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 128,
+    "stratum": "shrub_grass",
+    "landcover": 30,
+    "water_fraction": 0.0241,
+    "col": 31280,
+    "row": 7731
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.163313,
+     57.785417
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 129,
+    "stratum": "shrub_grass",
+    "landcover": 30,
+    "water_fraction": 0.0573,
+    "col": 31156,
+    "row": 7844
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -92.923747,
+     57.314583
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 130,
+    "stratum": "shrub_grass",
+    "landcover": 30,
+    "water_fraction": 0,
+    "col": 31049,
+    "row": 7838
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.81313,
+     57.339583
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 131,
+    "stratum": "shrub_grass",
+    "landcover": 30,
+    "water_fraction": 0,
+    "col": 31248,
+    "row": 7807
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -92.602574,
+     57.46875
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 132,
+    "stratum": "shrub_grass",
+    "landcover": 30,
+    "water_fraction": 0,
+    "col": 30997,
+    "row": 7869
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.884673,
+     57.210417
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 133,
+    "stratum": "shrub_grass",
+    "landcover": 30,
+    "water_fraction": 0,
+    "col": 31232,
+    "row": 7792
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -92.885454,
+     57.53125
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 134,
+    "stratum": "shrub_grass",
+    "landcover": 30,
+    "water_fraction": 0.0039,
+    "col": 31394,
+    "row": 7618
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.494782,
+     58.25625
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 135,
+    "stratum": "shrub_grass",
+    "landcover": 30,
+    "water_fraction": 0.0454,
+    "col": 31273,
+    "row": 7734
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.185763,
+     57.772917
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 136,
+    "stratum": "shrub_grass",
+    "landcover": 30,
+    "water_fraction": 0,
+    "col": 31103,
+    "row": 7875
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.006134,
+     57.185417
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 137,
+    "stratum": "shrub_grass",
+    "landcover": 30,
+    "water_fraction": 0.0808,
+    "col": 31265,
+    "row": 7738
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.205265,
+     57.75625
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 138,
+    "stratum": "shrub_grass",
+    "landcover": 30,
+    "water_fraction": 0,
+    "col": 31328,
+    "row": 7722
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -92.884646,
+     57.822917
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 139,
+    "stratum": "shrub_grass",
+    "landcover": 30,
+    "water_fraction": 0,
+    "col": 31081,
+    "row": 7807
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.896523,
+     57.46875
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 140,
+    "stratum": "shrub_grass",
+    "landcover": 30,
+    "water_fraction": 0,
+    "col": 31187,
+    "row": 7810
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.043392,
+     57.45625
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 141,
+    "stratum": "shrub_grass",
+    "landcover": 30,
+    "water_fraction": 0,
+    "col": 31333,
+    "row": 7690
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.190457,
+     57.95625
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 142,
+    "stratum": "shrub_grass",
+    "landcover": 30,
+    "water_fraction": 0,
+    "col": 31366,
+    "row": 7675
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.093593,
+     58.01875
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 143,
+    "stratum": "shrub_grass",
+    "landcover": 30,
+    "water_fraction": 0,
+    "col": 31306,
+    "row": 7759
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -92.660843,
+     57.66875
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 144,
+    "stratum": "shrub_grass",
+    "landcover": 30,
+    "water_fraction": 0.0787,
+    "col": 31577,
+    "row": 7503
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.310093,
+     58.735417
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 145,
+    "stratum": "shrub_grass",
+    "landcover": 30,
+    "water_fraction": 0,
+    "col": 31066,
+    "row": 7858
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.469892,
+     57.25625
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 146,
+    "stratum": "shrub_grass",
+    "landcover": 30,
+    "water_fraction": 0.043,
+    "col": 31139,
+    "row": 7852
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -92.970631,
+     57.28125
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 147,
+    "stratum": "shrub_grass",
+    "landcover": 30,
+    "water_fraction": 0,
+    "col": 31305,
+    "row": 7709
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.204691,
+     57.877083
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 148,
+    "stratum": "shrub_grass",
+    "landcover": 30,
+    "water_fraction": 0,
+    "col": 31369,
+    "row": 7674
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.080833,
+     58.022917
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 149,
+    "stratum": "shrub_grass",
+    "landcover": 20,
+    "water_fraction": 0,
+    "col": 31035,
+    "row": 7861
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.676921,
+     57.24375
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 150,
+    "stratum": "wetland",
+    "landcover": 90,
+    "water_fraction": 0.0543,
+    "col": 31175,
+    "row": 7740
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.886494,
+     57.747917
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 151,
+    "stratum": "wetland",
+    "landcover": 90,
+    "water_fraction": 0.0023,
+    "col": 31440,
+    "row": 7580
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.548696,
+     58.414583
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 152,
+    "stratum": "wetland",
+    "landcover": 90,
+    "water_fraction": 0.0009,
+    "col": 31362,
+    "row": 7688
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -92.984321,
+     57.964583
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 153,
+    "stratum": "wetland",
+    "landcover": 90,
+    "water_fraction": 0.0475,
+    "col": 31454,
+    "row": 7611
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.09622,
+     58.285417
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 154,
+    "stratum": "wetland",
+    "landcover": 90,
+    "water_fraction": 0,
+    "col": 31444,
+    "row": 7606
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.230344,
+     58.30625
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 155,
+    "stratum": "wetland",
+    "landcover": 90,
+    "water_fraction": 0.0048,
+    "col": 31284,
+    "row": 7691
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.564396,
+     57.952083
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 156,
+    "stratum": "wetland",
+    "landcover": 90,
+    "water_fraction": 0.0995,
+    "col": 31149,
+    "row": 7842
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -92.998838,
+     57.322917
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 157,
+    "stratum": "wetland",
+    "landcover": 90,
+    "water_fraction": 0.007,
+    "col": 31221,
+    "row": 7708
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.873784,
+     57.88125
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 158,
+    "stratum": "wetland",
+    "landcover": 90,
+    "water_fraction": 0.0223,
+    "col": 31545,
+    "row": 7522
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.354644,
+     58.65625
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 159,
+    "stratum": "wetland",
+    "landcover": 90,
+    "water_fraction": 0.0038,
+    "col": 31379,
+    "row": 7644
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.328512,
+     58.147917
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 160,
+    "stratum": "wetland",
+    "landcover": 90,
+    "water_fraction": 0.0073,
+    "col": 31140,
+    "row": 7814
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.364878,
+     57.439583
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 161,
+    "stratum": "wetland",
+    "landcover": 90,
+    "water_fraction": 0,
+    "col": 31498,
+    "row": 7563
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.274915,
+     58.485417
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 162,
+    "stratum": "wetland",
+    "landcover": 90,
+    "water_fraction": 0.0023,
+    "col": 31136,
+    "row": 7785
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.705534,
+     57.560417
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 163,
+    "stratum": "wetland",
+    "landcover": 90,
+    "water_fraction": 0,
+    "col": 31351,
+    "row": 7695
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -92.995083,
+     57.935417
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 164,
+    "stratum": "wetland",
+    "landcover": 90,
+    "water_fraction": 0,
+    "col": 31275,
+    "row": 7787
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -92.604635,
+     57.552083
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 165,
+    "stratum": "wetland",
+    "landcover": 90,
+    "water_fraction": 0.0627,
+    "col": 31149,
+    "row": 7760
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.873226,
+     57.664583
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 166,
+    "stratum": "wetland",
+    "landcover": 90,
+    "water_fraction": 0,
+    "col": 31355,
+    "row": 7680
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.125906,
+     57.997917
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 167,
+    "stratum": "wetland",
+    "landcover": 90,
+    "water_fraction": 0,
+    "col": 31392,
+    "row": 7650
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.160453,
+     58.122917
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 168,
+    "stratum": "wetland",
+    "landcover": 90,
+    "water_fraction": 0.0058,
+    "col": 31228,
+    "row": 7770
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.150832,
+     57.622917
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 169,
+    "stratum": "wetland",
+    "landcover": 90,
+    "water_fraction": 0,
+    "col": 31300,
+    "row": 7663
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.743861,
+     58.06875
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 170,
+    "stratum": "wetland",
+    "landcover": 90,
+    "water_fraction": 0.0243,
+    "col": 31419,
+    "row": 7638
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.078071,
+     58.172917
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 171,
+    "stratum": "wetland",
+    "landcover": 90,
+    "water_fraction": 0,
+    "col": 31391,
+    "row": 7641
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.26652,
+     58.160417
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 172,
+    "stratum": "wetland",
+    "landcover": 90,
+    "water_fraction": 0,
+    "col": 31151,
+    "row": 7776
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.685511,
+     57.597917
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 173,
+    "stratum": "wetland",
+    "landcover": 90,
+    "water_fraction": 0,
+    "col": 31254,
+    "row": 7800
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -92.630025,
+     57.497917
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 174,
+    "stratum": "wetland",
+    "landcover": 90,
+    "water_fraction": 0.0083,
+    "col": 31305,
+    "row": 7682
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.497265,
+     57.989583
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 175,
+    "stratum": "wetland",
+    "landcover": 90,
+    "water_fraction": 0.0943,
+    "col": 31222,
+    "row": 7749
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.42264,
+     57.710417
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 176,
+    "stratum": "wetland",
+    "landcover": 90,
+    "water_fraction": 0.0121,
+    "col": 31104,
+    "row": 7808
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.707631,
+     57.464583
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 177,
+    "stratum": "wetland",
+    "landcover": 90,
+    "water_fraction": 0.0315,
+    "col": 31561,
+    "row": 7518
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.271032,
+     58.672917
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 178,
+    "stratum": "wetland",
+    "landcover": 90,
+    "water_fraction": 0,
+    "col": 31267,
+    "row": 7803
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -92.497547,
+     57.485417
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 179,
+    "stratum": "wetland",
+    "landcover": 90,
+    "water_fraction": 0,
+    "col": 31397,
+    "row": 7605
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.614117,
+     58.310417
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 180,
+    "stratum": "wetland",
+    "landcover": 90,
+    "water_fraction": 0,
+    "col": 31163,
+    "row": 7855
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -92.754127,
+     57.26875
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 181,
+    "stratum": "wetland",
+    "landcover": 90,
+    "water_fraction": 0.0061,
+    "col": 31553,
+    "row": 7521
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.301703,
+     58.660417
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 182,
+    "stratum": "wetland",
+    "landcover": 90,
+    "water_fraction": 0.027,
+    "col": 31231,
+    "row": 7778
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.042134,
+     57.589583
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 183,
+    "stratum": "wetland",
+    "landcover": 90,
+    "water_fraction": 0.0448,
+    "col": 31411,
+    "row": 7623
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.305317,
+     58.235417
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 184,
+    "stratum": "wetland",
+    "landcover": 90,
+    "water_fraction": 0,
+    "col": 31346,
+    "row": 7716
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -92.808182,
+     57.847917
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 185,
+    "stratum": "wetland",
+    "landcover": 90,
+    "water_fraction": 0.0623,
+    "col": 31306,
+    "row": 7667
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.652884,
+     58.052083
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 186,
+    "stratum": "wetland",
+    "landcover": 90,
+    "water_fraction": 0,
+    "col": 31155,
+    "row": 7768
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.740352,
+     57.63125
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 187,
+    "stratum": "wetland",
+    "landcover": 90,
+    "water_fraction": 0.0236,
+    "col": 31194,
+    "row": 7755
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.576432,
+     57.685417
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 188,
+    "stratum": "wetland",
+    "landcover": 90,
+    "water_fraction": 0,
+    "col": 31318,
+    "row": 7716
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.027411,
+     57.847917
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 189,
+    "stratum": "wetland",
+    "landcover": 90,
+    "water_fraction": 0.0062,
+    "col": 31347,
+    "row": 7666
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.340923,
+     58.05625
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 190,
+    "stratum": "wetland",
+    "landcover": 90,
+    "water_fraction": 0.003,
+    "col": 31255,
+    "row": 7749
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.165245,
+     57.710417
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 191,
+    "stratum": "wetland",
+    "landcover": 90,
+    "water_fraction": 0,
+    "col": 31249,
+    "row": 7775
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -92.934141,
+     57.602083
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 192,
+    "stratum": "wetland",
+    "landcover": 90,
+    "water_fraction": 0,
+    "col": 31066,
+    "row": 7864
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.406523,
+     57.23125
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 193,
+    "stratum": "wetland",
+    "landcover": 90,
+    "water_fraction": 0,
+    "col": 31221,
+    "row": 7722
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.721832,
+     57.822917
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 194,
+    "stratum": "wetland",
+    "landcover": 90,
+    "water_fraction": 0.0216,
+    "col": 31221,
+    "row": 7712
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.830309,
+     57.864583
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 195,
+    "stratum": "wetland",
+    "landcover": 90,
+    "water_fraction": 0.0324,
+    "col": 31315,
+    "row": 7697
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.255985,
+     57.927083
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 196,
+    "stratum": "wetland",
+    "landcover": 90,
+    "water_fraction": 0.012,
+    "col": 31368,
+    "row": 7694
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -92.872437,
+     57.939583
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 197,
+    "stratum": "wetland",
+    "landcover": 90,
+    "water_fraction": 0.018,
+    "col": 31201,
+    "row": 7778
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.275352,
+     57.589583
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 198,
+    "stratum": "wetland",
+    "landcover": 90,
+    "water_fraction": 0.0446,
+    "col": 31115,
+    "row": 7884
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -92.819677,
+     57.147917
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 199,
+    "stratum": "wetland",
+    "landcover": 90,
+    "water_fraction": 0,
+    "col": 31361,
+    "row": 7641
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.503467,
+     58.160417
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 200,
+    "stratum": "wetland",
+    "landcover": 90,
+    "water_fraction": 0.0321,
+    "col": 31381,
+    "row": 7672
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.008087,
+     58.03125
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 201,
+    "stratum": "wetland",
+    "landcover": 90,
+    "water_fraction": 0,
+    "col": 31237,
+    "row": 7811
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -92.645557,
+     57.452083
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 202,
+    "stratum": "wetland",
+    "landcover": 90,
+    "water_fraction": 0,
+    "col": 31425,
+    "row": 7648
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -92.921818,
+     58.13125
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 203,
+    "stratum": "wetland",
+    "landcover": 90,
+    "water_fraction": 0.0614,
+    "col": 31103,
+    "row": 7851
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.2587,
+     57.285417
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 204,
+    "stratum": "wetland",
+    "landcover": 90,
+    "water_fraction": 0,
+    "col": 31233,
+    "row": 7799
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -92.80346,
+     57.502083
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 205,
+    "stratum": "wetland",
+    "landcover": 90,
+    "water_fraction": 0.0029,
+    "col": 31158,
+    "row": 7757
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.835457,
+     57.677083
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 206,
+    "stratum": "wetland",
+    "landcover": 90,
+    "water_fraction": 0,
+    "col": 31246,
+    "row": 7730
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.439843,
+     57.789583
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 207,
+    "stratum": "wetland",
+    "landcover": 90,
+    "water_fraction": 0.0025,
+    "col": 31269,
+    "row": 7705
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.530122,
+     57.89375
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 208,
+    "stratum": "wetland",
+    "landcover": 90,
+    "water_fraction": 0,
+    "col": 31337,
+    "row": 7661
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.474193,
+     58.077083
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 209,
+    "stratum": "wetland",
+    "landcover": 90,
+    "water_fraction": 0,
+    "col": 31267,
+    "row": 7793
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -92.603219,
+     57.527083
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 210,
+    "stratum": "wetland",
+    "landcover": 90,
+    "water_fraction": 0.0513,
+    "col": 31326,
+    "row": 7658
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.593648,
+     58.089583
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 211,
+    "stratum": "wetland",
+    "landcover": 90,
+    "water_fraction": 0,
+    "col": 31507,
+    "row": 7549
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.358239,
+     58.54375
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 212,
+    "stratum": "wetland",
+    "landcover": 90,
+    "water_fraction": 0.0755,
+    "col": 31332,
+    "row": 7658
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.546353,
+     58.089583
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 213,
+    "stratum": "wetland",
+    "landcover": 90,
+    "water_fraction": 0.0035,
+    "col": 31090,
+    "row": 7885
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.001225,
+     57.14375
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 214,
+    "stratum": "wetland",
+    "landcover": 90,
+    "water_fraction": 0,
+    "col": 31383,
+    "row": 7630
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.450117,
+     58.20625
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 215,
+    "stratum": "wetland",
+    "landcover": 90,
+    "water_fraction": 0.008,
+    "col": 31158,
+    "row": 7792
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.459803,
+     57.53125
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 216,
+    "stratum": "wetland",
+    "landcover": 90,
+    "water_fraction": 0.0233,
+    "col": 31499,
+    "row": 7560
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.300143,
+     58.497917
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 217,
+    "stratum": "wetland",
+    "landcover": 90,
+    "water_fraction": 0,
+    "col": 31287,
+    "row": 7684
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.616975,
+     57.98125
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 218,
+    "stratum": "wetland",
+    "landcover": 90,
+    "water_fraction": 0,
+    "col": 31208,
+    "row": 7851
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -92.449196,
+     57.285417
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 219,
+    "stratum": "wetland",
+    "landcover": 90,
+    "water_fraction": 0.0109,
+    "col": 31460,
+    "row": 7609
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.070569,
+     58.29375
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 220,
+    "stratum": "wetland",
+    "landcover": 90,
+    "water_fraction": 0.0786,
+    "col": 31134,
+    "row": 7773
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.849961,
+     57.610417
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 221,
+    "stratum": "wetland",
+    "landcover": 90,
+    "water_fraction": 0.0281,
+    "col": 31166,
+    "row": 7802
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.291115,
+     57.489583
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 222,
+    "stratum": "wetland",
+    "landcover": 90,
+    "water_fraction": 0,
+    "col": 31392,
+    "row": 7637
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.302331,
+     58.177083
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 223,
+    "stratum": "wetland",
+    "landcover": 90,
+    "water_fraction": 0.076,
+    "col": 31234,
+    "row": 7755
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.264653,
+     57.685417
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 224,
+    "stratum": "wetland",
+    "landcover": 90,
+    "water_fraction": 0.0035,
+    "col": 31267,
+    "row": 7697
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.632634,
+     57.927083
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 225,
+    "stratum": "moss_lichen",
+    "landcover": 100,
+    "water_fraction": 0,
+    "col": 31250,
+    "row": 7762
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.065056,
+     57.65625
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 226,
+    "stratum": "moss_lichen",
+    "landcover": 100,
+    "water_fraction": 0.0788,
+    "col": 31112,
+    "row": 7867
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.020879,
+     57.21875
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 227,
+    "stratum": "moss_lichen",
+    "landcover": 100,
+    "water_fraction": 0.0671,
+    "col": 31286,
+    "row": 7716
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.277958,
+     57.847917
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 228,
+    "stratum": "moss_lichen",
+    "landcover": 100,
+    "water_fraction": 0.0168,
+    "col": 31246,
+    "row": 7713
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.62364,
+     57.860417
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 229,
+    "stratum": "moss_lichen",
+    "landcover": 100,
+    "water_fraction": 0,
+    "col": 31121,
+    "row": 7843
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.204359,
+     57.31875
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 230,
+    "stratum": "moss_lichen",
+    "landcover": 100,
+    "water_fraction": 0.0006,
+    "col": 31178,
+    "row": 7826
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -92.943697,
+     57.389583
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 231,
+    "stratum": "moss_lichen",
+    "landcover": 100,
+    "water_fraction": 0.0189,
+    "col": 31191,
+    "row": 7770
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.438731,
+     57.622917
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 232,
+    "stratum": "moss_lichen",
+    "landcover": 100,
+    "water_fraction": 0.0819,
+    "col": 31270,
+    "row": 7716
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.403232,
+     57.847917
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 233,
+    "stratum": "moss_lichen",
+    "landcover": 100,
+    "water_fraction": 0.0331,
+    "col": 31240,
+    "row": 7692
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.898991,
+     57.947917
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 234,
+    "stratum": "moss_lichen",
+    "landcover": 100,
+    "water_fraction": 0,
+    "col": 31349,
+    "row": 7682
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.151401,
+     57.989583
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 235,
+    "stratum": "moss_lichen",
+    "landcover": 100,
+    "water_fraction": 0.0407,
+    "col": 31161,
+    "row": 7833
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.001146,
+     57.360417
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 236,
+    "stratum": "moss_lichen",
+    "landcover": 100,
+    "water_fraction": 0.0495,
+    "col": 31201,
+    "row": 7814
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -92.892615,
+     57.439583
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 237,
+    "stratum": "moss_lichen",
+    "landcover": 100,
+    "water_fraction": 0,
+    "col": 31254,
+    "row": 7712
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.571813,
+     57.864583
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 238,
+    "stratum": "moss_lichen",
+    "landcover": 100,
+    "water_fraction": 0,
+    "col": 31257,
+    "row": 7751
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.128212,
+     57.702083
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 239,
+    "stratum": "moss_lichen",
+    "landcover": 100,
+    "water_fraction": 0.0335,
+    "col": 31223,
+    "row": 7777
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.114992,
+     57.59375
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 240,
+    "stratum": "moss_lichen",
+    "landcover": 100,
+    "water_fraction": 0,
+    "col": 31260,
+    "row": 7736
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.265819,
+     57.764583
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 241,
+    "stratum": "moss_lichen",
+    "landcover": 100,
+    "water_fraction": 0,
+    "col": 31178,
+    "row": 7757
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.679603,
+     57.677083
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 242,
+    "stratum": "moss_lichen",
+    "landcover": 100,
+    "water_fraction": 0,
+    "col": 31381,
+    "row": 7624
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.53178,
+     58.23125
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 243,
+    "stratum": "moss_lichen",
+    "landcover": 100,
+    "water_fraction": 0.048,
+    "col": 31193,
+    "row": 7727
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.886657,
+     57.802083
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 244,
+    "stratum": "moss_lichen",
+    "landcover": 100,
+    "water_fraction": 0,
+    "col": 31092,
+    "row": 7889
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -92.944008,
+     57.127083
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 245,
+    "stratum": "moss_lichen",
+    "landcover": 100,
+    "water_fraction": 0.0736,
+    "col": 31248,
+    "row": 7696
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.792609,
+     57.93125
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 246,
+    "stratum": "moss_lichen",
+    "landcover": 100,
+    "water_fraction": 0.0498,
+    "col": 31157,
+    "row": 7761
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.80013,
+     57.660417
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 247,
+    "stratum": "moss_lichen",
+    "landcover": 100,
+    "water_fraction": 0.0666,
+    "col": 31176,
+    "row": 7821
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.012028,
+     57.410417
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 248,
+    "stratum": "moss_lichen",
+    "landcover": 100,
+    "water_fraction": 0.0813,
+    "col": 31143,
+    "row": 7777
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.736976,
+     57.59375
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 249,
+    "stratum": "moss_lichen",
+    "landcover": 100,
+    "water_fraction": 0,
+    "col": 31220,
+    "row": 7768
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.234468,
+     57.63125
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 250,
+    "stratum": "moss_lichen",
+    "landcover": 100,
+    "water_fraction": 0.0056,
+    "col": 31217,
+    "row": 7777
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.161641,
+     57.59375
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 251,
+    "stratum": "moss_lichen",
+    "landcover": 100,
+    "water_fraction": 0.0144,
+    "col": 31190,
+    "row": 7744
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.726172,
+     57.73125
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 252,
+    "stratum": "moss_lichen",
+    "landcover": 100,
+    "water_fraction": 0,
+    "col": 31098,
+    "row": 7815
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.679374,
+     57.435417
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 253,
+    "stratum": "moss_lichen",
+    "landcover": 100,
+    "water_fraction": 0.0011,
+    "col": 31308,
+    "row": 7709
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.181184,
+     57.877083
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 254,
+    "stratum": "moss_lichen",
+    "landcover": 100,
+    "water_fraction": 0,
+    "col": 31144,
+    "row": 7800
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.483007,
+     57.497917
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 255,
+    "stratum": "moss_lichen",
+    "landcover": 100,
+    "water_fraction": 0,
+    "col": 31224,
+    "row": 7705
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.882903,
+     57.89375
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 256,
+    "stratum": "moss_lichen",
+    "landcover": 100,
+    "water_fraction": 0,
+    "col": 31290,
+    "row": 7723
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.171196,
+     57.81875
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 257,
+    "stratum": "moss_lichen",
+    "landcover": 100,
+    "water_fraction": 0,
+    "col": 31214,
+    "row": 7793
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.01453,
+     57.527083
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 258,
+    "stratum": "moss_lichen",
+    "landcover": 100,
+    "water_fraction": 0.0034,
+    "col": 31268,
+    "row": 7756
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -92.988951,
+     57.68125
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 259,
+    "stratum": "moss_lichen",
+    "landcover": 100,
+    "water_fraction": 0,
+    "col": 31267,
+    "row": 7672
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.905233,
+     58.03125
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 260,
+    "stratum": "moss_lichen",
+    "landcover": 100,
+    "water_fraction": 0,
+    "col": 31243,
+    "row": 7770
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.034116,
+     57.622917
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 261,
+    "stratum": "moss_lichen",
+    "landcover": 100,
+    "water_fraction": 0.0726,
+    "col": 31169,
+    "row": 7746
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.868442,
+     57.722917
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 262,
+    "stratum": "moss_lichen",
+    "landcover": 100,
+    "water_fraction": 0,
+    "col": 31165,
+    "row": 7751
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.845633,
+     57.702083
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 263,
+    "stratum": "moss_lichen",
+    "landcover": 100,
+    "water_fraction": 0,
+    "col": 31431,
+    "row": 7642
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -92.939706,
+     58.15625
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 264,
+    "stratum": "moss_lichen",
+    "landcover": 100,
+    "water_fraction": 0,
+    "col": 31119,
+    "row": 7843
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.219792,
+     57.31875
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 265,
+    "stratum": "moss_lichen",
+    "landcover": 100,
+    "water_fraction": 0.019,
+    "col": 31151,
+    "row": 7834
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.067832,
+     57.35625
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 266,
+    "stratum": "moss_lichen",
+    "landcover": 100,
+    "water_fraction": 0.0006,
+    "col": 31114,
+    "row": 7873
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -92.942524,
+     57.19375
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 267,
+    "stratum": "moss_lichen",
+    "landcover": 100,
+    "water_fraction": 0.0029,
+    "col": 31249,
+    "row": 7758
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.115622,
+     57.672917
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 268,
+    "stratum": "moss_lichen",
+    "landcover": 100,
+    "water_fraction": 0.0128,
+    "col": 31109,
+    "row": 7803
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.72232,
+     57.485417
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 269,
+    "stratum": "moss_lichen",
+    "landcover": 100,
+    "water_fraction": 0,
+    "col": 31234,
+    "row": 7766
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.146883,
+     57.639583
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 270,
+    "stratum": "moss_lichen",
+    "landcover": 100,
+    "water_fraction": 0.0779,
+    "col": 31206,
+    "row": 7720
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.860894,
+     57.83125
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 271,
+    "stratum": "moss_lichen",
+    "landcover": 100,
+    "water_fraction": 0.003,
+    "col": 31407,
+    "row": 7607
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.51277,
+     58.302083
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 272,
+    "stratum": "moss_lichen",
+    "landcover": 100,
+    "water_fraction": 0.007,
+    "col": 31254,
+    "row": 7766
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -92.99119,
+     57.639583
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 273,
+    "stratum": "moss_lichen",
+    "landcover": 100,
+    "water_fraction": 0,
+    "col": 31099,
+    "row": 7888
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -92.900726,
+     57.13125
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 274,
+    "stratum": "moss_lichen",
+    "landcover": 100,
+    "water_fraction": 0.0157,
+    "col": 31189,
+    "row": 7822
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -92.900894,
+     57.40625
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 275,
+    "stratum": "moss_lichen",
+    "landcover": 100,
+    "water_fraction": 0.0926,
+    "col": 31195,
+    "row": 7824
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -92.833368,
+     57.397917
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 276,
+    "stratum": "moss_lichen",
+    "landcover": 100,
+    "water_fraction": 0,
+    "col": 31390,
+    "row": 7619
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.515468,
+     58.252083
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 277,
+    "stratum": "moss_lichen",
+    "landcover": 100,
+    "water_fraction": 0.0321,
+    "col": 31184,
+    "row": 7825
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -92.907869,
+     57.39375
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 278,
+    "stratum": "moss_lichen",
+    "landcover": 100,
+    "water_fraction": 0,
+    "col": 31321,
+    "row": 7688
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.306378,
+     57.964583
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 279,
+    "stratum": "moss_lichen",
+    "landcover": 100,
+    "water_fraction": 0.0632,
+    "col": 31245,
+    "row": 7747
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.264711,
+     57.71875
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 280,
+    "stratum": "moss_lichen",
+    "landcover": 100,
+    "water_fraction": 0.0565,
+    "col": 31137,
+    "row": 7799
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.547966,
+     57.502083
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 281,
+    "stratum": "moss_lichen",
+    "landcover": 100,
+    "water_fraction": 0.0059,
+    "col": 31227,
+    "row": 7781
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.04126,
+     57.577083
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 282,
+    "stratum": "moss_lichen",
+    "landcover": 100,
+    "water_fraction": 0,
+    "col": 31291,
+    "row": 7715
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.249599,
+     57.852083
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 283,
+    "stratum": "moss_lichen",
+    "landcover": 100,
+    "water_fraction": 0.0416,
+    "col": 31187,
+    "row": 7826
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -92.874114,
+     57.389583
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 284,
+    "stratum": "moss_lichen",
+    "landcover": 100,
+    "water_fraction": 0.0062,
+    "col": 31222,
+    "row": 7755
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.358187,
+     57.685417
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 285,
+    "stratum": "moss_lichen",
+    "landcover": 100,
+    "water_fraction": 0,
+    "col": 31237,
+    "row": 7770
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.080802,
+     57.622917
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 286,
+    "stratum": "moss_lichen",
+    "landcover": 100,
+    "water_fraction": 0.0796,
+    "col": 31175,
+    "row": 7818
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.051522,
+     57.422917
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 287,
+    "stratum": "moss_lichen",
+    "landcover": 100,
+    "water_fraction": 0,
+    "col": 31235,
+    "row": 7697
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.883734,
+     57.927083
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 288,
+    "stratum": "moss_lichen",
+    "landcover": 100,
+    "water_fraction": 0.0056,
+    "col": 31183,
+    "row": 7829
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -92.873372,
+     57.377083
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 289,
+    "stratum": "moss_lichen",
+    "landcover": 100,
+    "water_fraction": 0.0962,
+    "col": 31261,
+    "row": 7683
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.832214,
+     57.985417
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 290,
+    "stratum": "moss_lichen",
+    "landcover": 100,
+    "water_fraction": 0.008,
+    "col": 31175,
+    "row": 7816
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.072709,
+     57.43125
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 291,
+    "stratum": "moss_lichen",
+    "landcover": 100,
+    "water_fraction": 0.0005,
+    "col": 31238,
+    "row": 7773
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.04101,
+     57.610417
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 292,
+    "stratum": "moss_lichen",
+    "landcover": 100,
+    "water_fraction": 0,
+    "col": 31386,
+    "row": 7628
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.448319,
+     58.214583
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 293,
+    "stratum": "moss_lichen",
+    "landcover": 100,
+    "water_fraction": 0.0021,
+    "col": 31116,
+    "row": 7808
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.614663,
+     57.464583
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 294,
+    "stratum": "moss_lichen",
+    "landcover": 100,
+    "water_fraction": 0.027,
+    "col": 31195,
+    "row": 7818
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -92.896752,
+     57.422917
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 295,
+    "stratum": "moss_lichen",
+    "landcover": 100,
+    "water_fraction": 0.0736,
+    "col": 31179,
+    "row": 7756
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.682578,
+     57.68125
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 296,
+    "stratum": "moss_lichen",
+    "landcover": 100,
+    "water_fraction": 0.0496,
+    "col": 31235,
+    "row": 7780
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -92.989736,
+     57.58125
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 297,
+    "stratum": "moss_lichen",
+    "landcover": 100,
+    "water_fraction": 0.051,
+    "col": 31129,
+    "row": 7852
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.047718,
+     57.28125
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 298,
+    "stratum": "moss_lichen",
+    "landcover": 100,
+    "water_fraction": 0.0355,
+    "col": 31250,
+    "row": 7758
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.10783,
+     57.672917
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "pixel_id": 299,
+    "stratum": "moss_lichen",
+    "landcover": 100,
+    "water_fraction": 0,
+    "col": 31394,
+    "row": 7600
+   },
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     -93.693101,
+     58.33125
+    ]
+   }
+  }
+ ]
+}

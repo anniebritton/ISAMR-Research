@@ -1,0 +1,177 @@
+"""Confirmatory analysis (run once, after prereg.md is committed) and the robustness grid."""
+
+from __future__ import annotations
+
+import hashlib
+import json
+import subprocess
+from datetime import datetime, timezone
+from itertools import product
+
+import numpy as np
+import pandas as pd
+
+from . import config, drivers, phenology, stats
+
+PREREG = config.ROOT / "prereg.md"
+CONFIRMATORY = config.TABLES / "confirmatory.json"
+
+
+def prereg_hash() -> str:
+    return hashlib.sha256(PREREG.read_bytes()).hexdigest()
+
+
+def _git(*args: str) -> str:
+    return subprocess.run(["git", *args], cwd=config.ROOT, capture_output=True, text=True).stdout.strip()
+
+
+def _check_prereg_committed() -> None:
+    if not PREREG.exists():
+        raise SystemExit("prereg.md is missing; write and commit it before the confirmatory run.")
+    if _git("status", "--porcelain", "--", "prereg.md"):
+        raise SystemExit("prereg.md has uncommitted changes; commit it before the confirmatory run.")
+    if not _git("log", "-1", "--format=%H", "--", "prereg.md"):
+        raise SystemExit("prereg.md has never been committed.")
+
+
+def annual_series(pix: pd.DataFrame, mask: str, smoother: str, fraction: float, aggregation: str) -> pd.DataFrame:
+    return phenology.aggregate(phenology.select(pix, mask, smoother, fraction), aggregation)
+
+
+def _hypotheses(series: pd.DataFrame, drv: pd.DataFrame, cfg: dict) -> dict:
+    s = cfg["stats"]
+    d = series.merge(drv, on="year")
+    years = d["year"].to_numpy(float)
+    y = d["greenup_doy"].to_numpy(float)
+    out = {"h1_" + k: v for k, v in stats.theil_sen(years, y, s["alpha"]).items()}
+    out.update({"h1_" + k: v for k, v in stats.mann_kendall(y, s["alpha"]).items()})
+    out["h1_lag1"] = stats.lag1(y)
+    out.update(stats.nested_models(d, "greenup_doy", "snow_off", "tdd", reps=s["bootstrap_reps"], seed=s["random_seed"]))
+    return out
+
+
+def confirmatory(force: bool = False) -> dict:
+    """Pre-registered primary specification. Refuses to overwrite an existing result unless forced."""
+    if CONFIRMATORY.exists() and not force:
+        raise SystemExit(f"{CONFIRMATORY.relative_to(config.ROOT)} exists; the confirmatory run happens once.")
+    _check_prereg_committed()
+    cfg = config.load()
+    p = cfg["phenology"]["primary"]
+    pix = phenology.load_pixels()
+    drv = drivers.load()
+    primary_pix = phenology.select(pix, p["mask"], p["smoother"], p["fraction"])
+    series = phenology.aggregate(primary_pix, p["aggregation"])
+    series.to_csv(config.PROCESSED / "greenup_annual.csv", index=False)
+
+    d = series.merge(drv, on="year")
+    d["lag_days"] = d["greenup_doy"] - d["snow_off"]
+    result = {
+        "run_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+        "git_commit": _git("rev-parse", "HEAD"),
+        "prereg_sha256": prereg_hash(),
+        "primary_spec": p,
+        "hypotheses": _hypotheses(series, drv, cfg),
+        "commonality": stats.commonality(d, "greenup_doy", "snow_off", "tdd"),
+        "secondary_lag_trend": stats.theil_sen(d["year"].to_numpy(float), d["lag_days"].to_numpy(float)),
+        "mcd12q2_validation": phenology.compare_mcd12q2(primary_pix),
+        "years_with_valid_greenup": int(series["greenup_doy"].notna().sum()),
+        "tdd_days_filled_from_era5": int(d["tdd_days_filled"].sum()),
+    }
+    config.ensure_dirs()
+    CONFIRMATORY.write_text(json.dumps(result, indent=2, default=float))
+    return result
+
+
+def sensitivity() -> dict:
+    """Checks reported next to the confirmatory result. None of these change the primary estimate."""
+    cfg = config.load()
+    p = cfg["phenology"]["primary"]
+    pix = phenology.load_pixels()
+    drv = drivers.load()
+    out: dict = {}
+
+    mcd = phenology.mcd12q2_annual()
+    mcd.to_csv(config.PROCESSED / "mcd12q2_annual.csv", index=False)
+    out["mcd12q2_trend"] = stats.theil_sen(mcd["year"].to_numpy(float), mcd["greenup_doy"].to_numpy(float))
+    out["mcd12q2_trend"].update(stats.mann_kendall(mcd["greenup_doy"].to_numpy(float)))
+
+    nbar = annual_series(pix, "nbar", "savgol", p["fraction"], p["aggregation"])
+    out["nbar_trend"] = stats.theil_sen(nbar["year"].to_numpy(float), nbar["greenup_doy"].to_numpy(float))
+    nbar_pix = phenology.select(pix, "nbar", "savgol", p["fraction"])
+    out["nbar_mcd12q2_validation"] = phenology.compare_mcd12q2(nbar_pix)
+
+    strat = phenology.by_stratum(phenology.select(pix, p["mask"], p["smoother"], p["fraction"]))
+    strat.to_csv(config.TABLES / "greenup_by_stratum.csv", index=False)
+    out["stratum_trends"] = {
+        name: stats.theil_sen(g["year"].to_numpy(float), g["median"].to_numpy(float))
+        for name, g in strat.groupby("stratum")
+    }
+
+    # Alternative predictor sources, swapped in one at a time.
+    series_p = annual_series(pix, p["mask"], p["smoother"], p["fraction"], p["aggregation"])
+    for label, swap in [("station_snow_off", {"snow_off": "snow_off_station_filled"}), ("era5_tdd", {"tdd": "tdd_era5"})]:
+        alt = drv.copy()
+        for target, source in swap.items():
+            alt[target] = alt[source]
+        out[f"alt_predictors_{label}"] = _hypotheses(series_p, alt, cfg)
+
+    # Predictor cross-checks: station vs reanalysis vs MODIS snow-off, station vs ERA5 TDD.
+    out["predictor_agreement"] = {
+        "snow_off_station_vs_era5_r": float(drv[["snow_off_station", "snow_off_era5"]].corr().iloc[0, 1]),
+        "snow_off_station_vs_modis_r": float(drv[["snow_off_station", "snow_off_modis"]].corr().iloc[0, 1]),
+        "snow_off_era5_vs_modis_r": float(drv[["snow_off_era5", "snow_off_modis"]].corr().iloc[0, 1]),
+        "tdd_station_vs_era5_r": float(drv[["tdd", "tdd_era5"]].corr().iloc[0, 1]),
+    }
+    expl = stats.spearman_table(
+        series_p.merge(drv, on="year"), "greenup_doy",
+        ["snow_off", "snow_off_station_filled", "snow_off_modis", "tdd", "tdd_era5", "max_snow_depth_cm",
+         "spring_precip_mm"],
+    )
+    expl.to_csv(config.TABLES / "exploratory_correlations.csv", index=False)
+    (config.TABLES / "sensitivity.json").write_text(json.dumps(out, indent=2, default=float))
+    return out
+
+
+def multiverse() -> pd.DataFrame:
+    cfg = config.load()
+    mv = cfg["multiverse"]
+    p = cfg["phenology"]["primary"]
+    pix = phenology.load_pixels()
+    drv = drivers.load()
+    rows = []
+    for mask, smoother, fraction, agg in product(mv["masks"], mv["smoothers"], mv["fractions"], mv["aggregations"]):
+        series = annual_series(pix, mask, smoother, fraction, agg)
+        h = _hypotheses(series, drv, cfg)
+        rows.append({
+            "mask": mask, "smoother": smoother, "fraction": fraction, "aggregation": agg,
+            "primary": (mask, smoother, fraction, agg) == (p["mask"], p["smoother"], p["fraction"], p["aggregation"]),
+            "n_years": h["h1_n"],
+            "h1_slope": h["h1_slope"], "h1_ci_low": h["h1_ci_low"], "h1_ci_high": h["h1_ci_high"],
+            "h1_mk_p": h["h1_mk_p"], "h1_tfpw_p": h["h1_tfpw_p"],
+            "h2_slope_per_sd": h["h2_slope_per_sd"], "h2_p": h["h2_p"], "h2_r2": h["h2_r2"],
+            "h3_delta_r2": h["h3_delta_r2"], "h3_p": h["h3_p"],
+        })
+    out = pd.DataFrame(rows)
+    out.to_csv(config.TABLES / "multiverse.csv", index=False)
+    return out
+
+
+def power_analysis() -> dict:
+    """Minimum detectable trend from the MCD12Q2 interannual SD, so the response itself is not inspected."""
+    cfg = config.load()
+    s = cfg["stats"]
+    mcd = phenology.mcd12q2_annual()
+    y = mcd["greenup_doy"].to_numpy(float)
+    y = y[~np.isnan(y)]
+    years = mcd.dropna()["year"].to_numpy(float)
+    resid = y - np.polyval(np.polyfit(years, y, 1), years)
+    sd = float(resid.std(ddof=2))
+    rho = max(0.0, stats.lag1(resid))
+    mdt, curve = stats.minimum_detectable_trend(sd, len(cfg["year_list"]), rho, s["mdt_power"], s["alpha"],
+                                                s["mdt_sims"], s["random_seed"])
+    curve.to_csv(config.TABLES / "power_curve.csv", index=False)
+    out = {"reference": "MCD12Q2 MidGreenup_1, area-weighted median, detrended", "sd_days": sd, "lag1": rho,
+           "n_years": len(cfg["year_list"]), "power": s["mdt_power"], "alpha": s["alpha"],
+           "minimum_detectable_trend_days_per_year": mdt}
+    (config.TABLES / "power_analysis.json").write_text(json.dumps(out, indent=2))
+    return out
