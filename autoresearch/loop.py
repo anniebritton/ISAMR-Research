@@ -61,6 +61,12 @@ def ledger_tail(n: int = 15) -> str:
     )
 
 
+def call_fake_agent(script: str) -> dict:
+    """Testing only: run a local script in place of the agent to exercise the enforcement path."""
+    r = subprocess.run([sys.executable, script], cwd=ROOT, capture_output=True, text=True, timeout=300)
+    return {"result": r.stdout.strip() or "(fake agent)", "total_cost_usd": 0.0}
+
+
 def call_agent(best: float, model: str, budget: float) -> dict:
     prompt = (
         (HERE / "program.md").read_text()
@@ -90,6 +96,7 @@ def main() -> None:
     ap.add_argument("--iterations", type=int, default=30)
     ap.add_argument("--model", default="opus")
     ap.add_argument("--budget-per-call", type=float, default=2.0)
+    ap.add_argument("--fake-agent", help="testing only: script to run instead of the agent")
     args = ap.parse_args()
 
     if changed_files():
@@ -105,7 +112,7 @@ def main() -> None:
 
     for i in range(start + 1, start + args.iterations + 1):
         verify_lock()
-        agent = call_agent(best, args.model, args.budget_per_call)
+        agent = call_fake_agent(args.fake_agent) if args.fake_agent else call_agent(best, args.model, args.budget_per_call)
         changed = changed_files()
         stray = [f for f in changed if f != METHOD]
         if stray:
