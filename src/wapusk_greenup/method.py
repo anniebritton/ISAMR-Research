@@ -23,5 +23,14 @@ from .smoothers import greenup_doy as _baseline_greenup
 
 
 def greenup_doy(doy: np.ndarray, ndvi: np.ndarray, snow: np.ndarray, baseline: float, fraction: float = 0.5) -> float:
-    # Starting point: identical to the pre-registered Savitzky-Golay baseline.
+    # Pre-registered Savitzky-Golay baseline, except that only the persistent winter snowpack
+    # becomes dormant pseudo-observations. prepare() turns every snow flag before the first clear
+    # observation into a baseline value. When clouds hide the weeks after melt, a brief late
+    # snowfall would then pin the curve to the dormant level partway up the rise. A transient
+    # snowfall hides the canopy but doesn't make it dormant, so flags after melt are cleared here.
+    snow = np.array(snow, dtype=float)
+    valid = ~np.isnan(np.asarray(ndvi, dtype=float))
+    if (snow == 0).any() and valid.any():
+        melt, first = int(np.argmax(snow == 0)), int(np.argmax(valid))
+        snow[melt:first] = 0
     return _baseline_greenup(doy, ndvi, snow, baseline, smoother="savgol", fraction=fraction)
