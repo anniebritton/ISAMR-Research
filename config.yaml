@@ -1,0 +1,90 @@
+# Pipeline configuration. Values that the pre-registration fixes are marked [prereg].
+
+gee_project: ee-annieresearch
+
+aoi:
+  boundary: data/aoi/wapusk.geojson
+  sample_points: data/aoi/sample_points.geojson
+  # Pixels are drawn on the MODIS 500 m sinusoidal grid, stratified by land cover.
+  points_per_stratum: 75
+  sample_seed: 20261014
+  max_water_fraction: 0.10          # [prereg] drop 500 m pixels with >10% JRC water
+  water_occurrence_threshold: 50    # JRC occurrence (%) above which a 30 m cell counts as water
+  # ESA WorldCover v200 classes aggregated to strata (mode at 500 m).
+  strata:
+    forest: [10]
+    shrub_grass: [20, 30]
+    wetland: [90]
+    moss_lichen: [100]
+
+years: [2001, 2024]                 # [prereg] complete years analysed
+extract_doy: [60, 320]              # daily window pulled from MODIS (Mar 1 to mid-Nov)
+
+datasets:
+  surface_reflectance: MODIS/061/MOD09GA
+  nbar: MODIS/061/MCD43A4
+  nbar_quality: MODIS/061/MCD43A2
+  snow: MODIS/061/MOD10A1
+  phenology_product: MODIS/061/MCD12Q2
+  reanalysis: ECMWF/ERA5_LAND/DAILY_AGGR
+  surface_water: JRC/GSW1_4/GlobalSurfaceWater
+  land_cover: ESA/WorldCover/v200
+
+# MOD09GA state_1km and QC_500m masking. See gee.py for bit definitions.
+masks:
+  lenient:
+    cloud_state_clear_only: true    # bits 0-1 must be 00 (clear) or 11 (not set, assumed clear)
+    internal_cloud: true            # bit 10
+    internal_snow: true             # bit 15
+  strict:
+    cloud_state_clear_only: true
+    internal_cloud: true
+    internal_snow: true
+    cloud_shadow: true              # bit 2
+    mod35_snow: true                # bit 12
+    adjacent_cloud: true            # bit 13
+    max_cirrus: 1                   # bits 8-9: 0 none, 1 small
+    max_sensor_zenith_deg: 45
+
+station:
+  api: https://api.weather.gc.ca/collections/climate-daily/items
+  # Churchill, Manitoba. Each variable is spliced from the listed climate IDs in priority order by date range.
+  temperature:
+    - {climate_id: "5060600", start: "2001-01-01", end: "2005-12-31"}   # CHURCHILL A
+    - {climate_id: "5060608", start: "2006-01-01", end: "2024-12-31"}   # CHURCHILL CLIMATE
+    - {climate_id: "5060595", start: "2010-11-18", end: "2024-12-31"}   # CHURCHILL A (gap fill)
+  snow_on_ground:
+    - {climate_id: "5060600", start: "2001-01-01", end: "2005-12-31"}
+    - {climate_id: "5060608", start: "2006-01-01", end: "2024-12-31"}
+
+phenology:
+  window_doy: [91, 300]             # [prereg] growing-season window for smoothing
+  primary:                          # [prereg] confirmatory specification
+    smoother: savgol
+    fraction: 0.5
+    mask: strict
+    aggregation: median
+  min_valid_obs: 15                 # snow-free observations required in the window
+  min_amplitude: 0.10               # NDVI amplitude required for a valid season
+  baseline_percentile: 5            # per-pixel dormant baseline from snow-free NDVI outside DOY 150-250
+  baseline_exclude_doy: [150, 250]
+
+drivers:
+  snow_off_threshold_cm: 2          # station sensitivity: day after the last spring day with >= 2 cm on ground
+  snow_off_search_doy: [60, 212]    # Mar 1 to Jul 31
+  tdd_window_doy: [91, 151]         # [prereg] Apr 1 to May 31, ends before earliest plausible mid-green-up
+  era5_snow_cover_threshold: 50     # [prereg] primary snow-off = day after the last spring day with park-mean ERA5-Land snow cover >= 50%
+  spring_precip_doy: [91, 151]
+
+multiverse:
+  smoothers: [savgol, double_logistic, whittaker]
+  fractions: [0.5, 0.15]
+  masks: [strict, lenient]
+  aggregations: [median, mean]
+
+stats:
+  alpha: 0.05
+  bootstrap_reps: 5000
+  mdt_power: 0.8
+  mdt_sims: 2000
+  random_seed: 42
