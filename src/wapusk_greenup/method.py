@@ -33,4 +33,7 @@ def greenup_doy(doy: np.ndarray, ndvi: np.ndarray, snow: np.ndarray, baseline: f
     if (snow == 0).any() and valid.any():
         melt, first = int(np.argmax(snow == 0)), int(np.argmax(valid))
         snow[melt:first] = 0
-    return _baseline_greenup(doy, ndvi, snow, baseline, smoother="savgol", fraction=fraction)
+    # The pre-registered 0.10 amplitude floor rejects weak but real seasons (small amplitudes, or a
+    # peak trimmed by early senescence). After smoothing, a 0.05 rise is still well above clear-sky
+    # noise, and 0.05 is the floor used to define a resolvable season, so only flatter curves give NaN.
+    return _baseline_greenup(doy, ndvi, snow, baseline, smoother="savgol", fraction=fraction, min_amplitude=0.05)
