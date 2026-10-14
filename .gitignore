@@ -8,3 +8,4 @@ report/*_files/
 report/.quarto/
 autoresearch/runs/
 .DS_Store
+.worktrees/
