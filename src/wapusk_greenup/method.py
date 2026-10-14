@@ -18,8 +18,9 @@ Allowed imports: numpy, scipy. The function must be deterministic and take under
 from __future__ import annotations
 
 import numpy as np
+from scipy.signal import savgol_filter
 
-from .smoothers import greenup_doy as _baseline_greenup
+from .smoothers import crossing, prepare, savgol
 
 
 def greenup_doy(doy: np.ndarray, ndvi: np.ndarray, snow: np.ndarray, baseline: float, fraction: float = 0.5) -> float:
@@ -33,7 +34,20 @@ def greenup_doy(doy: np.ndarray, ndvi: np.ndarray, snow: np.ndarray, baseline: f
     if (snow == 0).any() and valid.any():
         melt, first = int(np.argmax(snow == 0)), int(np.argmax(valid))
         snow[melt:first] = 0
+    if valid.sum() < 15 or np.isnan(baseline):
+        return np.nan
+    t, y = prepare(doy, ndvi, snow, baseline)
+    grid = np.asarray(doy, dtype=float)
+    curve = savgol(t, y, grid)
+    # The upper envelope is kept for the curve's shape, since it undoes cloud dips on the rise. But
+    # lifting every point below the fit also keeps only the positive half of clear-sky noise, so the
+    # enveloped peak sits above the canopy's real maximum and raises the 50% threshold, giving late
+    # crossings. The first, unlifted fit has no such selection; its peak sets the amplitude instead.
+    # The threshold is only ever lowered, and crossing() still searches the enveloped curve.
+    first_fit = savgol_filter(np.interp(grid, t, y), window_length=31, polyorder=2, mode="nearest")
+    amp, amp0 = curve.max() - baseline, first_fit.max() - baseline
+    scale = min(1.0, max(amp0, 0.0) / amp) if amp > 0 else 1.0
     # The pre-registered 0.10 amplitude floor rejects weak but real seasons (small amplitudes, or a
     # peak trimmed by early senescence). After smoothing, a 0.05 rise is still well above clear-sky
     # noise, and 0.05 is the floor used to define a resolvable season, so only flatter curves give NaN.
-    return _baseline_greenup(doy, ndvi, snow, baseline, smoother="savgol", fraction=fraction, min_amplitude=0.05)
+    return crossing(grid, curve, baseline, fraction * scale, min_amplitude=0.05)
