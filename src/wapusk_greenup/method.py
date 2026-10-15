@@ -43,12 +43,12 @@ def greenup_doy(doy: np.ndarray, ndvi: np.ndarray, snow: np.ndarray, baseline: f
     # enveloped peak sits above the canopy's real maximum and raises the 50% threshold, giving late
     # crossings. The first, unlifted fit has no such selection; its peak sets the amplitude instead.
     # The threshold is only ever lowered, and crossing() still searches the enveloped curve.
-    first_fit = savgol_filter(np.interp(grid, t, y), window_length=31, polyorder=2, mode="nearest")
     # Without the envelope, residual cloud near the peak drags that fit down. Cloud only lowers NDVI,
-    # so one refit drops observations more than 3 robust sigma below it (MAD over clear observations
-    # above the baseline; clipped and snow points sit on it). Symmetric clear-sky noise is kept, so
-    # this doesn't recreate the envelope's upward bias. If no such points exist, NaN keeps everything.
-    resid = y - np.interp(t, grid, first_fit)
+    # so the fit is redone once without observations more than 3 robust sigma below the unlifted fit
+    # (MAD over clear observations above the baseline; clipped and snow points sit on it). Symmetric
+    # clear-sky noise is kept, so this doesn't recreate the envelope's upward bias. If no such points
+    # exist, NaN keeps everything.
+    resid = y - np.interp(t, grid, savgol_filter(np.interp(grid, t, y), window_length=31, polyorder=2, mode="nearest"))
     keep = ~(resid < -3 * 1.4826 * np.median(np.abs(resid[y > baseline])))
     first_fit = savgol_filter(np.interp(grid, t[keep], y[keep]), window_length=31, polyorder=2, mode="nearest")
     # Ratio of unlifted to enveloped amplitude, capped at 1. A non-positive enveloped amplitude gives
