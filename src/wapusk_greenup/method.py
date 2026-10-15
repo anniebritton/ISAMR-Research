@@ -29,11 +29,12 @@ def greenup_doy(doy: np.ndarray, ndvi: np.ndarray, snow: np.ndarray, baseline: f
     # snowfall hides the canopy but doesn't make it dormant, so flags after melt are cleared here.
     snow = np.array(snow, dtype=float)
     valid = ~np.isnan(np.asarray(ndvi, dtype=float))
-    if (snow == 0).any() and valid.any():
-        melt, first = int(np.argmax(snow == 0)), int(np.argmax(valid))
-        snow[melt:first] = 0
     if valid.sum() < 15 or np.isnan(baseline):
         return np.nan
+    # Clear flags from melt (first snow-free day) up to the first clear observation. The guard above
+    # guarantees a clear observation exists, so argmax(valid) is always a real index.
+    if (snow == 0).any():
+        snow[np.argmax(snow == 0) : np.argmax(valid)] = 0
     t, y = prepare(doy, ndvi, snow, baseline)
     grid = np.asarray(doy, dtype=float)
     curve = savgol(t, y, grid)
