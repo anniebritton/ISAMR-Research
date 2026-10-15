@@ -1,0 +1,34 @@
+iteration,category,idea,outcome
+1,snow_and_melt,keep snow pseudo-observations at the baseline instead of lifting them,reverted
+2,crossing_rule,use the last upward crossing before the peak,reverted
+3,smoother,replace Savitzky-Golay with a robust Whittaker smoother,reverted
+4,ensemble,median of the three pre-registered extractors,reverted
+5,outlier_filter,drop isolated low values against a running median before smoothing,reverted
+6,smoother,lift only points far below the fit instead of every point,reverted
+7,snow_and_melt,add a pseudo-observation on the snowmelt day,reverted
+8,snow_and_melt,ignore snow flags between melt and the first clear observation,kept
+9,validity_threshold,lower the amplitude floor from 0.10 to 0.05,kept
+10,crossing_rule,bound late crossings using the observations,reverted
+11,smoother,narrower Savitzky-Golay window,reverted
+12,smoother,wider Savitzky-Golay window,reverted
+13,ensemble,average two Savitzky-Golay fits,reverted
+14,smoother,change the number of upper-envelope passes,reverted
+15,snow_and_melt,keep the smoothing window from spanning snowmelt,reverted
+16,amplitude,take the seasonal amplitude from the unlifted fit,kept
+17,amplitude,drop outliers before the amplitude fit,reverted
+18,validity_threshold,stop clipping observations at the baseline,reverted
+19,line_count,remove an unused import,kept
+20,crossing_rule,midpoint of the first and last crossings,reverted
+21,amplitude,median-filter the amplitude fit,reverted
+22,snow_and_melt,bridge the week before melt,reverted
+23,amplitude,second smoothing pass on the amplitude fit,reverted
+24,amplitude,shorter outlier mask for the amplitude fit,kept
+25,amplitude,always keep baseline points in the outlier mask,reverted
+26,line_count,merge two amplitude lines,kept
+27,line_count,merge a validity check into one line,kept
+28,line_count,inline a variable used once,kept
+29,no_edit,reported no untried idea worth testing,no edit
+30,no_edit,reported no untried idea worth testing,no edit
+31,no_edit,reported no untried idea worth testing,no edit
+32,no_edit,reported no untried idea worth testing,no edit
+33,no_edit,reported no untried idea worth testing,no edit

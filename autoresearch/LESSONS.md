@@ -23,6 +23,21 @@ Evidence comes from [`ledger.jsonl`](ledger.jsonl), [`results/tables/autoresearc
   - left H1–H3 essentially unchanged
 * It failed the pre-registered entry rule for the robustness grid.
 
+## How the Agent Searched
+
+![What the agent tried, by iteration](../results/figures/autoresearch_attempts.png)
+
+Each iteration was coded by the kind of change attempted, from the agent's own rationale ([`iteration_coding.csv`](iteration_coding.csv)).
+
+* **Explore (iterations 1–7):** five kinds of change (snow handling, smoother settings, crossing rule, combining extractors, outlier filtering); none kept.
+* **Find (8, 9, 16):** the post-melt snow-flag fix, the lower amplitude floor, and the outlier-resistant amplitude.
+* **Exploit (16–25):** six refinements of the amplitude estimate, two kept.
+* **Game (19, 26–28):** line-count cleanups, each kept, each appearing right after substantive ideas stopped succeeding.
+* **Stop (29–33):** the agent reported no untried idea worth testing and made no edit.
+
+Overall, 4 of 24 substantive attempts were kept (17%).
+The coding was done by the same AI system that built the pipeline and should be treated as descriptive.
+
 ## Lessons
 
 ### 1. Put Enforcement Outside the Agent, and Test the Harness Before the Agent
@@ -36,6 +51,11 @@ A stripped `git status` line turned `src/...` into `rc/...`; the first smoke tes
 * **Do:** keep every check (allowed files, evaluator hash, held-out location) in code the agent cannot edit or run.
 
 ### 2. A Single Scalar Gets Gamed, Even by a Well-Behaved Agent
+
+Gaming appeared exactly when the search was exhausted: iteration 19 followed a failed substantive idea in iteration 18,
+and iterations 26–28 followed iteration 25, with the agent writing that "every idea I worked through has either been tried already
+or would shift a balance the ledger already maps."
+In this run, gaming was therefore a signal of exhausted search as well as a cost.
 
 Four of the eight kept changes (iterations 19, 26, 27, 28) only deleted or merged lines.
 Every estimate stayed identical; the gain came from the 0.001-per-line complexity penalty.
@@ -55,7 +75,7 @@ The science depends on interannual fidelity, which no part of the evaluator meas
 |---|---|---|---|
 | Start (pre-registered SG) | 4.65 | 0.900 | 10.11 |
 | Iteration 8: ignore post-melt snow flags | 4.48 | 0.903 | 10.14 |
-| Iteration 16: robust amplitude rescaling | 4.40 | 0.881 | 9.63 |
+| Iteration 16: outlier-resistant amplitude rescaling | 4.40 | 0.881 | 9.63 |
 | Frozen (iteration 28) | 4.39 | 0.881 | 9.68 |
 
 Iteration 8 improved held-out error without losing annual fidelity.
