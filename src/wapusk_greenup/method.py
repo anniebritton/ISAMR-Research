@@ -43,6 +43,13 @@ def greenup_doy(doy: np.ndarray, ndvi: np.ndarray, snow: np.ndarray, baseline: f
     # crossings. The first, unlifted fit has no such selection; its peak sets the amplitude instead.
     # The threshold is only ever lowered, and crossing() still searches the enveloped curve.
     first_fit = savgol_filter(np.interp(grid, t, y), window_length=31, polyorder=2, mode="nearest")
+    # Without the envelope, residual cloud near the peak drags that fit down. Cloud only lowers NDVI,
+    # so one refit drops observations more than 3 robust sigma below it (MAD over clear observations
+    # above the baseline; clipped and snow points sit on it). Symmetric clear-sky noise is kept, so
+    # this doesn't recreate the envelope's upward bias. If no such points exist, NaN keeps everything.
+    resid = y - np.interp(t, grid, first_fit)
+    keep = ~(resid < -3 * 1.4826 * np.median(np.abs(resid[y > baseline])))
+    first_fit = savgol_filter(np.interp(grid, t[keep], y[keep]), window_length=31, polyorder=2, mode="nearest")
     amp, amp0 = curve.max() - baseline, first_fit.max() - baseline
     scale = min(1.0, max(amp0, 0.0) / amp) if amp > 0 else 1.0
     # The pre-registered 0.10 amplitude floor rejects weak but real seasons (small amplitudes, or a
