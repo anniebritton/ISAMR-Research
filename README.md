@@ -1,36 +1,32 @@
 # Wapusk Green-Up
 
-Spring green-up timing and its climate drivers in Wapusk National Park, Manitoba, 2001–2024.
+Spring green-up timing and its association with snowmelt and spring warmth in Wapusk National Park, Manitoba, 2001–2024,
+with a supplementary study of a sandboxed coding agent improving the method.
 Written for the [International Student-led Arctic Monitoring and Research (ISAMR) Project](https://www.isamr.net/home).
+
+* **Interactive brief:** [anniebritton.github.io/ISAMR-Research](https://anniebritton.github.io/ISAMR-Research/)
+* **Report:** [`report/report.qmd`](report/report.qmd)
+* **Pre-registration:** [`prereg.md`](prereg.md)
 
 ## Research Question
 
 Has the timing of spring mid-green-up in Wapusk National Park shifted since 2001,
-and how much of its year-to-year variation is explained by snowmelt timing and spring temperature?
-
-The analysis is pre-registered in [`prereg.md`](prereg.md).
-The full write-up is [`report/report.qmd`](report/report.qmd).
+and how strongly is its year-to-year variation associated with snowmelt timing and spring temperature?
 
 ## Findings
 
-* **No detectable trend (H1).**
-  - Theil–Sen slope +0.03 days/yr, 95% CI −0.33 to +0.47, n = 24 years.
-  - Across 24 processing specifications the lower bound ranges from −0.33 to −0.72 days/yr,
-    and the minimum detectable trend is about 0.7–0.9 days/yr, so this rules out large shifts rather than demonstrating stability.
-  - Over 2004–2016 the series is compatible with the 0.56 days/yr advance reported for the nearby Qamanirjuaq calving grounds.
-* **Snow-off is associated with about half the variation (H2).**
-  - Each standard deviation (15 days) of later ERA5-Land snow-off goes with 5.4 days later mid-green-up (R² = 0.52).
-* **Spring warmth adds to snow-off (H3), but its size depends on the temperature window.**
-  - April–May thawing degree days at Churchill add ΔR² = 0.25 (BCa 95% CI 0.08–0.47); combined R² = 0.77, cross-validated error 4.1 days.
-  - Ending the window on 15 May instead of 31 May cuts the increment to 0.09.
-* **Checked against influence, retrieval noise, and predictor source.**
-  - All results hold across 24 specifications, a pixel bootstrap, and removal of the most influential years.
-  - The series agrees with MCD12Q2 at r = 0.90, a consistency check between two MODIS retrievals rather than independent validation.
-* **An agent loop improved the method on synthetic data but not for the science.**
-  - A sandboxed coding agent cut held-out synthetic error by 6% over 33 iterations, but traded away interannual fidelity on real pixels.
-  - See [`autoresearch/LESSONS.md`](autoresearch/LESSONS.md) for what that teaches about agents in research pipelines.
+* **No detectable trend.**
+  Theil–Sen slope +0.03 days/yr (95% CI −0.33 to +0.47); the record can only reliably detect trends of about 0.7–0.9 days/yr.
+  Over 2004–2016 the series is compatible with the 0.56 days/yr advance reported nearby by Mallory et al. (2020).
+* **Snowmelt and spring warmth.**
+  Each standard deviation (15 days) of later ERA5-Land snow-off goes with 5.4 days later green-up (R² = 0.52).
+  April–May thawing degree days add ΔR² = 0.25, for a combined R² of 0.77 and a cross-validated error of 4.1 days,
+  but the warmth contribution depends on how the temperature window is drawn.
+* **Agent loop.**
+  A sandboxed coding agent cut held-out synthetic error by 6%, but weakened year-to-year fidelity on real pixels.
+  [`autoresearch/LESSONS.md`](autoresearch/LESSONS.md) sets out what that teaches about agents in research pipelines.
 
-![Park-wide mid-green-up, 2001–2024](results/figures/greenup_series.png)
+![Annual mid-green-up, 2001–2024](results/figures/greenup_series.png)
 
 ## Repository Layout
 
@@ -39,14 +35,16 @@ The full write-up is [`report/report.qmd`](report/report.qmd).
   - `extract.py`, `station.py`: Earth Engine and ECCC downloads into `data/raw/`
   - `smoothers.py`: pre-registered green-up extractors
   - `phenology.py`, `drivers.py`: per-pixel green-up and annual predictors
-  - `stats.py`, `analysis.py`: trend, power, driver models, robustness grid
-  - `plots.py`, `cli.py`: figures and the `wapusk` command
-* [`data/`](data/): park boundary, the fixed pixel sample, and derived annual tables (raw extracts are gitignored)
-* [`results/`](results/): figures and result tables, including `confirmatory.json`
-* [`autoresearch/`](autoresearch/): a sandboxed agent loop that searches for a better green-up extractor on synthetic data,
-  with its [lessons](autoresearch/LESSONS.md)
-* [`docs/methods_justification.md`](docs/methods_justification.md): the peer-reviewed basis and sensitivity test for every method
-* [`results/review.md`](results/review.md): the AI referee report on the first draft
+  - `stats.py`, `analysis.py`: trend, power, driver models, and robustness grid
+  - `revision.py`: post-hoc checks requested by the referee report
+  - `plots.py`, `site.py`, `cli.py`: figures, data for the interactive brief, and the `wapusk` command
+  - `method.py`: the autoresearch agent's candidate extractor, never used in the confirmatory analysis
+* [`autoresearch/`](autoresearch/): the sandboxed agent loop, its ledger, evaluation, ablation, and [lessons](autoresearch/LESSONS.md)
+* [`data/`](data/): park boundary, the fixed pixel sample, and derived tables; raw extracts are gitignored
+* [`results/`](results/): figures, result tables, and the [AI referee report](results/review.md)
+* [`report/`](report/): the report and its bibliography
+* [`site/`](site/): the interactive brief, deployed to GitHub Pages
+* [`docs/`](docs/): [methods justification](docs/methods_justification.md) and [future work](docs/future_work.md)
 * [`notebooks/`](notebooks/): the original 2023 exploration (archived) and an exploratory appendix
 * [`DATA.md`](DATA.md): every dataset with its version, licence, and citation
 
@@ -64,39 +62,50 @@ Set `gee_project` in [`config.yaml`](config.yaml) to your Cloud project ID.
 ## Running
 
 ```sh
-uv run wapusk extract       # Earth Engine + station data into data/raw/ (cached; about 10 minutes)
-uv run wapusk phenology     # green-up for every pixel-year and specification
-uv run wapusk drivers       # annual predictors
-uv run wapusk confirmatory  # pre-registered analysis; runs once and needs a committed prereg.md
-uv run wapusk sensitivity   # MCD12Q2, NBAR, stratum, and predictor checks
-uv run wapusk multiverse    # 24-specification robustness grid
+uv run wapusk extract                # Earth Engine + station data into data/raw/ (cached)
+uv run wapusk phenology              # green-up for every pixel-year and specification
+uv run wapusk drivers                # annual predictors
+uv run wapusk confirmatory           # pre-registered analysis; runs once and needs a committed prereg.md
+uv run wapusk sensitivity            # MCD12Q2, NBAR, stratum, and predictor checks
+uv run wapusk multiverse             # 24-specification robustness grid
 uv run wapusk parameter-sensitivity  # post-hoc one-at-a-time parameter tests
 uv run wapusk stat-robustness        # post-hoc statistical checks
 uv run wapusk revision-checks        # post-hoc checks prompted by the referee report
-uv run wapusk figures
+uv run wapusk figures                # report figures
+uv run wapusk site                   # data for the interactive brief
 ```
 
 `uv run wapusk all` runs every step after sampling.
-`wapusk sample` redraws the pixel sample, which is already committed and should not change.
+`wapusk sample` redraws the pixel sample, which is committed and should not change.
+The view-angle sensitivity test needs one extra pull: `uv run wapusk extract --source mod09ga_zenith`.
 
-Render the report with [Quarto](https://quarto.org):
+To preview the brief locally, run `uv run wapusk site`, then `python -m http.server -d site` and open `localhost:8000`.
+The report renders with [Quarto](https://quarto.org) (`quarto render report/report.qmd`); the Pages workflow renders it automatically.
 
-```sh
-quarto render report/report.qmd
-```
+The autoresearch loop has its own instructions in [`autoresearch/README.md`](autoresearch/README.md).
 
 ## Tests
 
 ```sh
 uv run pytest            # unit tests on synthetic data
-uv run pytest -m gee     # integration test against the real Earth Engine backend
+uv run pytest -m gee     # integration tests against the real Earth Engine backend
 ```
+
+## Status
+
+The confirmatory analysis, robustness checks, and referee revisions are complete.
+Open items are tracked in [`docs/future_work.md`](docs/future_work.md),
+including a clean-clone reproducibility run, a Zenodo archive of the raw extracts, ground phenology for validation, and a second agent loop.
 
 ## Use of AI
 
 The pipeline, pre-registration, and first draft of the report were produced by an AI coding agent (Claude Code) under the author's direction,
 and an AI referee reviewed the draft.
 The author is responsible for the research questions, design decisions, and conclusions.
+
+## Citation
+
+See [`CITATION.cff`](CITATION.cff).
 
 ## Licence
 

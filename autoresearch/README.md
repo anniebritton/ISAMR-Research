@@ -71,6 +71,14 @@ Each call is capped by `--budget-per-call` (default USD 2).
 The ledger's `cost_usd` is Claude Code's estimate of each call's token usage at API list prices.
 Under a claude.ai subscription login the calls count against plan usage limits rather than being billed per token.
 
+## Outcome of the First Run
+
+* 33 iterations, 8 changes kept, no edits outside `method.py`, estimated usage USD 17.90.
+* Held-out synthetic error fell from 4.65 to 4.39 days, but park-wide annual agreement with MCD12Q2 fell from 0.900 to 0.881.
+* The candidate failed two of the four entry criteria
+  ([`autoresearch_independent.json`](../results/tables/autoresearch_independent.json)) and was not added to the robustness grid.
+* The run was executed in a separate git worktree on branch `autoresearch/2026-10-14`, then merged; the ledger and every kept commit are in the history.
+
 ## How the Result Is Used
 
 The frozen candidate never replaces the pre-registered Savitzky–Golay extractor.

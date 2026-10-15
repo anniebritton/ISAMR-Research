@@ -9,3 +9,5 @@ report/.quarto/
 autoresearch/runs/
 .DS_Store
 .worktrees/
+report/report.html
+site/report.html

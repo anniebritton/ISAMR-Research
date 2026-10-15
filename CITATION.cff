@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+message: "If you use this work, please cite it as below."
+title: "Wapusk Green-Up: Spring green-up timing and its association with snowmelt and spring warmth in Wapusk National Park, 2001-2024"
+authors:
+  - family-names: Britton
+    given-names: Annie
+type: software
+license: MIT
+repository-code: "https://github.com/anniebritton/ISAMR-Research"
+url: "https://anniebritton.github.io/ISAMR-Research/"
+date-released: "2026-10-14"
+keywords:
+  - phenology
+  - MODIS
+  - NDVI
+  - Hudson Bay Lowlands
+  - Wapusk National Park
+  - AI agents

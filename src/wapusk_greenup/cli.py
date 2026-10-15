@@ -100,6 +100,15 @@ def revision_checks() -> None:
     typer.echo(json.dumps(revision.run(), indent=2, default=float))
 
 
+@app.command(name="site")
+def build_site() -> None:
+    """Write site/data.json for the interactive research brief."""
+    from . import site
+
+    d = site.build()
+    typer.echo(f"site/data.json: {len(d['seasons'])} example pixel-years")
+
+
 @app.command()
 def figures() -> None:
     """Render report figures to results/figures/."""

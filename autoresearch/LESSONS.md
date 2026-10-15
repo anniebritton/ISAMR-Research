@@ -16,7 +16,7 @@ Evidence comes from [`ledger.jsonl`](ledger.jsonl), [`results/tables/autoresearc
   - 20 reverted because the score did not improve
   - 5 iterations where the agent declined to edit
   - 0 attempts to touch any file other than `method.py`
-* The visible score fell from 3.18 to 2.98 days (−6%); the held-out error fell from 4.66 to 4.39 days (−6%).
+* The visible score fell from 3.18 to 2.98 days (−6%); the held-out error fell from 4.65 to 4.39 days (−6%).
 * On real pixels, the frozen candidate:
   - improved pixel-level agreement with MCD12Q2 (MAE 9.7 vs 10.1 days)
   - lowered park-wide annual correlation (0.881 vs 0.900)
@@ -53,7 +53,7 @@ The science depends on interannual fidelity, which no part of the evaluator meas
 
 | Version | Held-out error (days) | Park-wide annual r | Pixel MAE (days) |
 |---|---|---|---|
-| Start (pre-registered SG) | 4.66 | 0.900 | 10.11 |
+| Start (pre-registered SG) | 4.65 | 0.900 | 10.11 |
 | Iteration 8: ignore post-melt snow flags | 4.48 | 0.903 | 10.14 |
 | Iteration 16: robust amplitude rescaling | 4.40 | 0.881 | 9.63 |
 | Frozen (iteration 28) | 4.39 | 0.881 | 9.68 |

@@ -1,0 +1,473 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Wapusk Green-Up</title>
+<meta name="description" content="Spring green-up timing and its association with snowmelt and spring warmth in Wapusk National Park, 2001–2024, with a supplementary study of a sandboxed agent loop.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&family=Source+Serif+4:opsz,wght@8..60,600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/plotly.js-dist-min@2.35.2/plotly.min.js"></script>
+<style>
+:root {
+  color-scheme: light;
+  --bg: #f7f5ef;
+  --surface: #fcfcfb;
+  --band: #1f3a2e;
+  --band-ink: #f3f1e8;
+  --ink: #0b0b0b;
+  --ink-2: #52514e;
+  --ink-3: #75736e;
+  --rule: #e4e3df;
+  --accent: #1f6b4f;
+  --s1: #2a78d6;
+  --s2: #eb6834;
+  --s3: #1baf7a;
+  --s4: #eda100;
+  --muted-mark: #b9b7b0;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --bg: #121211;
+    --surface: #1a1a19;
+    --band: #16261f;
+    --band-ink: #ecebe4;
+    --ink: #f0efec;
+    --ink-2: #c3c2b7;
+    --ink-3: #9a998f;
+    --rule: #33322f;
+    --accent: #5fbf98;
+    --s1: #3987e5;
+    --s2: #d95926;
+    --s3: #199e70;
+    --s4: #c98500;
+    --muted-mark: #5a5954;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #121211;
+  --surface: #1a1a19;
+  --band: #16261f;
+  --band-ink: #ecebe4;
+  --ink: #f0efec;
+  --ink-2: #c3c2b7;
+  --ink-3: #9a998f;
+  --rule: #33322f;
+  --accent: #5fbf98;
+  --s1: #3987e5;
+  --s2: #d95926;
+  --s3: #199e70;
+  --s4: #c98500;
+  --muted-mark: #5a5954;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 17px/1.6 "Source Sans 3", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+a { color: var(--accent); }
+header.band {
+  background: var(--band);
+  color: var(--band-ink);
+  padding: calc(env(safe-area-inset-top, 0px) + 28px) 20px 32px;
+}
+.wrap { max-width: 980px; margin: 0 auto; padding-inline: 20px; }
+header.band .wrap { padding-inline: 0; }
+.kicker { font-size: 13px; letter-spacing: .08em; text-transform: uppercase; opacity: .8; margin: 0 0 8px; }
+h1 { font: 600 clamp(28px, 4.4vw, 42px)/1.15 "Source Serif 4", Georgia, serif; margin: 0 0 10px; }
+.sub { font-size: 18px; max-width: 760px; margin: 0 0 16px; opacity: .92; }
+.byline { font-size: 14px; opacity: .85; display: flex; flex-wrap: wrap; gap: 6px 18px; }
+.byline a { color: var(--band-ink); }
+main { padding-block: 28px 56px; }
+h2 { font: 600 26px/1.25 "Source Serif 4", Georgia, serif; margin: 44px 0 10px; }
+h3 { font-size: 18px; margin: 22px 0 6px; }
+p { margin: 0 0 14px; max-width: 760px; }
+.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin: 8px 0 20px; }
+.tile { background: var(--surface); border: 1px solid var(--rule); border-radius: 8px; padding: 14px 16px; }
+.tile .label { font-size: 13px; color: var(--ink-2); text-transform: uppercase; letter-spacing: .05em; }
+.tile .value { font: 700 28px/1.2 "Source Sans 3", sans-serif; margin: 4px 0 2px; font-variant-numeric: tabular-nums; }
+.tile .note { font-size: 14px; color: var(--ink-2); }
+figure { margin: 14px 0 22px; background: var(--surface); border: 1px solid var(--rule); border-radius: 8px; padding: 12px 12px 8px; }
+figcaption { font-size: 14px; color: var(--ink-2); padding: 6px 4px 2px; max-width: 820px; }
+.chart { width: 100%; height: 360px; }
+.chart.tall { height: 520px; }
+.chart.short { height: 300px; }
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 720px) { .two { grid-template-columns: 1fr; } }
+.controls { display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center; font-size: 15px; margin: 4px 4px 8px; }
+select, button { font: inherit; font-size: 15px; padding: 5px 8px; border-radius: 6px; border: 1px solid var(--rule); background: var(--bg); color: var(--ink); }
+button[aria-pressed="true"] { background: var(--accent); color: var(--surface); border-color: var(--accent); }
+.readout { font-size: 15px; color: var(--ink-2); margin: 0 4px 6px; }
+ol.limits { max-width: 760px; padding-left: 22px; }
+ol.limits li { margin-bottom: 8px; }
+.callout { border-left: 3px solid var(--accent); padding: 4px 0 4px 14px; margin: 16px 0; max-width: 760px; }
+table.data { border-collapse: collapse; font-size: 15px; width: 100%; font-variant-numeric: tabular-nums; }
+table.data th, table.data td { text-align: left; padding: 6px 10px; border-bottom: 1px solid var(--rule); }
+table.data th { color: var(--ink-2); font-weight: 600; }
+.scroll { overflow-x: auto; }
+footer { border-top: 1px solid var(--rule); padding-block: 20px calc(env(safe-area-inset-bottom, 0px) + 28px); font-size: 14px; color: var(--ink-2); }
+.theme-toggle { margin-left: auto; }
+</style>
+</head>
+<body>
+<header class="band">
+  <div class="wrap">
+    <p class="kicker">ISAMR research brief · Wapusk National Park, Manitoba</p>
+    <h1>Green-Up Timing in Wapusk National Park, 2001–2024</h1>
+    <p class="sub">No detectable trend in when the park greens up, but strong associations with snowmelt and spring warmth from one year to the next, along with a supplementary experiment on using a coding agent to improve the method.</p>
+    <div class="byline">
+      <span>Annie Britton</span>
+      <a href="https://github.com/anniebritton/ISAMR-Research">Code and data</a>
+      <a href="report.html">Full report</a>
+      <a href="https://github.com/anniebritton/ISAMR-Research/blob/main/prereg.md">Pre-registration</a>
+      <button class="theme-toggle" id="theme" type="button" aria-label="Toggle dark mode">Theme</button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section>
+    <h2>Summary</h2>
+    <p>This study sought to determine whether spring green-up in Wapusk National Park has shifted since 2001, and how strongly its timing from year to year is associated with snowmelt and spring temperature. Mid-green-up, the day on which smoothed MODIS NDVI reaches half of its seasonal amplitude, was estimated for 300 land pixels and combined into an area-weighted value for each year, following an analysis plan that was fixed before any trend or relationship was examined.</p>
+    <div class="tiles" id="tiles"></div>
+  </section>
+
+  <section>
+    <h2>Study Area</h2>
+    <p>Wapusk covers 11,475 km² of peatland, fen, coastal tundra, and open spruce forest on the western shore of Hudson Bay, where polar bears summer on land and caribou and nesting geese depend on the timing of fresh forage. The sample drew 75 pixels at random from each of four land-cover strata, excluding pixels with more than 10% open water, so the results describe the drier ~70% of the park.</p>
+    <figure>
+      <div id="map" class="chart tall" role="img" aria-label="Map of Wapusk National Park with 300 sample pixels by land-cover stratum"></div>
+      <figcaption>Park boundary (Natural Resources Canada) and the 300 sample pixels on the MODIS 500 m grid. Hover a pixel for its stratum.</figcaption>
+    </figure>
+  </section>
+
+  <section>
+    <h2>Has Green-Up Shifted?</h2>
+    <p id="trend-text"></p>
+    <figure>
+      <div id="series" class="chart" role="img" aria-label="Annual mid-green-up from this study and MCD12Q2, 2001 to 2024"></div>
+      <figcaption>Annual mid-green-up (day of year) from this study and from the MCD12Q2 product, with the Theil–Sen trend. MCD12Q2 comes from the same sensor, so agreement is a consistency check rather than independent validation. Hover a year for its snow-off and thawing degree days.</figcaption>
+    </figure>
+  </section>
+
+  <section>
+    <h2>What Explains the Year-to-Year Variation?</h2>
+    <p id="driver-text"></p>
+    <div class="two">
+      <figure>
+        <div id="snow" class="chart short" role="img" aria-label="Mid-green-up against snow-off"></div>
+        <figcaption>Mid-green-up against park-mean ERA5-Land snow-off.</figcaption>
+      </figure>
+      <figure>
+        <div id="tdd" class="chart short" role="img" aria-label="Mid-green-up against thawing degree days"></div>
+        <figcaption>Mid-green-up against April–May thawing degree days at Churchill.</figcaption>
+      </figure>
+    </div>
+    <p>Snow-off and warmth overlap substantially, as 43% of the explained variance is shared between them, which is consistent with a single chain in which warm springs bring early melt and early green-up. The contribution of warmth beyond snow-off, however, depended on how the temperature window was drawn, falling to an increase in R² of 0.09 when the window ended on 15 May rather than 31 May.</p>
+  </section>
+
+  <section>
+    <h2>How Sensitive Are the Results?</h2>
+    <p>Every result was re-estimated under 24 combinations of smoother, threshold, cloud mask, and aggregation, and again under one-at-a-time changes to each parameter that the literature does not fix. No variant produced a trend whose interval excluded zero, and snow-off remained significant throughout; the precision of the trend estimate, however, is specific to the primary specification.</p>
+    <figure>
+      <div class="controls" role="group" aria-label="Choose set of specifications">
+        <button type="button" id="btn-grid" aria-pressed="true">24-specification grid</button>
+        <button type="button" id="btn-params" aria-pressed="false">One-at-a-time parameter tests</button>
+      </div>
+      <div id="forest" class="chart tall" role="img" aria-label="Trend estimates with 95% confidence intervals across specifications"></div>
+      <figcaption>Theil–Sen slope with 95% confidence interval under each specification. The pre-registered primary specification is shown in orange; hover a row for its snow-off and warmth results.</figcaption>
+    </figure>
+  </section>
+
+  <section>
+    <h2>Explore a Season</h2>
+    <p>Each green-up date comes from a single pixel's season of cloud-gapped daily NDVI. Snow-flagged days anchor the curve at the dormant baseline, and the smoothed curve's crossing of half the seasonal amplitude gives the date.</p>
+    <figure>
+      <div class="controls">
+        <label>Stratum <select id="sel-stratum"></select></label>
+        <label>Pixel <select id="sel-pixel"></select></label>
+        <label>Year <select id="sel-year"></select></label>
+      </div>
+      <p class="readout" id="season-readout" aria-live="polite"></p>
+      <div id="season" class="chart" role="img" aria-label="NDVI observations and fitted curve for one pixel-year"></div>
+      <figcaption>Strict-mask NDVI observations, snow anchors, the Savitzky–Golay fit, the dormant baseline, and the estimated mid-green-up for 12 example pixels (three per stratum).</figcaption>
+    </figure>
+  </section>
+
+  <section>
+    <h2>Supplementary Study: A Coding Agent Improving the Method</h2>
+    <p id="agent-text"></p>
+    <figure>
+      <div id="dynamics" class="chart" role="img" aria-label="Agent loop score by iteration"></div>
+      <figcaption>Score on the visible synthetic benchmark (mean error in days) for each iteration, with the best score so far. Hover an iteration to read the agent's own account of its change.</figcaption>
+    </figure>
+    <figure>
+      <div id="tradeoff" class="chart" role="img" aria-label="Held-out error against annual agreement for each kept version"></div>
+      <figcaption>Each kept version of the agent's extractor, in order, placed by its held-out synthetic error and its park-wide annual agreement with MCD12Q2. Iteration 8 improved both; iteration 16 traded interannual fidelity for lower pixel bias.</figcaption>
+    </figure>
+    <p>The run suggests three lessons for agents in research pipelines. First, a single score was gamed even by an agent that reported its changes openly, as four of the eight kept changes only removed lines to reduce a line-count penalty. Next, per-season accuracy on synthetic data diverged from the interannual fidelity that the science depends on, and a keep-if-better rule discarded the version that served the science best. Lastly, keeping the agent off the inference path meant that none of its changes could move the reported result, and none did. The full account is in <a href="https://github.com/anniebritton/ISAMR-Research/blob/main/autoresearch/LESSONS.md">LESSONS.md</a>.</p>
+  </section>
+
+  <section>
+    <h2>Methods in Brief</h2>
+    <p>Daily MOD09GA collection 6.1 reflectance was quality masked using the state and quality bits, and NDVI was computed for each pixel between 2001 and 2024. For each pixel, a dormant baseline was set at the 5th percentile of snow-free NDVI outside the growing season; each season was smoothed with a Savitzky–Golay filter fitted to the upper envelope, and mid-green-up was taken as the first day the curve reached half of its amplitude. Snow-off came from park-mean ERA5-Land snow cover and thawing degree days from the Churchill climate station, and trends were estimated with Theil–Sen slopes and Mann–Kendall tests, while associations were estimated with standardized least squares, a nested F-test, and commonality analysis. The peer-reviewed basis for each choice, and the sensitivity test behind each parameter, are documented in the <a href="https://github.com/anniebritton/ISAMR-Research/blob/main/docs/methods_justification.md">methods justification</a>.</p>
+  </section>
+
+  <section>
+    <h2>Limitations</h2>
+    <ol class="limits">
+      <li>Twenty-four years offer limited sensitivity to trends: the pre-registered power analysis put the minimum detectable trend near 0.9 days/yr, and most specifications cannot exclude an advance of 0.56 days/yr.</li>
+      <li>The driver models rest on 24 points, and the snow-off association weakens without the two most extreme years (2004 and 2009) or when only genuine station records are used.</li>
+      <li>The predictors are coarse, as ERA5-Land resolves the park at about 9 km and overestimates snow duration, and thawing degree days come from a single coastal station.</li>
+      <li>The results describe the drier ~70% of the park, and the land-cover map used for weighting classifies wetland poorly.</li>
+      <li>All comparisons are between MODIS retrievals; no ground phenology was available to validate the dates.</li>
+    </ol>
+  </section>
+
+  <section>
+    <h2>Data, Code, and Use of AI</h2>
+    <p>All code, derived data, the pre-registration, and an AI referee report are in the <a href="https://github.com/anniebritton/ISAMR-Research">repository</a>, and every dataset is listed with its licence and citation in <a href="https://github.com/anniebritton/ISAMR-Research/blob/main/DATA.md">DATA.md</a>. The pipeline, pre-registration, and first draft were produced by an AI coding agent (Claude Code) under the author's direction, and the author is responsible for the research questions, design decisions, and conclusions.</p>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    Written for the <a href="https://www.isamr.net/home">International Student-led Arctic Monitoring and Research (ISAMR) Project</a>. Contains modified Copernicus Climate Change Service information 2026. Park boundary: Natural Resources Canada, Open Government Licence – Canada.
+  </div>
+</footer>
+
+<script>
+(() => {
+  const root = document.documentElement;
+  const css = name => getComputedStyle(root).getPropertyValue(name).trim();
+  const fmt = (x, d = 2) => (x === null || x === undefined || Number.isNaN(x)) ? "–" : Number(x).toFixed(d);
+  const signed = (x, d = 2) => (x >= 0 ? "+" : "−") + Math.abs(x).toFixed(d);
+  const STRATA = { forest: "forest", shrub_grass: "shrub and grass", wetland: "wetland", moss_lichen: "moss and lichen" };
+  const SYMBOL = { forest: "circle", shrub_grass: "square", wetland: "diamond", moss_lichen: "triangle-up" };
+  let D = null;
+  let forestMode = "grid";
+
+  function base(extra = {}) {
+    const ink2 = css("--ink-2"), rule = css("--rule");
+    return Object.assign({
+      paper_bgcolor: css("--surface"), plot_bgcolor: css("--surface"),
+      font: { family: '"Source Sans 3", system-ui, sans-serif', color: ink2, size: 13 },
+      margin: { l: 56, r: 16, t: 12, b: 80 },
+      hoverlabel: { bgcolor: css("--surface"), bordercolor: rule, font: { color: css("--ink") } },
+      xaxis: { gridcolor: rule, zeroline: false, linecolor: rule },
+      yaxis: { gridcolor: rule, zeroline: false, linecolor: rule },
+      legend: { orientation: "h", y: -0.32, x: 0 },
+      showlegend: true,
+    }, extra);
+  }
+  const cfg = { displayModeBar: false, responsive: true };
+
+  function tiles() {
+    const h = D.headline;
+    const a = D.agent;
+    const items = [
+      ["Trend, 2001–2024", `${signed(h.trend[0])} d/yr`, `95% CI ${signed(h.trend[1])} to ${signed(h.trend[2])}; detectable only above ~${fmt(h.mdt, 1)} d/yr`],
+      ["Snow-off association", `${fmt(h.h2[0], 1)} d per SD`, `later melt, later green-up; R² = ${fmt(h.h2[3])}`],
+      ["Snow-off and warmth", `R² = ${fmt(h.m2_r2)}`, `cross-validated error ${fmt(h.loo[0], 1)} days vs ${fmt(h.loo[2], 1)} for the mean`],
+      ["Agent loop", `${fmt(100 * (1 - a.heldout.candidate / a.heldout.savgol), 0)}% lower`, "held-out synthetic error, but weaker year-to-year fidelity on real pixels"],
+    ];
+    document.getElementById("tiles").innerHTML = items.map(([l, v, n]) =>
+      `<div class="tile"><div class="label">${l}</div><div class="value">${v}</div><div class="note">${n}</div></div>`).join("");
+    const t = h.trend_2004_2016;
+    document.getElementById("trend-text").textContent =
+      `Mid-green-up averaged day ${fmt(h.mean_doy, 0)} (late June), with a standard deviation of ${fmt(h.sd_doy, 1)} days, and showed no detectable trend, as the Theil–Sen slope was ${signed(h.trend[0])} days/yr (95% CI ${signed(h.trend[1])} to ${signed(h.trend[2])}). This rules out large shifts rather than demonstrating stability, since the record can only reliably detect trends of about 0.7–0.9 days/yr. Over 2004–2016 alone, the slope was ${signed(t.slope)} days/yr (CI ${signed(t.ci_low)} to ${signed(t.ci_high)}), which is compatible with the 0.56 days/yr advance reported for the nearby Qamanirjuaq caribou calving grounds (Mallory et al., 2020); this suggests that a decade of earlier springs did not persist across the longer record.`;
+    document.getElementById("driver-text").textContent =
+      `Snow-off was associated with about half of the year-to-year variation, as each standard deviation (15 days) of later melt corresponded to green-up ${fmt(h.h2[0], 1)} days later (R² = ${fmt(h.h2[3])}). April–May thawing degree days accounted for a further ${fmt(100 * h.h3[0], 0)}% of the variance (BCa 95% CI ${fmt(100 * h.h3[1], 0)}–${fmt(100 * h.h3[2], 0)}%), and together the two predictors explained ${fmt(100 * h.m2_r2, 0)}% of the variance with a cross-validated error of ${fmt(h.loo[0], 1)} days.`;
+    document.getElementById("agent-text").textContent =
+      `A coding agent was given one narrow task, improving the extractor that turns gappy daily NDVI into a green-up date, inside a sandbox where it could edit a single file and a fixed evaluator outside its control scored each change on synthetic seasons. Over 33 iterations (estimated usage of USD ${fmt(a.total_cost, 2)} at API list prices) it kept 8 changes and never attempted an edit outside its file. Its final version cut held-out synthetic error from ${fmt(a.heldout.savgol)} to ${fmt(a.heldout.candidate)} days, yet on real pixels it weakened year-to-year agreement with MCD12Q2, so it did not qualify for the analysis.`;
+  }
+
+  function map() {
+    const ring = D.boundary;
+    const traces = [{ x: ring.map(p => p[0]), y: ring.map(p => p[1]), mode: "lines", line: { color: css("--ink-3"), width: 1 },
+      fill: "toself", fillcolor: css("--rule"), hoverinfo: "skip", showlegend: false }];
+    const colors = [css("--s1"), css("--s2"), css("--s3"), css("--s4")];
+    Object.keys(STRATA).forEach((s, i) => {
+      const pts = D.points.filter(p => p.stratum === s);
+      traces.push({ x: pts.map(p => p.lon), y: pts.map(p => p.lat), mode: "markers", name: STRATA[s],
+        marker: { color: colors[i], symbol: SYMBOL[s], size: 8, line: { color: css("--surface"), width: 1 } },
+        hovertemplate: `pixel %{customdata}<br>${STRATA[s]}<br>%{y:.3f}° N, %{x:.3f}°<extra></extra>`,
+        customdata: pts.map(p => p.id) });
+    });
+    Plotly.react("map", traces, base({
+      xaxis: { title: "Longitude", gridcolor: css("--rule"), zeroline: false },
+      yaxis: { title: "Latitude", gridcolor: css("--rule"), zeroline: false, scaleanchor: "x", scaleratio: 1 / Math.cos(58 * Math.PI / 180) },
+      legend: { orientation: "v", x: 1.02, y: 1 },
+      margin: { l: 56, r: 140, t: 12, b: 48 },
+    }), cfg);
+  }
+
+  function series() {
+    const a = D.annual, h = D.headline;
+    const years = a.map(r => r.year);
+    const x0 = Math.min(...years), x1 = Math.max(...years);
+    const mid = a.reduce((s, r) => s + r.greenup, 0) / a.length;
+    const ym = years.reduce((s, y) => s + y, 0) / years.length;
+    const trend = [x0, x1].map(x => mid + h.trend[0] * (x - ym));
+    Plotly.react("series", [
+      { x: years, y: a.map(r => r.mcd12q2), name: "MCD12Q2 MidGreenup", mode: "lines+markers",
+        line: { color: css("--s2"), width: 2 }, marker: { size: 7, symbol: "square", line: { color: css("--surface"), width: 1 } },
+        hovertemplate: "%{x}: MCD12Q2 day %{y:.0f}<extra></extra>" },
+      { x: years, y: a.map(r => r.greenup), name: "This study", mode: "lines+markers",
+        line: { color: css("--s1"), width: 2 }, marker: { size: 8, line: { color: css("--surface"), width: 1 } },
+        customdata: a.map(r => [r.snow_off, r.tdd, r.n_pixels]),
+        hovertemplate: "<b>%{x}</b>: mid-green-up day %{y:.0f}<br>snow-off day %{customdata[0]:.0f}<br>April–May TDD %{customdata[1]:.0f}<br>%{customdata[2]} valid pixels<extra></extra>" },
+      { x: [x0, x1], y: trend, name: `Theil–Sen ${signed(h.trend[0])} d/yr`, mode: "lines",
+        line: { color: css("--s1"), width: 1.5, dash: "dash" }, hoverinfo: "skip" },
+    ], base({ yaxis: { title: "Day of year", gridcolor: css("--rule"), zeroline: false }, hovermode: "closest" }), cfg);
+  }
+
+  function scatter(id, key, label) {
+    const a = D.annual.filter(r => r[key] !== null);
+    const xs = a.map(r => r[key]), ys = a.map(r => r.greenup);
+    const n = xs.length, mx = xs.reduce((s, v) => s + v, 0) / n, my = ys.reduce((s, v) => s + v, 0) / n;
+    const b = xs.reduce((s, v, i) => s + (v - mx) * (ys[i] - my), 0) / xs.reduce((s, v) => s + (v - mx) ** 2, 0);
+    const lx = [Math.min(...xs), Math.max(...xs)];
+    Plotly.react(id, [
+      { x: lx, y: lx.map(v => my + b * (v - mx)), mode: "lines", line: { color: css("--ink-3"), width: 1.5 }, hoverinfo: "skip", showlegend: false },
+      { x: xs, y: ys, mode: "markers", text: a.map(r => r.year), showlegend: false,
+        marker: { color: css("--s1"), size: 9, line: { color: css("--surface"), width: 1.5 } },
+        hovertemplate: `<b>%{text}</b><br>${label} %{x:.0f}<br>mid-green-up day %{y:.0f}<extra></extra>` },
+    ], base({ xaxis: { title: label, gridcolor: css("--rule"), zeroline: false },
+      yaxis: { title: "Mid-green-up (day)", gridcolor: css("--rule"), zeroline: false }, showlegend: false }), cfg);
+  }
+
+  function forest() {
+    const rows = forestMode === "grid"
+      ? D.multiverse.map(r => ({ ...r, name: r.label }))
+      : D.parameters.filter(r => r.slope !== null).map(r => ({ ...r, name: r.parameter === "primary" ? "primary (as pre-registered)" : `${r.parameter.replaceAll("_", " ")} = ${r.value}`, primary: r.parameter === "primary" }));
+    rows.sort((a, b) => a.slope - b.slope);
+    const names = rows.map(r => r.name);
+    const mk = (subset, color, label) => ({
+      x: subset.map(r => r.slope), y: subset.map(r => r.name), mode: "markers", name: label,
+      marker: { color, size: 9, line: { color: css("--surface"), width: 1 } },
+      error_x: { type: "data", symmetric: false, array: subset.map(r => r.hi - r.slope), arrayminus: subset.map(r => r.slope - r.lo), color, thickness: 2, width: 0 },
+      customdata: subset.map(r => [r.lo, r.hi, r.h2, r.h3, r.n_years ?? 24]),
+      hovertemplate: "<b>%{y}</b><br>slope %{x:.2f} d/yr [%{customdata[0]:.2f}, %{customdata[1]:.2f}]<br>snow-off %{customdata[2]:.1f} d per SD<br>warmth ΔR² %{customdata[3]:.2f}<br>%{customdata[4]} years<extra></extra>",
+    });
+    Plotly.react("forest", [
+      mk(rows.filter(r => !r.primary), css("--s1"), "Alternative"),
+      mk(rows.filter(r => r.primary), css("--s2"), "Pre-registered primary"),
+    ], base({
+      xaxis: { title: "Theil–Sen slope (days/yr) with 95% CI", gridcolor: css("--rule"), zeroline: true, zerolinecolor: css("--ink-3") },
+      yaxis: { categoryorder: "array", categoryarray: names, automargin: true, gridcolor: css("--surface"), tickfont: { size: 11 } },
+      margin: { l: 10, r: 16, t: 8, b: 90 }, legend: { orientation: "h", y: -0.16 },
+    }), cfg);
+  }
+
+  function seasonControls() {
+    const sS = document.getElementById("sel-stratum"), sP = document.getElementById("sel-pixel"), sY = document.getElementById("sel-year");
+    sS.innerHTML = Object.keys(STRATA).map(s => `<option value="${s}">${STRATA[s]}</option>`).join("");
+    sS.value = "wetland";
+    const fillPixels = () => {
+      const ids = [...new Set(D.seasons.filter(r => r.stratum === sS.value).map(r => r.pixel))];
+      sP.innerHTML = ids.map(i => `<option>${i}</option>`).join("");
+      fillYears();
+    };
+    const fillYears = () => {
+      const ys = D.seasons.filter(r => r.pixel == sP.value).map(r => r.year);
+      const keep = sY.value;
+      sY.innerHTML = ys.map(y => `<option>${y}</option>`).join("");
+      sY.value = ys.includes(+keep) ? keep : (ys.includes(2016) ? 2016 : ys[0]);
+      season();
+    };
+    sS.addEventListener("change", fillPixels);
+    sP.addEventListener("change", fillYears);
+    sY.addEventListener("change", season);
+    fillPixels();
+  }
+
+  function season() {
+    const r = D.seasons.find(s => s.pixel == document.getElementById("sel-pixel").value && s.year == document.getElementById("sel-year").value);
+    if (!r) return;
+    const traces = [
+      { x: r.obs_doy, y: r.obs_ndvi, mode: "markers", name: "Snow-free observation", marker: { color: css("--ink-2"), size: 6 },
+        hovertemplate: "day %{x}: NDVI %{y:.2f}<extra></extra>" },
+      { x: r.snow_doy, y: r.snow_doy.map(() => r.baseline), mode: "markers", name: "Snow flag (baseline anchor)",
+        marker: { color: css("--s4"), symbol: "x", size: 7 }, hovertemplate: "day %{x}: snow<extra></extra>" },
+    ];
+    if (r.curve_doy) traces.push({ x: r.curve_doy, y: r.curve_ndvi, mode: "lines", name: "Savitzky–Golay fit",
+      line: { color: css("--s1"), width: 2.5 }, hoverinfo: "skip" });
+    traces.push({ x: [91, 300], y: [r.baseline, r.baseline], mode: "lines", name: "Dormant baseline",
+      line: { color: css("--ink-3"), width: 1, dash: "dot" }, hoverinfo: "skip" });
+    const shapes = [];
+    if (r.greenup !== null) shapes.push({ type: "line", x0: r.greenup, x1: r.greenup, yref: "paper", y0: 0, y1: 1, line: { color: css("--s2"), width: 2, dash: "dash" } });
+    if (r.mcd12q2 !== null) shapes.push({ type: "line", x0: r.mcd12q2, x1: r.mcd12q2, yref: "paper", y0: 0, y1: 1, line: { color: css("--ink-3"), width: 1, dash: "dot" } });
+    Plotly.react("season", traces, base({ shapes, xaxis: { title: "Day of year", range: [88, 303], gridcolor: css("--rule"), zeroline: false },
+      yaxis: { title: "NDVI", gridcolor: css("--rule"), zeroline: false } }), cfg);
+    const gu = r.greenup === null ? "no valid date (too few observations or too small an amplitude)" : `mid-green-up on day ${fmt(r.greenup, 0)} (orange dashed line)`;
+    const mc = r.mcd12q2 === null ? "" : `; MCD12Q2 gives day ${r.mcd12q2} (grey dotted line)`;
+    document.getElementById("season-readout").textContent = `Pixel ${r.pixel}, ${STRATA[r.stratum]}, ${r.year}: ${r.obs_doy.length} snow-free observations, ${gu}${mc}.`;
+  }
+
+  function wrap(text, n = 70) {
+    const words = text.replace(/\s+/g, " ").split(" "); const lines = []; let line = "";
+    for (const w of words) { if ((line + " " + w).length > n) { lines.push(line); line = w; } else { line = line ? line + " " + w : w; } }
+    if (line) lines.push(line);
+    return lines.slice(0, 7).join("<br>") + (lines.length > 7 ? " …" : "");
+  }
+
+  function dynamics() {
+    const L = D.agent.ledger;
+    const scored = L.filter(r => r.score !== null);
+    let best = D.agent.start_score; const bestLine = scored.map(r => (best = Math.min(best, r.score)));
+    const kept = scored.filter(r => r.kept), rev = scored.filter(r => !r.kept), none = L.filter(r => r.score === null);
+    const hov = rs => rs.map(r => `<b>Iteration ${r.iteration}</b>${r.score !== null ? `: score ${r.score.toFixed(3)}` : ": no edit"}${r.kept ? " (kept)" : ""}<br>${wrap(r.rationale)}`);
+    Plotly.react("dynamics", [
+      { x: scored.map(r => r.iteration), y: bestLine, mode: "lines", line: { color: css("--s1"), width: 2, shape: "hv" }, name: "Best so far", hoverinfo: "skip" },
+      { x: rev.map(r => r.iteration), y: rev.map(r => Math.min(r.score, 3.7)), mode: "markers", name: "Reverted", text: hov(rev), hovertemplate: "%{text}<extra></extra>",
+        marker: { color: css("--muted-mark"), size: 8, line: { color: css("--ink-3"), width: 1 } } },
+      { x: kept.map(r => r.iteration), y: kept.map(r => r.score), mode: "markers", name: "Kept", text: hov(kept), hovertemplate: "%{text}<extra></extra>",
+        marker: { color: css("--s2"), size: 10, line: { color: css("--surface"), width: 1 } } },
+      { x: none.map(r => r.iteration), y: none.map(() => 3.68), mode: "markers", name: "No edit", text: hov(none), hovertemplate: "%{text}<extra></extra>",
+        marker: { color: css("--ink-2"), size: 9, symbol: "x" } },
+    ], base({ xaxis: { title: "Iteration", gridcolor: css("--rule"), zeroline: false },
+      yaxis: { title: "Visible score (days)", range: [2.92, 3.74], gridcolor: css("--rule"), zeroline: false },
+      shapes: [{ type: "line", xref: "paper", x0: 0, x1: 1, y0: D.agent.start_score, y1: D.agent.start_score, line: { color: css("--ink-3"), width: 1, dash: "dash" } }],
+      annotations: [{ xref: "paper", x: 0.99, y: D.agent.start_score, yanchor: "bottom", xanchor: "right", text: "starting score", showarrow: false, font: { size: 11, color: css("--ink-2") } }],
+      hoverlabel: { align: "left", bgcolor: css("--surface"), bordercolor: css("--rule"), font: { color: css("--ink"), size: 12 } } }), cfg);
+  }
+
+  function tradeoff() {
+    const A = D.agent.ablation.filter(r => !r.version.startsWith("final without"));
+    const label = v => v.startsWith("start") ? "start (pre-registered)" : v;
+    Plotly.react("tradeoff", [{
+      x: A.map(r => r.heldout), y: A.map(r => r.annual_r), mode: "lines+markers+text", text: A.map((r, i) => (i === 0 || r.version === "iter 8" || r.version === "iter 16") ? label(r.version) : ""),
+      textposition: "top center", textfont: { size: 11, color: css("--ink-2") },
+      line: { color: css("--rule"), width: 1.5 }, marker: { color: css("--s1"), size: 10, line: { color: css("--surface"), width: 1 } },
+      customdata: A.map(r => [label(r.version), r.pixel_mae]), showlegend: false,
+      hovertemplate: "<b>%{customdata[0]}</b><br>held-out error %{x:.2f} days<br>annual r %{y:.3f}<br>pixel MAE %{customdata[1]:.2f} days<extra></extra>",
+    }], base({ xaxis: { title: "Held-out synthetic error (days, lower is better)", autorange: "reversed", gridcolor: css("--rule"), zeroline: false },
+      yaxis: { title: "Annual r with MCD12Q2", gridcolor: css("--rule"), zeroline: false }, showlegend: false, margin: { l: 56, r: 16, t: 24, b: 56 } }), cfg);
+  }
+
+  function render() {
+    tiles(); map(); series();
+    scatter("snow", "snow_off", "Snow-off (day)"); scatter("tdd", "tdd", "Thawing degree days");
+    forest(); season(); dynamics(); tradeoff();
+  }
+
+  document.getElementById("btn-grid").addEventListener("click", e => {
+    forestMode = "grid"; e.target.setAttribute("aria-pressed", "true"); document.getElementById("btn-params").setAttribute("aria-pressed", "false"); forest(); });
+  document.getElementById("btn-params").addEventListener("click", e => {
+    forestMode = "params"; e.target.setAttribute("aria-pressed", "true"); document.getElementById("btn-grid").setAttribute("aria-pressed", "false"); forest(); });
+  document.getElementById("theme").addEventListener("click", () => {
+    const dark = root.dataset.theme ? root.dataset.theme === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
+    root.dataset.theme = dark ? "light" : "dark"; render(); });
+  matchMedia("(prefers-color-scheme: dark)").addEventListener("change", render);
+
+  fetch("data.json").then(r => r.json()).then(d => { D = d; seasonControls(); render(); });
+})();
+</script>
+</body>
+</html>
