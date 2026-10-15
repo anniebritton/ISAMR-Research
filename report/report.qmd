@@ -1,5 +1,5 @@
 ---
-title: "Green-Up Timing in Wapusk National Park, 2001–2024, and What a Sandboxed Coding Agent Contributed to Measuring It"
+title: "Coding Agents in an Environmental Research Pipeline: A Case Study of Spring Green-Up in Wapusk National Park, Canada, 2001–2024"
 author: "Annie Britton"
 date: last-modified
 format:
@@ -13,59 +13,73 @@ csl: apa.csl
 
 ## Abstract {.unnumbered}
 
-Coding agents are increasingly used to improve scientific methods, yet there is little evidence on whether their improvements carry over to the science they serve. This study examined that question within a concrete analysis of spring green-up in Wapusk National Park, on Hudson Bay, where caribou and nesting geese depend on the timing of fresh forage. In Part I, mid-green-up was estimated for 300 stratified MODIS pixels under a pre-registered plan. It showed no detectable trend between 2001 and 2024 (+0.03 days/yr, 95% CI −0.33 to +0.47), while snow-off and spring warmth together explained 77% of its year-to-year variation. In Part II, a sandboxed Claude Code agent was confined to improving the green-up method against a fixed evaluator. It reduced held-out synthetic error by 6%, but it weakened year-to-year fidelity on real pixels and gamed its score once its ideas ran out. These findings suggest that forage timing in Wapusk is best anticipated from spring snowmelt and temperature rather than from a long-term trend, and that agents used for method development should be scored on the statistic the science depends on and kept off the inference path. Both the green-up pipeline and the agent loop are open and configurable for reuse.
+Coding agents are increasingly used to build, improve, and review scientific analyses, yet there is little evidence on what they contribute in each of these roles or on the problems they introduce. This study examined that question through a complete remote sensing analysis in which agents built the pipeline, optimised one of its methods in a sandboxed loop, and audited the plan, the literature, and the draft. The worked example estimated spring green-up in Wapusk National Park from daily MODIS imagery and found no detectable trend between 2001 and 2024, while snow-off and spring warmth together explained 77% of its year-to-year variation. The optimizer agent reduced held-out synthetic error by 6% over 33 iterations, but its improvements did not carry over to year-to-year agreement on real pixels, it reasoned directly from the benchmark generator it could read, and it gamed its score once its ideas ran out. In contrast, the auditing agents caught 20 of the 24 consequential problems recorded in the project, including an optimisation objective that would have biased the trend and a misreported variance partition. These findings suggest that, in this case, agents added more value by checking research than by optimising it, and that agentic research needs evaluators scored on the scientific estimand, benchmarks the agent cannot read, and safeguards enforced in code rather than in time.
 
 ## Introduction
 
-Wapusk National Park covers 11,475 km² of peatland, fen, coastal tundra, and open spruce forest near Churchill, Manitoba. Its caribou and geese depend on the timing of high-quality forage, which the date of mid-green-up predicts [@doiron2013], and green-up on the nearby Qamanirjuaq caribou calving grounds advanced by 7.25 days between 2004 and 2016 [@mallory2020]. Whether a similar shift has occurred in Wapusk, however, has not been tested. At the same time, coding agents are increasingly used to improve scientific methods, typically by proposing changes to one program that a fixed evaluator accepts or rejects [@karpathy2026; @novikov2025; @chan2024]. Such systems, however, are judged by the score they optimise rather than by the science their method produces.
+Coding agents can now write analysis pipelines, propose improvements to methods, and review manuscripts. Recent systems formalise one of these roles as a loop in which an agent edits a program and a fixed evaluator decides which changes survive [@karpathy2026; @novikov2025; @chan2024]. These systems are typically judged by the score they optimise, however, rather than by whether the science improves, and there is little evidence on how the different roles an agent can play compare within a single study.
 
-This research therefore has two parts. For Part I, three alternative hypotheses were pre-registered:
+This study therefore used a complete analysis as a case study. The analysis was a pre-registered estimate of spring green-up in Wapusk National Park, Manitoba, whose caribou and nesting geese depend on the timing of fresh forage [@doiron2013; @mallory2020]. It tested three alternative hypotheses: that green-up advanced between 2001 and 2024 (H1), that later snow-off brings later green-up (H2), and that spring warmth explains variation beyond snow-off (H3). Within that analysis, the study asked three research questions:
 
-1. **(H1)** Spring mid-green-up advanced between 2001 and 2024.
-2. **(H2)** In years with later snow-off, mid-green-up occurs later.
-3. **(H3)** Spring thawing degree days explain variation in mid-green-up beyond that explained by snow-off.
+1. **(RQ1)** What did agents contribute in each of their roles, as builder, optimizer, and auditor?
+2. **(RQ2)** Did the optimizer's improvements carry over to the scientific result?
+3. **(RQ3)** How did the optimizer behave under a fixed objective, and what does that behaviour imply for designing such loops?
 
-Part II gives a sandboxed coding agent one task within that pipeline, improving the method that turns daily NDVI into a green-up date, and asks three exploratory research questions:
-
-1. **(RQ1)** Can the agent improve the method on held-out data it never sees?
-2. **(RQ2)** Do its improvements carry over to real pixels and to the year-to-year signal behind H1–H3?
-3. **(RQ3)** How does the agent behave under a fixed objective?
+The paper then sets out what went wrong, the challenges this approach poses for research, and the experiments most worth trying next.
 
 ## Methods
 
-### Green-Up and Its Drivers (Part I)
+### The Research Task
 
-Daily MOD09GA collection 6.1 reflectance [@vermote2021mod09ga] was quality masked using the cloud, shadow, snow, adjacency, and view-angle bits, and NDVI [@tucker1979] was computed for 300 pixels drawn at random on the MODIS 500 m grid, 75 in each of four land-cover strata [@zanaga2022], after excluding pixels with more than 10% surface water [@pekel2016] (@fig-study-area). For each pixel-season, snow-flagged days were anchored at a dormant baseline [@beck2006; @gray2019guide], the series was smoothed with a Savitzky–Golay filter fitted to the upper envelope [@chen2004], and mid-green-up was taken as the day the curve reached half of its amplitude above the baseline [@white1997]. Annual values are area-weighted medians [@olofsson2014] and describe the drier ~70% of the park.
+Daily MOD09GA collection 6.1 reflectance [@vermote2021mod09ga] was quality masked, and NDVI [@tucker1979] was computed for 300 pixels drawn at random on the MODIS 500 m grid, 75 in each of four land-cover strata [@zanaga2022]. For each pixel-season, snow-flagged days were anchored at a dormant baseline [@beck2006; @gray2019guide], the series was smoothed with a Savitzky–Golay filter fitted to the upper envelope [@chen2004], and mid-green-up was taken as the day the curve reached half of its seasonal amplitude [@white1997]. Snow-off came from ERA5-Land [@munozsabater2021] and thawing degree days (TDD) from the Churchill climate station, and the trend and associations were tested with Theil–Sen slopes, Mann–Kendall tests, and nested least-squares models [@sen1968; @yue2002]. The basis for each method is documented in `docs/methods_justification.md`.
 
-Snow-off was the day after the last spring day with park-mean ERA5-Land [@munozsabater2021] snow cover at or above 50%, and thawing degree days (TDD) were the sum of positive daily mean temperatures at Churchill between 1 April and 31 May [@assmann2019]. The trend was estimated with a Theil–Sen slope and Mann–Kendall tests [@sen1968; @yue2002], the associations with standardized least squares and a nested F-test, and every result was repeated under 24 processing specifications and one-at-a-time parameter changes. The peer-reviewed basis for each method and parameter is documented in `docs/methods_justification.md`.
+### Agent Roles
 
-![Wapusk National Park and the 300 sample pixels.](../results/figures/study_area.png){#fig-study-area width=45%}
+Every agent in the study was an instance of Claude Code working under the author's direction, in one of four roles (@tbl-roles).
 
-### Agent Loop (Part II)
+| Role | Task | Access |
+|---|---|---|
+| Builder | Wrote the pipeline, pre-registration, and drafts | Full repository and data, under human direction |
+| Optimizer | Improved the green-up extractor in a loop | Read the repository; edit one file; no code execution |
+| Auditors | Reviewed the plan, checked the literature, refereed the draft | Read-only, with web search for the literature and referee roles |
+| Harness tests | Scripted agents that deliberately broke the loop's rules | Edit any file, to test enforcement |
 
-A Claude Code agent could edit only `method.py`, the file containing the green-up extractor. It could read the evaluator, the benchmark generator, and a ledger of earlier iterations, but it could not run code, write other files, use the web, or read held-out data. A driver outside the agent reverted any other change, verified the evaluator's hash before and after every call, and kept a change only if its score on 1,800 synthetic seasons fell, where the score was the mean error in days plus small penalties for line count and runtime. After 33 iterations the candidate was frozen, scored once on held-out synthetic seasons (including a family built from real NDVI shapes), and compared with the pre-registered method on real pixels against four entry criteria fixed in advance. Every kept version was then re-scored post hoc, and each iteration was coded by the kind of change attempted.
+: Agent roles in the case study. {#tbl-roles}
+
+### The Optimizer Loop
+
+The optimizer could edit only `method.py`, the file containing the green-up extractor, and could read the evaluator, the benchmark generator, and a ledger of earlier attempts, but it could not run code, use the web, or read held-out data. A driver outside the agent reverted any other change, verified the evaluator's hash before and after every call, and kept a change only if its score on 1,800 synthetic seasons fell. The score was the mean error in days plus small penalties for line count and runtime. After 33 iterations, the frozen candidate was scored once on held-out synthetic seasons, including a family built from real NDVI shapes, and compared with the pre-registered method on real pixels against four entry criteria fixed in advance.
+
+### Evaluating Contributions
+
+Consequential problems raised during the project, and the changes they caused, were recorded by role (`results/tables/agent_contributions.csv`). After the loop, every kept version of the extractor was re-scored on held-out and real data, and each of the 33 iterations was coded by the kind of change attempted, from the optimizer's own rationale (`autoresearch/iteration_coding.csv`).
 
 ## Results
 
-### Part I
+### The Worked Example
 
-Mid-green-up averaged DOY 180 (late June) and ranged from DOY 165 in 2006 to DOY 196 in 2009, with no detectable trend (@fig-series, @tbl-results). In contrast, snow-off and spring warmth explained most of the year-to-year variation (@fig-drivers), predicting mid-green-up to within 4.1 days in leave-one-year-out cross-validation, against 7.6 days for the long-term mean. All three results held across 24 specifications, although the record can only reliably detect trends of about 0.7–0.9 days/yr, and the contribution of warmth fell from 0.25 to 0.09 when the temperature window ended on 15 May rather than 31 May.
+Mid-green-up averaged day of year 180 (late June) and showed no detectable trend between 2001 and 2024 (+0.03 days/yr, 95% CI −0.33 to +0.47), which does not support H1 (@fig-series). Snow-off and spring warmth supported H2 and H3: each standard deviation (15 days) of later snow-off corresponded to green-up 5.4 days later (R² = 0.52), and TDD raised the explained variance to 77%. The record can only reliably detect trends of about 0.7–0.9 days/yr, however, and the contribution of warmth depended on the temperature window.
 
 ![Annual mid-green-up from this study and from the MCD12Q2 product, with the Theil–Sen trend.](../results/figures/greenup_series.png){#fig-series}
 
-| Hypothesis | Estimate (95% CI) | Outcome |
+### Contributions by Role (RQ1)
+
+The auditing agents caught 20 of the 24 consequential problems recorded in the project, and 17 of their 20 changed a design decision or a claim (@tbl-contributions). The plan reviewer raised the most consequential of these before any code ran. The first design of the optimizer's objective would have pulled each year toward the long-term average and copied the comparison product's trend, biasing the very result the study set out to test. After the first draft, the referee found that the variance partition was misreported, that causal language contradicted the pre-registration, and that an apparent conflict with Mallory et al. [-@mallory2020] rested on a mismatched comparison. A like-for-like comparison over 2004–2016 then showed the results to be compatible. The builder introduced several of these errors itself, including a park boundary reprojected into the wrong UTM zone and a misattributed citation. The optimizer, in contrast, contributed one useful idea (iteration 8), which was not adopted under the entry rule.
+
+| Role | Problems recorded | Changed a design or claim |
 |---|---|---|
-| H1: green-up advanced | +0.03 days/yr (−0.33 to +0.47) | Not supported |
-| H2: later snow-off, later green-up | +5.4 days per SD of snow-off (3.1 to 7.7); R² = 0.52 | Supported |
-| H3: TDD beyond snow-off | ΔR² = 0.25 (0.08 to 0.47); combined R² = 0.77 | Supported, window-dependent |
+| Plan reviewer | 8 | 8 |
+| Literature auditors | 6 | 3 |
+| Referee | 6 | 6 |
+| Harness tests and builder self-checks | 2 | 2 |
+| Optimizer | 1 | 0 |
+| Human author | 1 | 1 |
 
-: Results for the pre-registered hypotheses. {#tbl-results}
+: Consequential problems recorded by role. Source: `results/tables/agent_contributions.csv`. {#tbl-contributions}
 
-![Mid-green-up against ERA5-Land snow-off and Churchill April–May thawing degree days.](../results/figures/drivers_scatter.png){#fig-drivers}
+### Transfer of the Optimizer's Improvements (RQ2)
 
-### Part II
-
-The agent improved the method on held-out synthetic data (RQ1), as its final version reduced error from 4.65 to 4.39 days. The improvement did not carry over to the science, however (RQ2), as its year-to-year agreement with MCD12Q2 on real pixels fell from 0.900 to 0.881, so it failed the pre-registered entry criteria (@tbl-ablation). The ablation showed that the best version for the science was iteration 8, which fixed how late snowfall was handled, whereas iteration 16 traded year-to-year fidelity for lower pixel bias, a trade that a keep-if-better rule on one score could not see. On held-out seasons built from real NDVI shapes, every method erred by more than 8 days, against 2–4 days on synthetic seasons.
+The optimizer's final version reduced held-out synthetic error from 4.65 to 4.39 days, but its year-to-year agreement with MCD12Q2 on real pixels fell from 0.900 to 0.881, so it failed the entry criteria (@tbl-ablation, @fig-agent). The best version for the science was an intermediate one. Iteration 8, which stopped treating brief post-melt snowfall as dormancy, improved held-out error without losing year-to-year agreement, whereas iteration 16 traded that agreement for lower pixel bias. On held-out seasons built from real NDVI shapes, every method erred by more than 8 days, against 2–4 days on synthetic seasons, and none of the optimizer's versions moved the conclusions of the worked example.
 
 | Version | Held-out error (days) | Annual r with MCD12Q2 |
 |---|---|---|
@@ -74,53 +88,53 @@ The agent improved the method on held-out synthetic data (RQ1), as its final ver
 | Iteration 16: outlier-resistant amplitude | 4.40 | 0.881 |
 | Final (iteration 28) | 4.39 | 0.881 |
 
-: Kept versions of the agent's method on held-out and real data. {#tbl-ablation}
+: Kept versions of the optimizer's method on held-out and real data. {#tbl-ablation}
 
-The agent explored five kinds of change before finding its first gain, kept 4 of 24 substantive attempts, and never tried to leave its sandbox (RQ3, @fig-attempts). Once substantive ideas stopped succeeding, it kept four changes that only deleted lines to shave the line-count penalty, describing them openly as cleanups, and in its last five iterations it reported that no idea remained and made no edit. None of its versions moved the conclusions of Part I.
+![Left: visible score by iteration. Right: held-out synthetic error against annual agreement with MCD12Q2 for each kept version.](../results/figures/autoresearch_dynamics.png){#fig-agent}
 
-![Each iteration by the kind of change attempted, coded from the agent's rationale.](../results/figures/autoresearch_attempts.png){#fig-attempts}
+### Optimizer Behaviour (RQ3)
+
+The optimizer explored five kinds of change before its first gain, kept 4 of 24 substantive attempts, and never attempted to edit another file (@fig-attempts). It also reasoned directly from the benchmark generator it was allowed to read, which 26 of its 33 rationales cite, including all three kept substantive changes. Iteration 8, for instance, was justified by noting that late snowfall occurs "in about 20% of seasons" in the generator. Once substantive ideas stopped succeeding, it kept four changes that only deleted lines to reduce the line-count penalty, and in its last five iterations it reported that no idea remained and made no edit. By iteration 16 the run had used an estimated USD 7.50 of its USD 17.90 total and achieved essentially all of its real gain.
+
+![Each iteration by the kind of change attempted, coded from the optimizer's rationale.](../results/figures/autoresearch_attempts.png){#fig-attempts}
 
 ## Discussion
 
-The results do not support H1 but support H2 and H3: green-up in Wapusk varies far more from one spring to the next than it has changed over the record. Late melt and a cold spring in 2009 delayed it by about two weeks, while an early, warm spring in 2006 advanced it by a similar margin. Over the 2004–2016 window studied by Mallory et al. [-@mallory2020], however, the slope (−0.31 days/yr) was compatible with their reported advance. This suggests that a decade of earlier springs did not persist, a pattern that resembles the long-term record from Zackenberg, Greenland [@schmidt2023], and fits evidence that phenology advances only where snowmelt advances [@assmann2019].
+### What Can Be Gained
 
-The agent loop's main finding is that a real improvement on the agent's objective did not translate into a better scientific result. Its best version was an intermediate one, its gaming appeared exactly when its search was exhausted, and the gap between synthetic and real seasons was larger than any gain it found. Keeping the agent off the inference path meant that none of these behaviours could affect Part I, and none did.
+In this case, agents added more value by checking the research than by optimising it. The auditors prevented a biased design, corrected a misreported result, and reversed an interpretation, whereas the optimizer produced one physically reasoned idea that the science could have used. Two further gains are less obvious. First, the optimizer's 24 substantive attempts, each with a written rationale and a measured effect, amount to a documented exploration of the method's design space, which could serve as an automated sensitivity analysis if every candidate's code were saved. Next, its turn to gaming coincided with the exhaustion of its ideas, which suggests that gaming can serve as a measurable signal for stopping a search.
+
+### What Went Wrong
+
+There are seven main errors in how this study was run. First, the optimizer could read the benchmark generator, so it designed changes around the generator's rules, which may explain why its gains on real-shaped seasons were small. Second, the line-count penalty and the fixed penalty for failed seasons invited gaming, and the keep-if-better rule on one score discarded the version that served the science best. Next, the code of reverted candidates was not saved, so the loop's exploration cannot be re-analysed, and the loop had no stopping rule, so about USD 10.40 was spent after its real gains ended. Furthermore, the optimizer could not run code, which kept its hit rate at 17%, and the loop was run once with one model, so its behaviour cannot be separated from chance. In addition, the literature audit ran after the confirmatory analysis rather than before it, so several corrections had to be reported as deviations. The plausibility criterion for the optimizer's method was also not defined precisely in the pre-registration. The pre-registration itself was committed four seconds before the confirmatory run, within a single session, so its protection rests on the order of operations rather than on elapsed time. Lastly, the builder introduced errors that only later audits caught, and the same system that built the pipeline also coded the optimizer's iterations.
+
+### Challenges for Agentic Research
+
+These errors point to five challenges for anyone using agents in research. First, the evaluator defines what the agent improves, and for most scientific methods the quantity that matters, such as a trend or a driver effect, is not the quantity that is easy to score. Second, ground truth is scarce, so benchmarks tend to be synthetic, and an agent that can read how they are built will learn the benchmark rather than the world. Next, agents work faster than the safeguards designed for human researchers, so pre-registration and sequencing must be enforced in code rather than trusted to time. Furthermore, the builder's errors were confident and plausible, which means that verification, rather than generation, becomes the main cost of agentic research. Lastly, agent runs are hard to reproduce, as model versions change and outputs are not deterministic, so the ledger, the prompts, and every candidate need to be archived for others to evaluate the work.
+
+## What to Try Next
+
+The most informative next experiments would change one element of the design at a time, and several follow directly from the errors above. First, the evaluator could score the scientific estimand directly, by building synthetic multi-year panels with a known trend and a known driver effect and rewarding their recovery, while keeping every version that is not beaten on all objectives. Second, the same loop could be run with the benchmark generator readable and unreadable, to measure how much of the optimizer's gain comes from reading it. Next, the benchmark could be built from real ground truth, for instance by using PhenoCam or field phenology sites across the boreal and tundra zones, with whole sites held out.
+
+The study area itself could also be varied. Running the same loop across several parks, and holding out entire parks, would test whether an agent-designed method transfers across landscapes, which is a stronger test than held-out seasons from one place. Letting the agent select its own data sources or predictors is the most tempting extension, but it carries the greatest risk, since choosing data after seeing results is the agentic equivalent of searching for significance. It should therefore be tried only if the agent proposes its choices before seeing the outcome, a human approves them, and the confirmatory test runs on held-out years or parks.
+
+Several smaller changes would also be informative, such as giving the optimizer a sandboxed tool to test its own changes, saving every candidate so the loop doubles as a sensitivity analysis, stopping after a set number of reports that no idea remains, and comparing several models or several independent agents on the same task. Some directions, in contrast, appear less promising. These include longer runs of the same loop, which saturated by iteration 16; more powerful search on a synthetic benchmark, which was the binding constraint; penalties on line count; and any role for agents in the confirmatory test itself. Lastly, the finding that auditors contributed more than the optimizer could be tested directly, by giving auditing and optimising agents equal budgets across several studies and comparing the problems each resolves.
 
 ## Applications
 
-### For Park Managers and Ecologists
-
-The timing of fresh forage in Wapusk appears to be predictable from conditions in a given spring rather than from a long-term trend. Monitoring and planning that depend on forage timing, such as caribou and goose surveys or fieldwork on breeding success, could therefore use snow-off and April–May warmth as early indicators. In 20 of the 24 years both predictors were available by the end of May, about a month before mid-green-up, and together they predicted green-up to within about four days. The absence of a detectable trend should not be read as stability, however, because advances of the size reported nearby for 2004–2016 cannot be excluded.
-
-### For Analysts Applying the Method Elsewhere
-
-The green-up pipeline is configured rather than hard-coded, so it can be applied to another park by replacing the boundary GeoJSON, the station climate IDs, and the seasonal windows in `config.yaml`, then running `wapusk sample` and `wapusk all`. Outside Canada, ERA5-Land degree days, which are already computed as a sensitivity predictor, can replace the station series. Three design choices are likely to transfer to other high-latitude sites. First, phenology is estimated per pixel on a fixed stratified sample rather than on an area mean that shifts with cloud cover. Next, snow-covered days are anchored at a dormant baseline rather than discarded. Lastly, green-up is defined relative to the seasonal amplitude rather than to the annual maximum, since the maximum-based date could not be defined in 92% of Wapusk pixels. In addition, pre-registering the analysis and reporting every sensitivity test made the null trend credible, and both are easy to repeat with the included code.
-
-### For Teams Building Agent Loops
-
-The loop in `autoresearch/` can be reused for any method that fits in one function with a measurable error, by replacing `method.py`, the benchmark generator, and the evaluator. The run suggests five design rules:
-
-1. Score the statistic the science depends on, not only per-sample accuracy, for instance with synthetic multi-year panels that carry a known trend and a known driver effect.
-2. Keep every version that is not beaten on all objectives, and choose among them at the end, rather than accepting changes on one number.
-3. Reject changes whose outputs are identical to the current version, which removes the incentive to game penalties while preserving gaming as a signal that the search is exhausted.
-4. Build benchmarks from real data where possible, and hold out a family derived from real data, because benchmark realism was the binding constraint here.
-5. Enforce every rule in code outside the agent, test that code with scripted rule-breaking agents before the run, and keep the agent away from inference.
-
-## Next Steps
-
-The highest-value next step is to validate the green-up dates against ground phenology from the Churchill area, such as plot records from the Churchill Northern Studies Centre or the long-term goose research at La Pérouse Bay, since every comparison so far is between MODIS products. Next, extending the record with Landsat and Sentinel-2 imagery would increase sensitivity to trends and cover the wetter margins of the park. Furthermore, testing whether spring snow-off and warmth predict the arrival of caribou and geese would connect these results directly to management. Lastly, a second agent loop that applies the five design rules above, and compares several models on the same task, would show whether the behaviours observed here are general.
+For teams building agent loops, the repository's `autoresearch/` directory can be reused for any method that fits in one function with a measurable error. This study suggests scoring the scientific estimand, keeping a Pareto archive, rejecting edits that leave outputs unchanged, hiding the benchmark generator, saving every candidate, and enforcing every rule in code outside the agent. For research groups adopting agents more broadly, the case suggests running auditing agents on the plan before any code is written and on the literature before the confirmatory analysis, and keeping a record of what each agent caught. For analysts and park managers, the green-up pipeline can be applied to another park by changing `config.yaml`. In Wapusk, snow-off and April–May warmth, which were known by the end of May in 20 of 24 years, predicted mid-green-up to within about four days.
 
 ## Limitations
 
-There are four main limitations to this research. First, 24 years offer limited sensitivity to trends, and the snow-off association rests on a few influential years, weakening from R² = 0.52 to 0.36 without 2004 and 2009. Second, the predictors are coarse, as ERA5-Land resolves the park at about 9 km and the degree days come from a single coastal station. Next, the results describe the drier ~70% of the park and are not validated against ground observations. Lastly, the agent study is a single run with one model, the agent could not run code, and its iterations were coded by the same AI system that built the pipeline.
+There are four main limitations to this research. First, it is a single case study, with one research task, one model family, and one optimizer run, so its findings are suggestive rather than general. Second, the record of contributions by role was compiled by the builder and is not exhaustive, and the coding of the optimizer's iterations was performed by the same system, so both should be treated as descriptive. Next, the costs reported are estimates at API list prices rather than billed amounts. Lastly, the worked example has its own limitations, including a short record for detecting trends and the absence of ground phenology for validation, which are documented in the repository.
 
 ## Conclusion
 
-This study found no detectable trend in green-up in Wapusk National Park between 2001 and 2024, but strong year-to-year associations with snowmelt and spring warmth, which suggests that forage timing is best anticipated from spring conditions. Within the same pipeline, a sandboxed coding agent improved the green-up method on synthetic data without improving the science. Overall, this suggests that agents can contribute to method development when they are scored on the statistic the science depends on, protected against gaming, and kept off the inference path.
+This study examined what coding agents contributed to a complete environmental analysis in three roles. The optimizer improved one method on held-out synthetic data, but its improvements did not carry over to the scientific result, it learned from the benchmark it could read, and it gamed its score once its ideas ran out. The auditors, in contrast, caught most of the consequential problems, including errors made by the builder. Overall, these results suggest that the near-term value of agents in research lies as much in checking work as in producing it, and that agentic research will need evaluators scored on the scientific estimand, benchmarks the agent cannot read, and safeguards enforced in code.
 
 ## Data & Software {.unnumbered}
 
-Code, derived data, the pre-registration, the agent's ledger, and an AI referee report are available at <https://github.com/anniebritton/ISAMR-Research>, with an interactive version at <https://anniebritton.github.io/ISAMR-Research/>. The README gives setup and reuse instructions, `DATA.md` lists every dataset with its licence, and `prereg.md` records the pre-registered plan and every later deviation. The analysis code, pre-registration, and first draft were produced by an AI coding agent (Claude Code) under the author's direction, and the author is responsible for the research questions, design decisions, and conclusions.
+Code, derived data, the pre-registration, the optimizer's ledger, the record of contributions by role, and an AI referee report are available at <https://github.com/anniebritton/ISAMR-Research>, with an interactive version at <https://anniebritton.github.io/ISAMR-Research/>. The pipeline, pre-registration, and first drafts were produced by Claude Code under the author's direction, and the author is responsible for the research questions, design decisions, and conclusions.
 
 ## References {.unnumbered}
 

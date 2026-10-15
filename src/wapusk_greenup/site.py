@@ -106,6 +106,7 @@ def build() -> dict:
                         **{k: v["heldout"]["mean_capped_error"] for k, v in final["baselines"].items()}},
             "total_cost": sum(r["cost_usd"] or 0 for r in ledger),
             "coding": pd.read_csv(config.ROOT / "autoresearch" / "iteration_coding.csv").to_dict("records"),
+            "contributions": pd.read_csv(config.TABLES / "agent_contributions.csv").to_dict("records"),
         },
         "stratum_trends": sens["stratum_trends"],
         "seasons": seasons(),
