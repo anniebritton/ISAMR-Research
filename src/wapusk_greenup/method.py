@@ -15,8 +15,6 @@ Contract, fixed by autoresearch/evaluate.py:
 Allowed imports: numpy, scipy. The function must be deterministic and take under 50 ms per call.
 """
 
-from __future__ import annotations
-
 import numpy as np
 from scipy.signal import savgol_filter
 
