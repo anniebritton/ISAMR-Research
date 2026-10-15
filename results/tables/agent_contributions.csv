@@ -1,0 +1,25 @@
+role,stage,issue,consequence,changed_design_or_claim
+plan_reviewer,before implementation,loop objective (stability penalty and tuning to MCD12Q2) would have pulled each year toward the average and copied MCD12Q2's trend,loop redesigned to score synthetic recovery only and kept off inference,yes
+plan_reviewer,before implementation,validation planned against MCD12Q2 Greenup (15%) for a 50% metric,compared against MidGreenup instead,yes
+plan_reviewer,before implementation,snow-off predictor would share the MODIS snow signal used to build NDVI,predictors taken from ERA5-Land and the station,yes
+plan_reviewer,before implementation,MOD10A1 NDSI misread as fractional snow cover,threshold reinterpreted as NDSI,yes
+plan_reviewer,before implementation,area mean over cloud-free pixels changes composition daily,fixed per-pixel stratified sample,yes
+plan_reviewer,before implementation,loop guards relied on the agent's honesty,enforcement moved into a driver outside the agent,yes
+plan_reviewer,before implementation,synthetic generator could be matched by its own curve shape,mixed curve families and a held-out real-shape family,yes
+plan_reviewer,before implementation,WDPA boundary licence restricts redistribution,Parks Canada boundary under Open Government Licence,yes
+harness_test,before main run,driver parsed changed-file paths incorrectly (src/ became rc/),parsing fixed and tested with scripted rule-breaking agents,yes
+builder_self_check,during implementation,park boundary reprojected with the wrong UTM zone (longitude -105 instead of -93),reprojected from the shipped projection file,yes
+literature_auditor,after confirmatory run,percentile baseline attributed to Beck et al. (2006),re-attributed to the MCD12Q2 dormant-value rule,yes
+literature_auditor,after confirmatory run,Doiron et al. (2013) define green-up as 50% of the annual maximum on AVHRR,definition justified with data (undefined in 92% of pixels),yes
+literature_auditor,after confirmatory run,MCD12Q2 definitions came from a non-peer-reviewed user guide and use EVI2,peer-reviewed assessment added and comparison described as analogous,yes
+literature_auditor,after confirmatory run,a homogenized Churchill temperature series exists,station splice validated against it (r = 0.9995),no
+literature_auditor,after confirmatory run,trend-free pre-whitening can inflate Type I error,three further Mann-Kendall variants reported,no
+literature_auditor,after confirmatory run,power analysis conventionally uses the series' own residuals,own-series minimum detectable trend reported,no
+referee,after first draft,commonality shares reported as shares of explained variance,corrected (shared component is 43% of explained variance),yes
+referee,after first draft,causal language contradicted the pre-registered reading,rewritten as associations,yes
+referee,after first draft,"conflict with Mallory et al. (2020) held only for the primary specification and a mismatched window",matched 2004-2016 comparison showed the results are compatible,yes
+referee,after first draft,station snow-off check reused ERA5-Land in 9 of 24 years,station-only check reported (R² = 0.27),yes
+referee,after first draft,MCD12Q2 annual r computed differently from the description,description corrected,yes
+referee,after first draft,Kouki et al. (2023) cited for a claim it does not make,citation corrected,yes
+optimizer_loop,after loop,post-melt snow flags treated as dormancy (iteration 8),improved held-out error and annual agreement but not adopted under the entry rule,no
+human_author,throughout,framing and prose did not match the author's register,rewritten,yes

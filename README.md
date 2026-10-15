@@ -1,7 +1,7 @@
 # Wapusk Green-Up
 
-Spring green-up timing in Wapusk National Park, Manitoba, 2001–2024 (Part I),
-and what a sandboxed coding agent contributed to measuring it (Part II).
+A case study of what coding agents contributed to a complete remote sensing analysis, as builder, optimizer, and auditor,
+using spring green-up in Wapusk National Park, Manitoba, 2001–2024, as the worked example.
 Written for the [International Student-led Arctic Monitoring and Research (ISAMR) Project](https://www.isamr.net/home).
 
 * **Interactive brief:** [anniebritton.github.io/ISAMR-Research](https://anniebritton.github.io/ISAMR-Research/)
@@ -10,27 +10,25 @@ Written for the [International Student-led Arctic Monitoring and Research (ISAMR
 
 ## Research Questions
 
-* **Part I (pre-registered):** has spring mid-green-up shifted since 2001 (H1),
-  and is its year-to-year variation associated with snow-off (H2) and spring warmth beyond snow-off (H3)?
-* **Part II (exploratory):** can a sandboxed coding agent improve the green-up method on held-out data (RQ1),
-  do its improvements carry over to real pixels and to the signal H1–H3 depend on (RQ2),
-  and how does it search, follow rules, and respond to its objective (RQ3)?
+* **RQ1:** what did agents contribute in each role (builder, optimizer, auditor)?
+* **RQ2:** did the optimizer's improvements carry over to the scientific result?
+* **RQ3:** how did the optimizer behave under a fixed objective?
+* **Worked example (pre-registered):** has spring mid-green-up shifted since 2001 (H1),
+  and is it associated with snow-off (H2) and spring warmth beyond snow-off (H3)?
 
 ## Findings
 
-* **H1 not supported.**
-  Theil–Sen slope +0.03 days/yr (95% CI −0.33 to +0.47); the record can only reliably detect trends of about 0.7–0.9 days/yr.
-* **H2 and H3 supported.**
-  Each standard deviation (15 days) of later snow-off goes with 5.4 days later green-up (R² = 0.52),
-  and April–May thawing degree days add ΔR² = 0.25, for a combined R² of 0.77; the warmth contribution depends on the temperature window.
-* **RQ1, yes, modestly.**
-  The agent cut held-out synthetic error from 4.65 to 4.39 days (6%).
-* **RQ2, no.**
-  On real pixels its year-to-year agreement with MCD12Q2 fell from 0.900 to 0.881; the best version for the science was iteration 8, not the last.
-* **RQ3.**
-  It explored, then exploited, kept 4 of 24 substantive changes, never left its sandbox,
-  gamed a line-count penalty once its ideas ran out, and then stopped editing.
-  See [`autoresearch/LESSONS.md`](autoresearch/LESSONS.md).
+* **Auditors caught most of the consequential problems.**
+  Of 24 recorded, the plan reviewer, literature auditors, and referee caught 20, including an optimisation objective that would have biased the trend
+  and a misreported variance partition ([`agent_contributions.csv`](results/tables/agent_contributions.csv)).
+* **The optimizer's gains did not transfer.**
+  Held-out synthetic error fell from 4.65 to 4.39 days, but year-to-year agreement with MCD12Q2 on real pixels fell from 0.900 to 0.881;
+  the best version for the science was iteration 8, not the last.
+* **The optimizer learned the benchmark.**
+  26 of its 33 rationales reasoned from the readable benchmark generator, it kept 4 of 24 substantive changes,
+  and it gamed a line-count penalty once its ideas ran out ([`LESSONS.md`](autoresearch/LESSONS.md)).
+* **Worked example.**
+  No detectable trend in mid-green-up (+0.03 days/yr, 95% CI −0.33 to +0.47); snow-off and April–May warmth explain 77% of year-to-year variation.
 
 ![Annual mid-green-up, 2001–2024](results/figures/greenup_series.png)
 
