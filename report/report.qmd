@@ -187,4 +187,32 @@ Future work could extend the record with Landsat and Sentinel-2 to increase sens
 
 ## Appendix: Agent-Driven Search for a Green-Up Extractor {.unnumbered}
 
-AUTORESEARCH_APPENDIX
+This appendix reports a methods experiment that was kept entirely separate from the confirmatory analysis.
+It sought to test whether a coding agent, working in a restricted loop, could find a green-up extractor that recovers known crossings more accurately than the pre-registered Savitzky–Golay method.
+The design follows the pattern of a single editable program judged by a fixed external evaluator, as in Karpathy's autoresearch, AlphaEvolve, and MLE-bench, rather than an agent-driven notebook; the full design is in `autoresearch/README.md`.
+
+### Design
+
+In each iteration, a Claude Code agent could read the repository and edit only `src/wapusk_greenup/method.py`; it could not execute code, write other files, use the web, or read the held-out benchmark.
+A driver outside the agent reverted any other change, verified the hashes of the evaluator and benchmark against a lock stored outside the repository, scored the candidate, and kept it only if the score fell.
+The visible benchmark contained 1,800 synthetic pixel-seasons from three curve families, with cloud gaps resampled from 7,088 real strict-mask pixel-years, snow before melt, late snowfall, Gaussian noise, and negative outliers.
+The score was the mean error against the known crossing, capped at 30 days, plus small penalties for line count and runtime.
+After the loop, the candidate was frozen (SHA-256 `0d0d9af3…`) and scored once on held-out seeds and a fourth family built from normalised real NDVI seasons, then compared with the baseline on real pixels.
+
+### Results
+
+The loop ran for 33 iterations (3 in a smoke test and 30 in the main run) at an estimated usage of USD 17.90 at API list prices; no iteration attempted an edit outside the permitted file, and the evaluator lock was never violated.
+Eight changes were kept, 20 were reverted because they did not lower the score, and in the final five iterations the agent reported that it had no further idea worth testing and made no edit.
+Two of the kept changes were substantive: the candidate ignores snow flags between melt and the first clear observation, on the reasoning that a brief snowfall hides vegetation without making it dormant, and it takes the seasonal amplitude from a fit that discards strongly negative outliers, which corrects the upward bias that the upper envelope introduces at the peak.
+A third change lowered the amplitude floor from 0.10 to 0.05 NDVI, which mainly converts seasons that previously scored the 30-day failure penalty into estimates.
+Four further kept changes only removed or merged lines to reduce the line-count penalty, with identical estimates, which is a small but clear instance of an agent optimising the metric rather than the method.
+
+On synthetic data the candidate generalised modestly: its mean error fell from 3.18 to 2.96 days on the visible benchmark and from 4.66 to 4.39 days on the held-out benchmark, where it outperformed all three baseline smoothers.
+On real pixels, its agreement with MCD12Q2 improved at the pixel-year scale (MAE 9.7 against 10.1 days, bias +7.7 against +8.6 days), but its annual correlation with MCD12Q2 fell from 0.904 to 0.883, and 0.15% of its pixel-years placed green-up before the pixel's own snowmelt, against none for the baseline.
+Under the rule fixed in the pre-registration, the candidate therefore did not join the robustness grid.
+The lag check was corrected once after its first run, because its melt definition ended the snow season at the first cloudy day; the candidate had already failed the annual-correlation criterion, so the correction did not affect the outcome.
+
+### Interpretation
+
+The experiment suggests that an agent loop of this kind can find small, physically reasoned improvements to a retrieval algorithm within a tight sandbox, but that improvements on a per-season accuracy metric do not necessarily carry over to the interannual signal that a trend or driver analysis depends on.
+The loop also demonstrated the value of the safeguards: the held-out family limited overfitting to the visible generators, the independent real-data checks caught a trade-off that the synthetic score could not see, and keeping the agent off the confirmatory path meant that none of its choices could influence the reported result.
