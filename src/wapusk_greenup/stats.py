@@ -24,6 +24,42 @@ def mann_kendall(y: np.ndarray, alpha: float = 0.05) -> dict:
     return {"mk_tau": orig.Tau, "mk_p": orig.p, "tfpw_tau": tfpw.Tau, "tfpw_p": tfpw.p}
 
 
+def mann_kendall_variants(y: np.ndarray, alpha: float = 0.05) -> dict:
+    """Mann-Kendall p-values under the main autocorrelation corrections.
+
+    TFPW (Yue et al. 2002) can inflate Type I error under strong autocorrelation (Buerger 2017),
+    so the variance-correction (Hamed & Rao 1998) and pre-whitening (Yue & Wang 2002) variants are
+    reported alongside it.
+    """
+    y = y[~np.isnan(y)]
+    tests = {
+        "original": mk.original_test,
+        "hamed_rao": mk.hamed_rao_modification_test,
+        "yue_wang_prewhitening": mk.pre_whitening_modification_test,
+        "trend_free_prewhitening": mk.trend_free_pre_whitening_modification_test,
+    }
+    return {name: {"tau": float(fn(y, alpha=alpha).Tau), "p": float(fn(y, alpha=alpha).p)} for name, fn in tests.items()}
+
+
+def delta_r2_bca(df: pd.DataFrame, response: str, first: str, second: str, reps: int = 5000, seed: int = 42) -> dict:
+    """BCa bootstrap CI for the R^2 gained by adding the second predictor, plus adjusted R^2."""
+    d = df[[response, first, second]].dropna()
+    y = d[response].to_numpy()
+    x1 = d[first].to_numpy()
+    x2 = d[second].to_numpy()
+
+    def gain(yy, a, b):
+        return _ols(yy, np.column_stack([a, b])).rsquared - _ols(yy, a[:, None]).rsquared
+
+    res = stats.bootstrap((y, x1, x2), gain, paired=True, n_resamples=reps, method="BCa",
+                          random_state=np.random.default_rng(seed), vectorized=False)
+    m1 = _ols(y, x1[:, None])
+    m2 = _ols(y, np.column_stack([x1, x2]))
+    return {"delta_r2": float(m2.rsquared - m1.rsquared), "bca_ci_low": float(res.confidence_interval.low),
+            "bca_ci_high": float(res.confidence_interval.high), "adj_r2_m1": float(m1.rsquared_adj),
+            "adj_r2_m2": float(m2.rsquared_adj)}
+
+
 def lag1(y: np.ndarray) -> float:
     y = y[~np.isnan(y)]
     y = y - y.mean()

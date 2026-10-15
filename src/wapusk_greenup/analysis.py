@@ -11,7 +11,7 @@ from itertools import product
 import numpy as np
 import pandas as pd
 
-from . import config, drivers, phenology, stats
+from . import config, drivers, extract, phenology, stats
 
 PREREG = config.ROOT / "prereg.md"
 CONFIRMATORY = config.TABLES / "confirmatory.json"
@@ -235,4 +235,64 @@ def parameter_sensitivity() -> pd.DataFrame:
     out = pd.DataFrame(rows)
     config.ensure_dirs()
     out.to_csv(config.TABLES / "parameter_sensitivity.csv", index=False)
+    return out
+
+
+def statistical_robustness() -> dict:
+    """Post-hoc checks raised by the methods audit (docs/methods_justification.md)."""
+    from . import station
+
+    cfg = config.load()
+    s = cfg["stats"]
+    series = pd.read_csv(config.PROCESSED / "greenup_annual.csv")
+    drv = drivers.load()
+    d = series.merge(drv, on="year")
+    years = d["year"].to_numpy(float)
+    y = d["greenup_doy"].to_numpy(float)
+    out: dict = {"mann_kendall_variants": stats.mann_kendall_variants(y, s["alpha"])}
+
+    # Weatherhead et al. (1998) estimate noise from the series' own residuals; the pre-registered
+    # MDT used MCD12Q2 so the response was not inspected. Both are reported, over a range of lag-1 values.
+    resid = y - np.polyval(np.polyfit(years, y, 1), years)
+    own_sd = float(resid.std(ddof=2))
+    mcd_sd = json.loads((config.TABLES / "power_analysis.json").read_text())["sd_days"]
+    out["mdt"] = {
+        "own_series_sd_days": own_sd,
+        "own_series_lag1": stats.lag1(resid),
+        "by_source_and_lag1": [
+            {"sd_source": src, "sd_days": sd, "lag1": rho,
+             "mdt_days_per_year": stats.minimum_detectable_trend(sd, len(y), rho, s["mdt_power"], s["alpha"], 1000,
+                                                                 s["random_seed"])[0]}
+            for src, sd in (("this_study", own_sd), ("mcd12q2", mcd_sd)) for rho in (0.0, 0.1, 0.2, 0.3)
+        ],
+    }
+    out["h3_bca"] = stats.delta_r2_bca(d, "greenup_doy", "snow_off", "tdd", s["bootstrap_reps"], s["random_seed"])
+
+    # Homogenized AHCCD spring temperature (2001-2020) in place of spliced-station TDD.
+    ah = station.ahccd_spring()
+    da = d.merge(ah, on="year")
+    temp = drivers.station_temperature_filled(station.load(), extract.load("era5"))
+    temp = temp.assign(year=temp["date"].dt.year, month=temp["date"].dt.month)
+    raw_spring = temp[temp["month"].isin([4, 5])].groupby("year")["tmean_filled_c"].mean().rename("raw_spring_tmean_c")
+    da = da.merge(raw_spring.reset_index(), on="year")
+    out["ahccd_check"] = {
+        "years": [int(da["year"].min()), int(da["year"].max())],
+        "n": int(len(da)),
+        "raw_vs_ahccd_spring_tmean_r": float(np.corrcoef(da["raw_spring_tmean_c"], da["ahccd_spring_tmean_c"])[0, 1]),
+        "raw_minus_ahccd_mean_c": float((da["raw_spring_tmean_c"] - da["ahccd_spring_tmean_c"]).mean()),
+        "h3_with_ahccd": stats.nested_models(da, "greenup_doy", "snow_off", "ahccd_spring_tmean_c",
+                                             reps=s["bootstrap_reps"], seed=s["random_seed"]),
+        "h3_with_tdd_same_years": stats.nested_models(da, "greenup_doy", "snow_off", "tdd",
+                                                      reps=s["bootstrap_reps"], seed=s["random_seed"]),
+    }
+
+    # ERA5-Land snow_cover is a function of modelled depth and overestimates snow duration
+    # (Urraca & Gobron 2023), so report its offset from MODIS snow-off as well as their agreement.
+    both = drv[["snow_off_era5", "snow_off_modis"]].dropna()
+    out["era5_vs_modis_snow_off"] = {
+        "mean_era5_minus_modis_days": float((both["snow_off_era5"] - both["snow_off_modis"]).mean()),
+        "r": float(np.corrcoef(both["snow_off_era5"], both["snow_off_modis"])[0, 1]),
+        "n": int(len(both)),
+    }
+    (config.TABLES / "statistical_robustness.json").write_text(json.dumps(out, indent=2, default=float))
     return out

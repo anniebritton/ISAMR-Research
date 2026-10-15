@@ -84,6 +84,14 @@ def parameter_sensitivity() -> None:
     typer.echo(analysis.parameter_sensitivity().round(3).to_string())
 
 
+@app.command(name="stat-robustness")
+def stat_robustness() -> None:
+    """Post-hoc MK variants, own-series MDT, BCa interval, AHCCD and snow-off checks."""
+    from . import analysis
+
+    typer.echo(json.dumps(analysis.statistical_robustness(), indent=2, default=float))
+
+
 @app.command()
 def figures() -> None:
     """Render report figures to results/figures/."""
@@ -110,6 +118,7 @@ def run_all(force_extract: bool = False) -> None:
     analysis.sensitivity()
     analysis.multiverse()
     analysis.parameter_sensitivity()
+    analysis.statistical_robustness()
     plots.run()
 
 

@@ -63,3 +63,29 @@ def load() -> pd.DataFrame:
     if not path.exists():
         raise FileNotFoundError("No cached station data; run `wapusk extract` first.")
     return pd.read_csv(path, parse_dates=["date"])
+
+
+AHCCD_API = "https://api.weather.gc.ca/collections/ahccd-monthly/items"
+
+
+def ahccd_spring(climate_id: str = "5060608", months: tuple[str, ...] = ("Apr", "May")) -> pd.DataFrame:
+    """Homogenized (AHCCD Gen3) monthly mean temperature at Churchill, averaged over spring months.
+
+    Vincent et al. (2020) homogenized series; used only as a sensitivity check on the spliced raw station record.
+    """
+    path = config.RAW / "ahccd_monthly.csv"
+    if path.exists():
+        df = pd.read_csv(path)
+    else:
+        r = requests.get(AHCCD_API, params={"f": "json", "limit": 5000, "station_id__id_station": climate_id}, timeout=120)
+        r.raise_for_status()
+        df = pd.DataFrame([f["properties"] for f in r.json()["features"]])
+        df = df[["date", "period_value__valeur_periode", "temp_mean__temp_moyenne"]].rename(
+            columns={"period_value__valeur_periode": "month", "temp_mean__temp_moyenne": "tmean_c"})
+        config.ensure_dirs()
+        df.to_csv(path, index=False)
+    df["year"] = df["date"].str[:4].astype(int)
+    df = df[df["tmean_c"] > -9999]  # AHCCD missing-value code is -9999.9
+    spring = df[df["month"].isin(months)].groupby("year")["tmean_c"].agg(["mean", "count"])
+    spring = spring[spring["count"] == len(months)]
+    return spring["mean"].rename("ahccd_spring_tmean_c").reset_index()
