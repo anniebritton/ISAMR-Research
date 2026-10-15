@@ -1,0 +1,151 @@
+---
+title: "No Detectable Trend but Strong Associations with Snowmelt and Spring Warmth: Green-Up Timing in Wapusk National Park, 2001–2024"
+subtitle: "With a supplementary study of a sandboxed agent loop for method development"
+author: "Annie Britton"
+date: last-modified
+format:
+  html:
+    toc: true
+    number-sections: true
+    embed-resources: true
+bibliography: references.bib
+---
+
+## Abstract
+
+Spring green-up sets the timing of fresh forage for the caribou and nesting geese of Wapusk National Park, on the western coast of Hudson Bay, yet whether it has shifted in recent decades has not been established.
+This study used daily MODIS reflectance, reanalysis snow cover, and station temperature to estimate mid-green-up for 300 stratified pixels between 2001 and 2024, and tested its trend and its association with snowmelt and spring warmth under a pre-registered analysis plan.
+Mid-green-up averaged day of year (DOY) 180 and showed no detectable trend (Theil–Sen +0.03 days/yr, 95% CI −0.33 to +0.47), although the record can only reliably detect trends of about 0.7–0.9 days/yr.
+Later snow-off was associated with later green-up (5.4 days per standard deviation, R² = 0.52), and April–May thawing degree days accounted for a further 25% of the variance, for a combined R² of 0.77; the contribution of warmth, however, depended on how the temperature window was drawn.
+A supplementary study found that a sandboxed coding agent improved the green-up extractor on held-out synthetic data but weakened its year-to-year fidelity on real pixels, which suggests that agents in research pipelines should be scored on the statistic the science depends on.
+
+## Introduction
+
+Wapusk National Park covers 11,475 km² of peatland, fen, coastal tundra, and open spruce forest south and east of Churchill, Manitoba, and its vegetation supports polar bears that summer on land as well as caribou and geese whose breeding success depends on the timing of high-quality forage.
+Doiron et al. [-@doiron2013] demonstrated on Bylot Island that the date on which NDVI reaches 50% of its annual maximum predicts the peak in plant nitrogen concentration, and Mallory et al. [-@mallory2020] reported that the start of green-up on the Qamanirjuaq caribou calving grounds, north-west of Hudson Bay, advanced by 7.25 days between 2004 and 2016.
+Whether a similar shift has occurred in Wapusk, however, has not been tested.
+
+This study therefore sought to answer two questions.
+First, it estimates the trend in spring mid-green-up in Wapusk between 2001 and 2024, together with the smallest trend the record could detect.
+Next, it tests whether snow-off timing is associated with year-to-year variation in mid-green-up, and whether spring thawing degree days account for variation beyond snow-off.
+The analysis plan, including hypotheses, definitions, and models, was committed before any trend or driver relationship was examined (`prereg.md`).
+
+## Methods
+
+### Study Area and Sample
+
+Per-pixel phenology was estimated on a fixed sample rather than on a park-wide mean, because a mean over whichever pixels happen to be cloud-free on a given day mixes landscapes with different timing.
+Candidate pixels were drawn at random from the 53,164 MODIS 500 m grid cells inside the park boundary; those with more than 10% surface water [@pekel2016] were excluded, and 75 pixels were retained in each of four ESA WorldCover [@zanaga2022] strata (forest, shrub and grass, wetland, and moss and lichen), as shown in @fig-study-area.
+Annual values were weighted by each stratum's share of dry land [@olofsson2014], so the results describe the drier ~70% of the park.
+
+![Wapusk National Park and the 300 sample pixels, by land-cover stratum.](../results/figures/study_area.png){#fig-study-area width=50%}
+
+### Green-Up
+
+Daily MOD09GA collection 6.1 reflectance [@vermote2021mod09ga] was quality masked using the cloud, shadow, snow, adjacency, and view-angle bits of the state and quality bands, and NDVI [@tucker1979] was computed between 2001 and 2024 through Google Earth Engine [@gorelick2017].
+For each pixel, a dormant baseline was set at the 5th percentile of snow-free NDVI outside the growing season, following the pixel-specific winter NDVI of Beck et al. [-@beck2006] and the dormant-value rule of MCD12Q2 [@gray2019guide], and snow-flagged days before melt were anchored at that baseline.
+Each season was smoothed with a Savitzky–Golay filter fitted to the upper envelope [@chen2004; @jonsson2004], and mid-green-up was taken as the first day on which the curve reached half of its seasonal amplitude above the baseline [@white1997], as shown in @fig-example-fits.
+This amplitude-based definition was used rather than the 50%-of-maximum rule of Doiron et al. [-@doiron2013], because in 92% of Wapusk pixels the snow-free dormant NDVI already exceeds half of the summer peak, so the maximum-based date cannot be defined once snow is masked.
+The annual value was the area-weighted median across valid pixels, of which there were between 227 and 300 in each year.
+
+![Three randomly drawn pixel-years, showing snow-free observations, snow anchors at the baseline, the Savitzky–Golay fit, and the estimated mid-green-up.](../results/figures/example_fits.png){#fig-example-fits}
+
+### Predictors
+
+Snow-off was the day after the last spring day on which park-mean ERA5-Land [@munozsabater2021] snow cover was at or above 50%.
+ERA5-Land was chosen over the Churchill station before any relationship with green-up was examined, because the station lacked a usable spring snow record in 9 of 24 years, and because ERA5-Land and MODIS snow-off [@hall2002] agreed closely (r = 0.81) despite their independent sources.
+ERA5-Land overestimates snow-cover duration [@urraca2023], so snow-off is used as an index of year-to-year variation rather than as an absolute melt date.
+Thawing degree days (TDD) were the sum of positive daily mean temperatures at the Churchill climate station between 1 April and 31 May, a window chosen to end before the earliest plausible green-up, as both snowmelt and spring temperature shape tundra phenology [@assmann2019; @bjorkman2015]; the spliced station record agrees closely with the homogenized Churchill series [@vincent2020].
+
+### Analysis
+
+The trend (H1) was estimated as a Theil–Sen slope [@sen1968] with Mann–Kendall tests [@hamed1998; @yue2002; @yuewang2002], and the smallest detectable trend was simulated before the response was examined [@weatherhead1998].
+The association with snow-off (H2) was estimated with least squares on standardized predictors, and the contribution of TDD beyond snow-off (H3) with a nested F-test and bootstrap confidence intervals [@efron1993].
+Because warm springs also melt snow early, the explained variance was partitioned with commonality analysis [@seibold1979; @raymukherjee2014] and read as a single chain from warmth through melt to green-up rather than as independent effects.
+All three hypotheses were re-estimated under 24 combinations of smoother, threshold, mask, and aggregation, and again under one-at-a-time changes to each parameter that the literature does not fix; the basis for every method and the result of every sensitivity test are documented in `docs/methods_justification.md`.
+The MCD12Q2 product [@friedl2022mcd12q2] served as a comparison, although because it derives from the same MODIS reflectance, agreement with it demonstrates consistency rather than accuracy.
+
+## Results
+
+Mid-green-up averaged DOY 180 (late June), with a standard deviation of 7.5 days, and ranged from DOY 165 in 2006 to DOY 196 in 2009 (@fig-series).
+The series agreed with MCD12Q2 (r = 0.90), although it ran 8.3 days later on average, an offset that showed no trend over time.
+@tbl-results summarises the three hypotheses.
+
+![Annual mid-green-up from this study and from MCD12Q2, with the Theil–Sen trend of this study's series.](../results/figures/greenup_series.png){#fig-series}
+
+| Hypothesis | Estimate | 95% CI | Result |
+|---|---|---|---|
+| H1: trend in mid-green-up | +0.03 days/yr | −0.33 to +0.47 | No detectable trend |
+| H2: later snow-off, later green-up | +5.4 days per SD (R² = 0.52) | 3.1 to 7.7 | Supported |
+| H3: TDD beyond snow-off | ΔR² = 0.25 (F-test p < 0.001) | 0.08 to 0.47 (BCa) | Supported, window-dependent |
+
+: Pre-registered hypotheses. Source: `results/tables/confirmatory.json` and `results/tables/revision_checks.json`. {#tbl-results}
+
+### Trend
+
+Mid-green-up showed no detectable trend between 2001 and 2024, as the Theil–Sen slope was +0.03 days/yr (95% CI −0.33 to +0.47) and all four Mann–Kendall variants gave p between 0.60 and 0.86.
+This rules out large shifts rather than demonstrating stability, since the pre-registered power analysis put the minimum detectable trend at about 0.9 days/yr, and across the 24 specifications the lower bound of the interval ranged from −0.33 to −0.72 days/yr (@fig-multiverse).
+Over the 2004–2016 window studied by Mallory et al. [-@mallory2020], the slope was −0.31 days/yr (CI −1.57 to +0.83), and onset at 15% of the amplitude trended at −0.27 to −0.61 days/yr across smoothers and masks, both compatible with their 0.56 days/yr advance.
+
+![Theil–Sen slope and 95% CI under each of the 24 specifications; the pre-registered primary specification is shown in orange.](../results/figures/multiverse.png){#fig-multiverse}
+
+### Snow-Off and Spring Warmth
+
+Snow-off was associated with about half of the year-to-year variation, as each standard deviation (15 days) of later melt corresponded to green-up 5.4 days later (@fig-drivers).
+TDD accounted for a further 25% of the variance, and together the two predictors explained 77% of it, with a leave-one-year-out error of 4.1 days against 7.6 days for the long-term mean.
+Of the explained variance, 43% was shared between the two predictors, 33% was unique to TDD, and 24% was unique to snow-off, although the bootstrap intervals for each share were wide.
+Both associations held across all 24 specifications, under resampling of pixels, and with the most influential years removed; the snow-off association, however, weakened to R² = 0.36 without 2004 and 2009 and to R² = 0.27 (p = 0.05) when only the 15 years of genuine station snow-off were used.
+The contribution of TDD was the most sensitive result, as ending the window on 15 May rather than 31 May reduced it from 0.25 to 0.09 (p = 0.04).
+
+![Mid-green-up against ERA5-Land snow-off and Churchill April–May thawing degree days.](../results/figures/drivers_scatter.png){#fig-drivers}
+
+## Discussion
+
+The results suggest that green-up timing in the drier part of Wapusk varies far more from one spring to the next than it has changed over the 24-year record, as late melt and a cold spring in 2009 delayed it by about two weeks while an early, warm spring in 2006 advanced it by a similar margin.
+The absence of a trend is compatible with Mallory et al. [-@mallory2020], since the 2004–2016 slope falls within the range they reported, and it suggests that a decade of earlier springs did not persist across the longer record.
+This pattern resembles the long-term record from Zackenberg in north-east Greenland, where earlier advances in spring phenology have given way to little directional change [@schmidt2023], and Assmann et al. [-@assmann2019] found that phenology advanced only where snowmelt advanced, which points to local snowmelt rather than Hudson Bay sea ice as the more plausible control.
+In essence, the timing of fresh forage in Wapusk appears to be predictable from spring conditions in a given year, to within about four days, rather than from the calendar.
+
+## Limitations
+
+There are five main limitations to this research.
+First, 24 years offer limited sensitivity to trends, and most specifications cannot exclude an advance of 0.56 days/yr.
+Second, the driver models rest on 24 points, and the snow-off association weakens without the two most extreme years or when only station data are used.
+Next, the predictors are coarse, as ERA5-Land resolves the park at about 9 km and the thawing degree days come from a single coastal station, and the contribution of warmth depends on the choice of window.
+Furthermore, the results describe the drier ~70% of the park, and the land-cover map used for weighting classifies wetland poorly [@worldcoverpvr2022].
+Lastly, every comparison is between MODIS retrievals, so no ground phenology was available to validate the dates themselves.
+
+## Conclusion
+
+This study sought to establish whether green-up in Wapusk National Park has shifted since 2001 and how its timing relates to snowmelt and spring warmth.
+No trend was detectable under any of 24 processing specifications, although the record cannot exclude moderate advances, and snow-off and spring warmth together accounted for 77% of the year-to-year variation.
+Future work could extend the record with Landsat and Sentinel-2, add ground phenology from the Churchill area, and test whether spring conditions predict the timing of caribou and goose use of the park.
+
+## Supplementary Study: A Sandboxed Agent Loop {.unnumbered}
+
+This study also examined what happens when a coding agent is given one narrow part of a research pipeline to improve.
+Following the pattern of a single editable program judged by a fixed external evaluator [@karpathy2026; @novikov2025], with held-out grading and rule-breaking checks as in MLE-bench [@chan2024], a Claude Code agent could edit only the green-up extractor, while a driver outside its control scored each change on 1,800 synthetic seasons and kept it only if the error fell.
+After 33 iterations, the frozen candidate was scored once on held-out synthetic data and on real pixels, and it was kept off the confirmatory analysis throughout.
+
+The agent kept 8 changes and never attempted an edit outside its file, and its final version cut held-out synthetic error from 4.65 to 4.39 days (@fig-agent).
+On real pixels, however, it lowered the park-wide annual agreement with MCD12Q2 from 0.900 to 0.881, so it did not qualify for the analysis.
+An ablation located the trade-off: an early change (iteration 8) improved held-out error without losing year-to-year fidelity, whereas a later change (iteration 16) bought lower pixel bias at the cost of that fidelity, and a keep-if-better rule could not see the difference.
+Four of the eight kept changes only removed lines to reduce a line-count penalty, which the agent described openly, and on held-out seasons built from real NDVI shapes every method erred by more than 8 days, against 2–4 days on synthetic seasons.
+
+These results suggest three lessons for agents in research.
+First, a single score is gamed even by an agent that reports its changes honestly, so evaluators should reject changes that leave outputs unchanged.
+Next, per-season accuracy diverged from the statistic the science depends on, so the evaluator should score that statistic directly and keep every version that is not dominated across objectives.
+Lastly, keeping the agent off the inference path meant that none of its changes could move the reported result, and none did; the full account is in `autoresearch/LESSONS.md`.
+
+![Left: score on the visible synthetic benchmark by iteration. Right: held-out synthetic error against annual agreement with MCD12Q2 for each kept version (blue) and for the frozen candidate with one change removed (green).](../results/figures/autoresearch_dynamics.png){#fig-agent}
+
+## Deviations and Use of AI {.unnumbered}
+
+The pre-registration was committed at 23:12:06 UTC on 14 October 2026, after data extraction and four seconds before the confirmatory run, and the commit history makes that order verifiable.
+Analyses added afterwards, including a methods audit and checks requested by an AI referee (`results/review.md`), are reported alongside the confirmatory result without replacing it and are listed under Deviations in `prereg.md`.
+The analysis code, pre-registration, and first draft were produced by an AI coding agent (Claude Code) under the author's direction, and the author is responsible for the research questions, design decisions, and conclusions.
+
+## References {.unnumbered}
+
+::: {#refs}
+:::
