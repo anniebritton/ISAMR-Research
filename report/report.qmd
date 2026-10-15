@@ -189,7 +189,7 @@ Future work could extend the record with Landsat and Sentinel-2 to increase sens
 
 This appendix reports a methods experiment that was kept entirely separate from the confirmatory analysis.
 It sought to test whether a coding agent, working in a restricted loop, could find a green-up extractor that recovers known crossings more accurately than the pre-registered Savitzky–Golay method.
-The design follows the pattern of a single editable program judged by a fixed external evaluator, as in Karpathy's autoresearch, AlphaEvolve, and MLE-bench, rather than an agent-driven notebook; the full design is in `autoresearch/README.md`.
+The design follows the pattern of a single editable program judged by a fixed external evaluator, as in Karpathy's autoresearch [@karpathy2026], AlphaEvolve [@novikov2025], and MLE-bench [@chan2024], rather than an agent-driven notebook; the full design is in `autoresearch/README.md`.
 
 ### Design
 
