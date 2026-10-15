@@ -5,7 +5,7 @@ with a supplementary study of a sandboxed coding agent improving the method.
 Written for the [International Student-led Arctic Monitoring and Research (ISAMR) Project](https://www.isamr.net/home).
 
 * **Interactive brief:** [anniebritton.github.io/ISAMR-Research](https://anniebritton.github.io/ISAMR-Research/)
-* **Report:** [`report/report.qmd`](report/report.qmd)
+* **Report:** [rendered](https://anniebritton.github.io/ISAMR-Research/report.html) · [source](report/report.qmd) (APA citations via `report/apa.csl`)
 * **Pre-registration:** [`prereg.md`](prereg.md)
 
 ## Research Question
