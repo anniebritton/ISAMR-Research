@@ -63,7 +63,8 @@ autoresearch/freeze.sh                              # hash method.py, score once
 ```
 
 Each call is capped by `--budget-per-call` (default USD 2).
-The ledger records the cost of every call.
+The ledger's `cost_usd` is Claude Code's estimate of each call's token usage at API list prices.
+Under a claude.ai subscription login the calls count against plan usage limits rather than being billed per token.
 
 ## How the Result Is Used
 

@@ -22,11 +22,12 @@ def load_daily(mask: str) -> pd.DataFrame:
     return df
 
 
-def baselines(daily: pd.DataFrame) -> pd.Series:
+def baselines(daily: pd.DataFrame, percentile: float | None = None) -> pd.Series:
     cfg = config.load()["phenology"]
+    pct = cfg["baseline_percentile"] if percentile is None else percentile
     return daily.groupby("pixel_id").apply(
         lambda g: smoothers.dormant_baseline(
-            g["doy"].to_numpy(), g["ndvi"].to_numpy(), tuple(cfg["baseline_exclude_doy"]), cfg["baseline_percentile"]
+            g["doy"].to_numpy(), g["ndvi"].to_numpy(), tuple(cfg["baseline_exclude_doy"]), pct
         ),
         include_groups=False,
     )
@@ -38,12 +39,12 @@ def _pixel_years(daily: pd.DataFrame, base: pd.Series):
 
 
 def _fit_chunk(args) -> list[dict]:
-    chunk, smoother, fraction, cfg = args
+    chunk, smoother, fraction, cfg, extra = args
+    opts = {"min_valid": cfg["min_valid_obs"], "min_amplitude": cfg["min_amplitude"], **extra}
     out = []
     for pid, year, doy, ndvi, snow, b in chunk:
         d = smoothers.greenup_doy(
-            doy, ndvi, snow, b, smoother=smoother, fraction=fraction, window=tuple(cfg["window_doy"]),
-            min_valid=cfg["min_valid_obs"], min_amplitude=cfg["min_amplitude"],
+            doy, ndvi, snow, b, smoother=smoother, fraction=fraction, window=tuple(cfg["window_doy"]), **opts,
         )
         out.append({"pixel_id": pid, "year": year, "doy": d})
     return out
@@ -60,11 +61,25 @@ def pixel_greenup(masks: list[str], smoother_list: list[str], fractions: list[fl
         chunks = [items[i::workers] for i in range(workers)]
         for smoother, fraction in product(smoother_list, fractions):
             with ProcessPoolExecutor(max_workers=workers) as pool:
-                rows = [r for part in pool.map(_fit_chunk, [(c, smoother, fraction, cfg) for c in chunks]) for r in part]
+                rows = [r for part in pool.map(_fit_chunk, [(c, smoother, fraction, cfg, {}) for c in chunks]) for r in part]
             frames.append(pd.DataFrame(rows).assign(mask=mask, smoother=smoother, fraction=fraction))
         frames.append(base.rename("baseline").reset_index().assign(mask=mask, smoother="_baseline", fraction=np.nan, year=0))
     out = pd.concat(frames, ignore_index=True)
     return out
+
+
+def primary_variant(daily: pd.DataFrame, baseline_percentile: float | None = None, workers: int = 8,
+                    **extra) -> pd.DataFrame:
+    """Pixel green-up under the primary specification with one or more parameters overridden."""
+    cfg = config.load()["phenology"]
+    p = cfg["primary"]
+    base = baselines(daily, baseline_percentile)
+    items = list(_pixel_years(daily, base))
+    chunks = [items[i::workers] for i in range(workers)]
+    with ProcessPoolExecutor(max_workers=workers) as pool:
+        rows = [r for part in pool.map(_fit_chunk, [(c, p["smoother"], p["fraction"], cfg, extra) for c in chunks])
+                for r in part]
+    return pd.DataFrame(rows)
 
 
 def _weighted_median(values: np.ndarray, weights: np.ndarray) -> float:
@@ -74,17 +89,18 @@ def _weighted_median(values: np.ndarray, weights: np.ndarray) -> float:
     return float(v[np.searchsorted(cum, 0.5)])
 
 
-def aggregate(pix: pd.DataFrame, how: str, min_pixel_share: float = 0.3) -> pd.DataFrame:
+def aggregate(pix: pd.DataFrame, how: str, min_pixel_share: float = 0.3, weighted: bool = True,
+              n_total: int | None = None) -> pd.DataFrame:
     """Area-weighted park-wide value per year.
 
     The sample has equal pixels per stratum, so each valid pixel is weighted by its stratum's
     dry-land share divided by the number of valid pixels in that stratum that year.
     """
     strata = {p["properties"]["pixel_id"]: p["properties"]["stratum"] for p in aoi.load_points()}
-    shares = aoi.stratum_weights()
+    shares = aoi.stratum_weights() if weighted else {s: 1.0 for s in set(strata.values())}
     df = pix.dropna(subset=["doy"]).copy()
     df["stratum"] = df["pixel_id"].map(strata)
-    n_pixels = len(strata)
+    n_pixels = n_total or len(strata)
     rows = []
     for year, g in df.groupby("year"):
         counts = g["stratum"].value_counts()

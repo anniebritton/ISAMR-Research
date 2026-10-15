@@ -175,3 +175,64 @@ def power_analysis() -> dict:
            "minimum_detectable_trend_days_per_year": mdt}
     (config.TABLES / "power_analysis.json").write_text(json.dumps(out, indent=2))
     return out
+
+
+def parameter_sensitivity() -> pd.DataFrame:
+    """Post-hoc, one-at-a-time sensitivity of H1-H3 to parameters the literature does not fix.
+
+    Added after the confirmatory run (see the Deviations section of prereg.md); it cannot change
+    the primary result. Each row moves one parameter of the primary specification.
+    """
+    from . import aoi, extract, station
+
+    cfg = config.load()
+    ph = cfg["phenology"]
+    p = ph["primary"]
+    drv = drivers.load()
+    daily = phenology.load_daily(p["mask"])
+    rows = []
+
+    def record(parameter: str, value, pix: pd.DataFrame | None = None, drv_alt: pd.DataFrame | None = None,
+               series: pd.DataFrame | None = None) -> None:
+        if series is None:
+            series = phenology.aggregate(pix, p["aggregation"])
+        h = _hypotheses(series, drv if drv_alt is None else drv_alt, cfg)
+        rows.append({"parameter": parameter, "value": value, "n_years": h["h1_n"],
+                     "mean_doy": float(series["greenup_doy"].mean()),
+                     "h1_slope": h["h1_slope"], "h1_ci_low": h["h1_ci_low"], "h1_ci_high": h["h1_ci_high"],
+                     "h2_slope_per_sd": h["h2_slope_per_sd"], "h2_p": h["h2_p"],
+                     "h3_delta_r2": h["h3_delta_r2"], "h3_p": h["h3_p"], "m2_r2": h["m2_r2"]})
+
+    primary = phenology.select(phenology.load_pixels(), p["mask"], p["smoother"], p["fraction"])
+    record("primary", "as pre-registered", primary)
+    for w in (21, 45):
+        record("savgol_window_days", w, phenology.primary_variant(daily, savgol_window=w))
+    for q in (2, 10):
+        record("baseline_percentile", q, phenology.primary_variant(daily, baseline_percentile=q))
+    for n in (10, 25):
+        record("min_valid_obs", n, phenology.primary_variant(daily, min_valid=n))
+    for a in (0.05, 0.15):
+        record("min_amplitude", a, phenology.primary_variant(daily, min_amplitude=a))
+
+    # Stricter water screen: keep only pixels with at most 2% surface water.
+    dry = {f["properties"]["pixel_id"] for f in aoi.load_points() if f["properties"]["water_fraction"] <= 0.02}
+    sub = primary[primary["pixel_id"].isin(dry)]
+    record("max_water_fraction", 0.02, series=phenology.aggregate(sub, p["aggregation"], n_total=len(dry)))
+    record("stratum_weighting", "unweighted", series=phenology.aggregate(primary, p["aggregation"], weighted=False))
+
+    era = extract.load("era5")
+    for thr in (30, 70):
+        alt = drv.drop(columns="snow_off").merge(
+            drivers.era5_snow_off(era, thr).rename(columns={"snow_off_era5": "snow_off"}), on="year")
+        record("era5_snow_cover_threshold_pct", thr, primary, drv_alt=alt)
+
+    temp = drivers.station_temperature_filled(station.load(), era)
+    for end in (135, 166):
+        t = drivers.tdd(temp, "tmean_filled_c", (cfg["drivers"]["tdd_window_doy"][0], end))
+        alt = drv.drop(columns="tdd").merge(t.rename(columns={"tdd_tmean_filled_c": "tdd"})[["year", "tdd"]], on="year")
+        record("tdd_window_end_doy", end, primary, drv_alt=alt)
+
+    out = pd.DataFrame(rows)
+    config.ensure_dirs()
+    out.to_csv(config.TABLES / "parameter_sensitivity.csv", index=False)
+    return out

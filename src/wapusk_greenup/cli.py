@@ -76,6 +76,14 @@ def multiverse() -> None:
     typer.echo(analysis.multiverse().to_string())
 
 
+@app.command(name="parameter-sensitivity")
+def parameter_sensitivity() -> None:
+    """Post-hoc one-at-a-time sensitivity to parameters the literature does not fix."""
+    from . import analysis
+
+    typer.echo(analysis.parameter_sensitivity().round(3).to_string())
+
+
 @app.command()
 def figures() -> None:
     """Render report figures to results/figures/."""
@@ -101,6 +109,7 @@ def run_all(force_extract: bool = False) -> None:
         analysis.confirmatory()
     analysis.sensitivity()
     analysis.multiverse()
+    analysis.parameter_sensitivity()
     plots.run()
 
 

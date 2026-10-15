@@ -134,6 +134,8 @@ def greenup_doy(
     window: tuple[int, int] = (91, 300),
     min_valid: int = 15,
     min_amplitude: float = 0.10,
+    savgol_window: int = 31,
+    whittaker_lambda: float = 200.0,
 ) -> float:
     doy = np.asarray(doy)
     keep = (doy >= window[0]) & (doy <= window[1])
@@ -143,9 +145,9 @@ def greenup_doy(
     t, y = prepare(doy, ndvi, snow, baseline)
     grid = np.arange(window[0], window[1] + 1, dtype=float)
     if smoother == "savgol":
-        curve = savgol(t, y, grid)
+        curve = savgol(t, y, grid, window=savgol_window)
     elif smoother == "whittaker":
-        curve = whittaker(t, y, grid)
+        curve = whittaker(t, y, grid, lam=whittaker_lambda)
     elif smoother == "double_logistic":
         curve = double_logistic(t, y, grid, baseline)
         if curve is None:

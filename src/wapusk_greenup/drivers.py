@@ -40,13 +40,13 @@ def station_snow_off(st: pd.DataFrame, min_obs_before: int = 20) -> pd.DataFrame
     return pd.DataFrame(rows)
 
 
-def era5_snow_off(era: pd.DataFrame) -> pd.DataFrame:
+def era5_snow_off(era: pd.DataFrame, threshold: float | None = None) -> pd.DataFrame:
     cfg = config.load()["drivers"]
+    threshold = cfg["era5_snow_cover_threshold"] if threshold is None else threshold
     rows = []
     for year, g in _doy(era).groupby("year"):
         rows.append({"year": year, "snow_off_era5": snow_off_last_day(
-            g["doy"].to_numpy(), g["snow_cover"].to_numpy(), cfg["era5_snow_cover_threshold"],
-            tuple(cfg["snow_off_search_doy"]))})
+            g["doy"].to_numpy(), g["snow_cover"].to_numpy(), threshold, tuple(cfg["snow_off_search_doy"]))})
     return pd.DataFrame(rows)
 
 
