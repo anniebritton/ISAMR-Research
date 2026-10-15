@@ -150,9 +150,10 @@ Across every variant below, H1 (no detectable trend) and H2 (snow-off) never cha
 * **Choice:** day after the last day in DOY 60–212 with park-mean ERA5-Land `snow_cover` ≥ 50%.
 * **Basis:**
   - Muñoz-Sabater et al. (2021), *Earth System Science Data* 13:4349–4383, doi:10.5194/essd-13-4349-2021.
-  - ERA5-Land snow cover is a function of modelled depth (full cover at 10 cm), and ERA5-Land overestimates snow-cover duration and spring snow mass in the Northern Hemisphere
-    (Urraca & Gobron 2023, *The Cryosphere* 17:1023–1052, doi:10.5194/tc-17-1023-2023;
-    Kouki et al. 2023, *The Cryosphere* 17:5007–5026, doi:10.5194/tc-17-5007-2023).
+  - ERA5-Land snow cover is a function of modelled depth (full cover at 10 cm).
+    ERA5-Land overestimates Northern Hemisphere snow-cover duration (Urraca & Gobron 2023, *The Cryosphere* 17:1023–1052, doi:10.5194/tc-17-1023-2023)
+    and spring snow water equivalent, while its snow-cover extent compares well with satellite data
+    (Kouki et al. 2023, *The Cryosphere* 17:5007–5026, doi:10.5194/tc-17-5007-2023).
   - No published source defines snow-off as the last day ≥ 50% in ERA5-Land; 50% matches the MODIS convention that NDSI ≥ 0.4 corresponds to roughly half cover
     (Hall et al. 2002, *Remote Sensing of Environment* 83:181–194, doi:10.1016/S0034-4257(02)00095-0).
 * **Status:** peer-reviewed data with documented biases, chosen parameter.

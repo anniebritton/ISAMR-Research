@@ -1,5 +1,7 @@
 # Autoresearch: Agent-Driven Search for a Green-Up Extractor
 
+Results and lessons from the 33-iteration run are in [`LESSONS.md`](LESSONS.md).
+
 A coding agent proposes changes to one file, a fixed evaluator scores them, and the loop keeps only improvements.
 The loop is a methods experiment on synthetic data.
 It is walled off from the confirmatory analysis in [`prereg.md`](../prereg.md).
@@ -60,6 +62,9 @@ Small penalties apply for line count (0.001 per line) and runtime above 50 ms pe
 uv run python autoresearch/setup_heldout.py         # once, by a person
 autoresearch/run_loop.sh --iterations 30            # works on branch autoresearch/<date>
 autoresearch/freeze.sh                              # hash method.py, score once on held-out data
+uv run python autoresearch/independent_check.py     # pre-registered real-data entry criteria
+uv run python autoresearch/ablation.py              # post-hoc: score every kept version
+uv run python autoresearch/plot_dynamics.py         # figure for LESSONS.md
 ```
 
 Each call is capped by `--budget-per-call` (default USD 2).

@@ -136,3 +136,17 @@ Everything above this section is unchanged since then.
 3. **Code refactor, no change to results.**
    `smoothers.greenup_doy` gained optional arguments (smoothing window, Whittaker λ, threshold reference) for the sensitivity tests.
    Defaults reproduce the confirmatory pixel dates exactly (maximum absolute difference 3 × 10⁻¹⁴ days).
+4. **Referee-prompted checks (2026-10-14), added after the confirmatory run.**
+   An AI referee report (`results/review.md`) prompted the post-hoc checks in `results/tables/revision_checks.json`
+   ([`src/wapusk_greenup/revision.py`](src/wapusk_greenup/revision.py)): a pixel bootstrap, bootstrap intervals for the commonality components,
+   influence diagnostics, station-only and MODIS snow-off predictors, wetland versus non-wetland strata, snow-anchor binding,
+   and the 2004–2016 trend.
+   The report's interpretation was revised to follow the pre-registered reading of the commonality analysis (a single causal chain, not independent effects),
+   which the first draft had departed from.
+5. **Autoresearch melt-plausibility criterion.**
+   The entry criteria for the agent's candidate were fixed above, but the operational definition of "plausibility of the snow-off lag" was not.
+   It was implemented as the share of pixel-years whose green-up precedes the pixel's own MODIS melt,
+   and its melt definition was corrected once after the first run; the candidate had already failed another criterion.
+6. **Timeline and AI use.**
+   Extraction finished at 23:08:41 UTC, this file was committed at 23:12:06 UTC, and the confirmatory run started at 23:12:10 UTC,
+   all within one working session by an AI coding agent (Claude Code) under the author's direction.

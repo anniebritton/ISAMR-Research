@@ -92,6 +92,14 @@ def stat_robustness() -> None:
     typer.echo(json.dumps(analysis.statistical_robustness(), indent=2, default=float))
 
 
+@app.command(name="revision-checks")
+def revision_checks() -> None:
+    """Post-hoc checks requested by the referee report."""
+    from . import revision
+
+    typer.echo(json.dumps(revision.run(), indent=2, default=float))
+
+
 @app.command()
 def figures() -> None:
     """Render report figures to results/figures/."""
