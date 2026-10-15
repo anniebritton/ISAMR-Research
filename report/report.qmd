@@ -43,7 +43,7 @@ Among randomly drawn 500 m pixels with little open water, ESA WorldCover classif
 ## Data
 
 All satellite and reanalysis inputs were accessed through Google Earth Engine [@gorelick2017].
-Daily surface reflectance came from MOD09GA collection 6.1 [@vermote2021mod09ga], from which NDVI was computed from bands 1 and 2; MCD43A4 collection 6.1 nadir BRDF-adjusted reflectance [@schaaf2021mcd43a4] provided an alternative NDVI series.
+Daily surface reflectance came from MOD09GA collection 6.1 [@vermote2021mod09ga], from which NDVI [@tucker1979] was computed from bands 1 and 2; MCD43A4 collection 6.1 nadir BRDF-adjusted reflectance [@schaaf2021mcd43a4] provided an alternative NDVI series.
 Snow cover came from MOD10A1 collection 6.1 [@hall2021mod10a1] and from ERA5-Land daily aggregates [@munozsabater2021], which also supplied 2 m air temperature, snow depth, and precipitation.
 The MCD12Q2 collection 6.1 Land Cover Dynamics product [@friedl2022mcd12q2] served only as an independent validation reference.
 Surface water came from the JRC Global Surface Water occurrence layer [@pekel2016], and land cover from ESA WorldCover 10 m v200 [@zanaga2022].
@@ -56,27 +56,31 @@ Daily mean temperature, precipitation, and snow on the ground at Churchill came 
 Per-pixel phenology was estimated on a fixed sample rather than on a park-wide mean, because a mean over whichever pixels happen to be cloud-free on a given day mixes landscapes with different phenology from one day to the next.
 Candidate pixel centres were drawn at random (seed 20261014) from the 53,164 MODIS 500 m grid cells inside the boundary, and the water fraction and modal WorldCover class of each candidate's exact footprint were computed at native resolution.
 Pixels with more than 10% JRC surface water (occurrence above 50%) were excluded, which removed 28% of candidates, and the first 75 remaining candidates in each of four strata (forest, shrub and grassland, wetland, moss and lichen) were retained.
+Estimates were weighted by each stratum's share of dry land, following standard stratified estimation [@olofsson2014]; because ESA WorldCover maps herbaceous wetland with a user's accuracy of only 23–31%, the strata serve as a sampling design rather than as validated land-cover classes, which affects precision but not the validity of the weighted estimates.
 The sample is committed as `data/aoi/sample_points.geojson`, so every run uses identical pixels.
 
 ### NDVI and Quality Masking
 
 Two quality masks were applied to MOD09GA.
 The strict (primary) mask retained a pixel only where the `state_1km` cloud state was clear or unset, no cloud shadow, internal cloud, MOD35 snow, internal snow, or cloud-adjacency flag was set, cirrus was absent or small, the sensor zenith angle was below 45°, and the `QC_500m` MODLAND flag indicated ideal or less-than-ideal quality.
+Bit definitions follow the MOD09 Collection 6 user guide; the 45° view-angle screen addresses the documented dependence of daily MODIS NDVI on viewing geometry [@norris2020] and is stricter than the product's own 60° high-view flag.
 The lenient mask kept only the cloud-state, internal cloud, internal snow, and MODLAND conditions.
 The snow flags were also retained as a separate band, so that snow-covered days could anchor the dormant baseline rather than simply disappear.
 Under the strict mask, 11% of pixel-days between DOY 60 and 320 were usable, compared with 17% under the lenient mask.
 
 ### Green-Up Extraction
 
-For each pixel, a dormant baseline was defined as the 5th percentile of all snow-free NDVI observations outside DOY 150–250, pooled across years [@beck2006].
+For each pixel, a dormant baseline was defined as the 5th percentile of all snow-free NDVI observations outside DOY 150–250, pooled across years; the concept of a pixel-specific winter NDVI that replaces lower values follows Beck et al. [-@beck2006], while the percentile rule follows the dormant-value step of MCD12Q2 [@gray2019guide].
 Within the DOY 91–300 window of each pixel-year, observed NDVI below the baseline was raised to it, and snow-flagged days before the first and after the last snow-free observation were entered as baseline values.
-The primary smoother interpolated these points to a daily series and applied a Savitzky–Golay filter (31-day window, second-order polynomial) with two upper-envelope passes, in which observations falling below the fitted curve were treated as residual cloud contamination [@chen2004].
-Mid-green-up was the first day before the seasonal peak on which the curve reached the baseline plus 50% of the amplitude, interpolated linearly between days.
-Pixel-years with fewer than 15 snow-free observations, an amplitude below 0.10 NDVI, or a crossing at the window start were treated as missing.
+The primary smoother interpolated these points to a daily series and applied a Savitzky–Golay filter (31-day window, second-order polynomial) with two upper-envelope passes, in which observations falling below the fitted curve were treated as residual cloud contamination [@chen2004; @jonsson2004].
+Chen et al. [-@chen2004] recommended a window of about 90 days for 10-day composites; the shorter window was chosen because daily data resolve the rapid, melt-driven rise that a 90-day window would flatten, and windows from 15 to 91 days were tested.
+Mid-green-up was the first day before the seasonal peak on which the curve reached the baseline plus 50% of the amplitude [@white1997], interpolated linearly between days.
+Pixel-years with fewer than 15 snow-free observations, an amplitude below 0.10 NDVI (the MCD12Q2 floor), or a crossing at the window start were treated as missing.
 @fig-example-fits shows three randomly drawn pixel-years.
 
-This definition departs from Doiron et al. [-@doiron2013], who used 50% of the annual maximum rather than of the amplitude above a baseline.
-The amplitude form was preferred because it does not depend on the NDVI of snow, which is negative and highly variable, and because it corresponds directly to the MCD12Q2 `MidGreenup` metric used for validation.
+This definition departs from Doiron et al. [-@doiron2013], who used the date 1 km AVHRR NDVI reached 50% of its annual maximum.
+In Wapusk that crossing cannot be defined once snow is masked, because the snow-free dormant NDVI (median 0.42) exceeds half the summer peak (median 0.60) in 92% of pixels; with snow left in, it would mark snowmelt rather than growth.
+The amplitude form avoids this, does not depend on the NDVI of snow, and is analogous to the MCD12Q2 `MidGreenup` metric, which applies the same 50% rule to EVI2 [@moon2019].
 
 ![Three randomly drawn pixel-years under the primary specification, showing snow-free observations, snow anchors at the baseline, the Savitzky–Golay fit, and the estimated mid-green-up.](../results/figures/example_fits.png){#fig-example-fits}
 
@@ -86,23 +90,27 @@ Between 227 and 300 of the 300 pixels contributed in each year.
 ### Predictors
 
 The pre-registered snow-off date was the day after the last day between DOY 60 and 212 on which park-mean ERA5-Land snow cover was at or above 50%.
-ERA5-Land was chosen over the Churchill station before any relationship with green-up was examined, for three reasons: the station lacked a usable spring snow-on-ground record in 9 of 24 years; where present, station snow-off correlated with park-wide estimates at only r = 0.58; and ERA5-Land and MODIS snow-off agreed at r = 0.81 despite their independent sources.
+ERA5-Land was chosen over the Churchill station before any relationship with green-up was examined, for three reasons: the station lacked a usable spring snow-on-ground record in 9 of 24 years; where present, station snow-off correlated with park-wide estimates at only r = 0.58; and ERA5-Land and MODIS snow-off (the day after the last day park-mean MOD10A1 NDSI was at or above 0.4, the conventional snow threshold of @hall2002) agreed at r = 0.81 despite their independent sources.
 Neither primary predictor relies on the MODIS snow flags that shape the NDVI series, which avoids building a mechanical correlation between snow-off and green-up.
-Thawing degree days (TDD) were the sum of positive daily mean temperatures at Churchill between 1 April and 31 May, a window chosen to end before the earliest plausible mid-green-up; 14 of 1,464 station-days were filled from ERA5-Land through a daily linear calibration.
+ERA5-Land derives snow cover from modelled snow depth and is known to overestimate snow-cover duration in the Northern Hemisphere [@urraca2023; @kouki2023]; its snow-off averaged 3.3 days later than MODIS snow-off here, so it is used as an index of interannual variation rather than as an absolute melt date.
+Thawing degree days (TDD) were the sum of positive daily mean temperatures at Churchill between 1 April and 31 May, a window chosen to end before the earliest plausible mid-green-up, following evidence that snowmelt and spring temperature jointly govern tundra spring phenology [@assmann2019; @bjorkman2015]; 14 of 1,464 station-days were filled from ERA5-Land through a daily linear calibration.
+The spliced station series matches the homogenized AHCCD Churchill record [@vincent2020] closely (April–May mean temperature r = 0.9995, mean difference −0.17 °C, 2001–2020).
 
 ### Statistical Analysis
 
-The trend in mid-green-up (H1) was estimated as a Theil–Sen slope [@sen1968] with a 95% confidence interval, accompanied by Mann–Kendall tests with and without trend-free pre-whitening [@yue2002].
-Because a trend estimate from 24 years is only informative relative to the smallest trend the series could reveal, the minimum detectable trend was simulated before the response was examined, using the detrended interannual standard deviation of the independent MCD12Q2 series (9.2 days) and an AR(1) noise model; Mann–Kendall reached 80% power at α = 0.05 only for trends of 0.9 days/yr or larger.
+The trend in mid-green-up (H1) was estimated as a Theil–Sen slope [@sen1968] with a 95% confidence interval, accompanied by Mann–Kendall tests with no correction, with the Hamed–Rao variance correction [@hamed1998], with pre-whitening [@yuewang2002], and with trend-free pre-whitening [@yue2002], since the last is known to inflate Type I error under strong autocorrelation [@burger2017].
+Because a trend estimate from 24 years is only informative relative to the smallest trend the series could reveal, the minimum detectable trend was simulated before the response was examined, using the detrended interannual standard deviation of the independent MCD12Q2 series (9.2 days) and an AR(1) noise model [@weatherhead1998]; Mann–Kendall reached 80% power at α = 0.05 only for trends of 0.9 days/yr or larger.
+Using the series' own residual variability instead, as is conventional, gives a minimum detectable trend of 0.70–0.75 days/yr for lag-1 autocorrelations between 0 and 0.3.
 
-The association with snow-off (H2) was tested with ordinary least squares on standardized predictors, and the added contribution of TDD (H3) with a nested F-test and a bootstrap confidence interval (5,000 resamples of years) for the change in R².
-Because warmer springs also melt snow earlier, the explained variance was further partitioned into unique and shared components by commonality analysis [@seibold1979], and both models were evaluated by leave-one-year-out cross-validation.
+The association with snow-off (H2) was tested with ordinary least squares on standardized predictors, and the added contribution of TDD (H3) with a nested F-test and bootstrap confidence intervals (5,000 resamples of years, percentile and BCa) for the change in R² [@efron1993].
+Because warmer springs also melt snow earlier, the explained variance was further partitioned into unique and shared components by commonality analysis [@seibold1979; @raymukherjee2014], and both models were evaluated by leave-one-year-out cross-validation.
 
 ### Robustness Grid and Validation
 
-H1 to H3 were re-estimated across 24 specifications formed by three smoothers (Savitzky–Golay; a double logistic with fixed baseline after @beck2006; a weighted Whittaker smoother after @eilers2003), two thresholds (50% and 15% of amplitude), two masks (strict and lenient), and two aggregations (weighted median and weighted mean).
+H1 to H3 were re-estimated across 24 specifications formed by three smoothers (Savitzky–Golay; a double logistic with fixed baseline after @beck2006 and @zhang2003; a weighted Whittaker smoother after @eilers2003 and @atzberger2011), two thresholds (50% and 15% of amplitude), two masks (strict and lenient), and two aggregations (weighted median and weighted mean).
 Alternative predictor sources (station snow-off gap-filled from ERA5-Land, and ERA5-Land TDD), an NBAR-based NDVI series, and per-stratum trends were evaluated as further sensitivity checks.
-Agreement with MCD12Q2 `MidGreenup_1`, restricted to best- and good-quality retrievals, was computed at both the pixel-year and the annual scale.
+After the confirmatory run, a methods audit added one-at-a-time tests of every parameter the literature does not fix (smoothing window, Whittaker λ, baseline percentile and pooling, view-angle screen, minimum observations and amplitude, water screen, stratum weighting, snow-cover threshold, TDD window, and exclusion of the 2022–2024 Terra drift years); these are listed in `docs/methods_justification.md` and recorded as a deviation in the pre-registration.
+Agreement with MCD12Q2 `MidGreenup_1`, restricted to best- and good-quality retrievals, was computed at both the pixel-year and the annual scale; MCD12Q2 is treated as an independent comparison rather than as ground truth, and its guide recommends `MidGreenup` over the earlier metrics in low-amplitude high-latitude regions [@gray2019guide].
 
 ## Results
 
@@ -137,7 +145,9 @@ The lag between snow-off and mid-green-up showed no trend (+0.42 days/yr, CI −
 
 None of the 24 specifications produced a trend whose confidence interval excluded zero, with slopes ranging from −0.05 to +0.11 days/yr (@fig-multiverse), whereas H2 and H3 were supported in all 24, with snow-off effects between 5.4 and 8.2 days per standard deviation and TDD increments in R² between 0.12 and 0.32.
 The 15% threshold and the lenient mask produced wider trend intervals and stronger snow-off effects, which is consistent with the onset of green-up being more tightly coupled to melt than its midpoint.
-Substituting station snow-off or ERA5-Land TDD changed none of the conclusions (combined R² of 0.67 and 0.79, respectively).
+Substituting station snow-off or ERA5-Land TDD changed none of the conclusions (combined R² of 0.67 and 0.79, respectively), and all four Mann–Kendall variants gave p between 0.60 and 0.86.
+In the post-hoc parameter tests, every trend interval spanned zero, including the variant that excluded the Terra drift years (+0.21 days/yr, CI −0.29 to +0.79), and snow-off remained significant throughout.
+The contribution of spring warmth was the most sensitive result: ending the TDD window on 15 May rather than 31 May reduced the gain in R² to 0.09 (p = 0.04), ending it on 15 June raised it to 0.34, and replacing TDD with homogenized April–May mean temperature gave 0.12 (p = 0.04, n = 18).
 In the exploratory analysis, maximum spring snow depth (Spearman ρ = 0.08) and spring precipitation (ρ = −0.19) showed no association with green-up.
 
 ![Theil–Sen slope and 95% CI for H1 across all 24 specifications. The pre-registered primary specification is shown in orange.](../results/figures/multiverse.png){#fig-multiverse}
@@ -147,7 +157,8 @@ In the exploratory analysis, maximum spring snow depth (Spearman ρ = 0.08) and 
 Overall, the results suggest that green-up in Wapusk is governed far more by the conditions of a given spring than by any steady change across the 24-year record.
 A spring with late snowmelt and little April–May warmth, such as 2009, delayed mid-green-up by about two weeks relative to the mean, whereas the early melt and warm spring of 2006 advanced it by a similar margin, and these swings are an order of magnitude larger than any trend the confidence interval allows.
 This finding sits uneasily beside Mallory et al. [-@mallory2020], who reported green-up on the Qamanirjuaq calving grounds advancing by about 0.56 days/yr between 2004 and 2016, a rate that lies outside the confidence interval estimated here.
-The two results are not directly comparable, however, because the calving grounds lie several hundred kilometres north of Wapusk, the earlier study used a 13-year window that a single anomalous year can tilt, and the two studies define green-up differently; the coastal position of Wapusk, where Hudson Bay sea ice may hold spring temperatures down, offers one plausible reason for a weaker trend that this study cannot test.
+The two results are not directly comparable, however, because the calving grounds lie several hundred kilometres north of Wapusk, the earlier study used a 13-year window that a single anomalous year can tilt, and the green-up metric used on the calving grounds may not match the definition used here; the coastal position of Wapusk, where Hudson Bay sea ice may hold spring temperatures down, offers one plausible reason for a weaker trend that this study cannot test.
+The result is, however, consistent with recent long-term ground observations from coastal Arctic sites, where earlier advances in spring phenology have given way to little directional change [@schmidt2023], and with evidence that phenology advances only where snowmelt itself has advanced [@assmann2019].
 
 The commonality analysis also suggests a mechanism.
 Rather than acting as independent drivers, snow-off and spring warmth share a third of the explained variance, which is what would be expected if warm springs both melt snow early and accelerate growth once the ground is exposed; TDD nonetheless retains a unique contribution, which indicates that warmth matters to the pace of green-up after melt as well as to the date of melt itself.

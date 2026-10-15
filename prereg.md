@@ -120,4 +120,19 @@ It may join the robustness grid as a 25th specification only if, after freezing,
 
 ## Deviations
 
-None yet.
+The SHA-256 recorded in `results/tables/confirmatory.json` is that of this file at commit `cba988e`, before this section was filled in.
+Everything above this section is unchanged since then.
+
+1. **Post-hoc methods audit (2026-10-14), added after the confirmatory run.**
+   A literature check of every method found several parameters the literature does not fix
+   (see [`docs/methods_justification.md`](docs/methods_justification.md)).
+   One-at-a-time sensitivity tests (`results/tables/parameter_sensitivity.csv`) and statistical robustness checks
+   (`results/tables/statistical_robustness.json`) were added.
+   They are reported alongside the confirmatory result and do not replace it.
+2. **Citation correction, no change to the method.**
+   The baseline section above attributes the percentile baseline to Beck et al. (2006).
+   Beck et al. introduced the pixel-specific winter NDVI that replaces lower values; the 5th-percentile-of-snow-free-observations rule
+   follows the MCD12Q2 Collection 6 dormant-value step. The report cites both accordingly.
+3. **Code refactor, no change to results.**
+   `smoothers.greenup_doy` gained optional arguments (smoothing window, Whittaker λ, threshold reference) for the sensitivity tests.
+   Defaults reproduce the confirmatory pixel dates exactly (maximum absolute difference 3 × 10⁻¹⁴ days).

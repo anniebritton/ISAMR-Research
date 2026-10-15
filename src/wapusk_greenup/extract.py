@@ -66,6 +66,15 @@ def mod09ga_year(year: int) -> tuple[pd.DataFrame, dict]:
     return _region_to_frame(rows, bands), _record("mod09ga", year, coll)
 
 
+def mod09ga_zenith_year(year: int) -> tuple[pd.DataFrame, dict]:
+    cfg = config.load()
+    start, end = _date_range(year)
+    coll = ee.ImageCollection(cfg["datasets"]["surface_reflectance"]).filterDate(start, end)
+    rows = coll.map(gee.daily_ndvi_zenith).getRegion(_multipoint(), **gee.grid_args()).getInfo()
+    df = _region_to_frame(rows, ["ndvi_strict_anyzenith", "sensor_zenith", "snow"])
+    return df, _record("mod09ga_zenith", year, coll)
+
+
 def nbar_year(year: int) -> tuple[pd.DataFrame, dict]:
     cfg = config.load()
     start, end = _date_range(year)
@@ -143,7 +152,8 @@ def mcd12q2_all() -> tuple[pd.DataFrame, dict]:
     return df[["pixel_id", "year", "NumCycles", "Greenup_doy", "MidGreenup_doy", "mid_qa"]], rec
 
 
-YEARLY = {"mod09ga": mod09ga_year, "nbar": nbar_year, "era5": era5_year, "mod10a1": mod10a1_year}
+YEARLY = {"mod09ga": mod09ga_year, "nbar": nbar_year, "era5": era5_year, "mod10a1": mod10a1_year,
+          "mod09ga_zenith": mod09ga_zenith_year}
 
 
 def _path(source: str, year: int | None = None) -> Path:
@@ -162,7 +172,8 @@ def run(sources: list[str] | None = None, years: list[int] | None = None, force:
     gee.initialize()
     cfg = config.load()
     years = years or cfg["year_list"]
-    sources = sources or [*YEARLY, "mcd12q2"]
+    # The zenith sensitivity source is pulled only on request.
+    sources = sources or [*[k for k in YEARLY if k != "mod09ga_zenith"], "mcd12q2"]
     jobs = []
     for source in sources:
         if source == "mcd12q2":

@@ -196,6 +196,9 @@ def parameter_sensitivity() -> pd.DataFrame:
                series: pd.DataFrame | None = None) -> None:
         if series is None:
             series = phenology.aggregate(pix, p["aggregation"])
+        if series["greenup_doy"].notna().sum() < 10:
+            rows.append({"parameter": parameter, "value": value, "n_years": int(series["greenup_doy"].notna().sum())})
+            return
         h = _hypotheses(series, drv if drv_alt is None else drv_alt, cfg)
         rows.append({"parameter": parameter, "value": value, "n_years": h["h1_n"],
                      "mean_doy": float(series["greenup_doy"].mean()),
@@ -205,8 +208,22 @@ def parameter_sensitivity() -> pd.DataFrame:
 
     primary = phenology.select(phenology.load_pixels(), p["mask"], p["smoother"], p["fraction"])
     record("primary", "as pre-registered", primary)
-    for w in (21, 45):
+    for w in (15, 21, 45, 61, 91):
         record("savgol_window_days", w, phenology.primary_variant(daily, savgol_window=w))
+    for lam in (50, 200, 1000):
+        record("whittaker_lambda (whittaker smoother)", lam,
+               phenology.primary_variant(daily, smoother="whittaker", whittaker_lambda=lam))
+    record("threshold_definition", "50% of annual maximum (Doiron et al. 2013)",
+           phenology.primary_variant(daily, relative_to="maximum"))
+    record("baseline_pooling", "per pixel-year", phenology.primary_variant(daily, yearly_baseline=True))
+
+    # View-angle screen: strict mask without the zenith rule, re-screened locally at each cutoff.
+    zen = extract.load("mod09ga_zenith")
+    for cutoff in (30, 45, 60, None):
+        z = zen.assign(ndvi=zen["ndvi_strict_anyzenith"].where(
+            zen["sensor_zenith"] < cutoff if cutoff else zen["ndvi_strict_anyzenith"].notna()))
+        z = z.assign(year=z["date"].dt.year, doy=z["date"].dt.dayofyear)[["pixel_id", "date", "ndvi", "snow", "year", "doy"]]
+        record("max_sensor_zenith_deg", cutoff if cutoff else "none", phenology.primary_variant(z))
     for q in (2, 10):
         record("baseline_percentile", q, phenology.primary_variant(daily, baseline_percentile=q))
     for n in (10, 25):
@@ -215,9 +232,13 @@ def parameter_sensitivity() -> pd.DataFrame:
         record("min_amplitude", a, phenology.primary_variant(daily, min_amplitude=a))
 
     # Stricter water screen: keep only pixels with at most 2% surface water.
-    dry = {f["properties"]["pixel_id"] for f in aoi.load_points() if f["properties"]["water_fraction"] <= 0.02}
-    sub = primary[primary["pixel_id"].isin(dry)]
-    record("max_water_fraction", 0.02, series=phenology.aggregate(sub, p["aggregation"], n_total=len(dry)))
+    for limit in (0.02, 0.05):
+        dry = {f["properties"]["pixel_id"] for f in aoi.load_points() if f["properties"]["water_fraction"] <= limit}
+        sub = primary[primary["pixel_id"].isin(dry)]
+        record("max_water_fraction", limit, series=phenology.aggregate(sub, p["aggregation"], n_total=len(dry)))
+    # Terra left its constellation in October 2022; drop the drift years.
+    series = phenology.aggregate(primary, p["aggregation"])
+    record("years", "2001-2021 (exclude Terra drift)", series=series[series["year"] <= 2021])
     record("stratum_weighting", "unweighted", series=phenology.aggregate(primary, p["aggregation"], weighted=False))
 
     era = extract.load("era5")

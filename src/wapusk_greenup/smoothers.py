@@ -105,16 +105,19 @@ def double_logistic(t: np.ndarray, y: np.ndarray, grid: np.ndarray, baseline: fl
     return f(grid, *params)
 
 
-def crossing(grid: np.ndarray, curve: np.ndarray, baseline: float, fraction: float, min_amplitude: float) -> float:
-    """First day before the peak where the curve reaches baseline + fraction * amplitude.
+def crossing(grid: np.ndarray, curve: np.ndarray, baseline: float, fraction: float, min_amplitude: float,
+             relative_to: str = "amplitude") -> float:
+    """First day before the peak where the curve reaches the threshold.
 
+    relative_to="amplitude": baseline + fraction * amplitude (White et al. 1997; MCD12Q2 MidGreenup).
+    relative_to="maximum": fraction * peak NDVI (Doiron et al. 2013).
     Returns NaN for weak seasons and for crossings at the window start (left-censored).
     """
     peak_i = int(np.argmax(curve))
     amplitude = curve[peak_i] - baseline
     if amplitude < min_amplitude:
         return np.nan
-    threshold = baseline + fraction * amplitude
+    threshold = baseline + fraction * amplitude if relative_to == "amplitude" else fraction * curve[peak_i]
     above = np.nonzero(curve[: peak_i + 1] >= threshold)[0]
     if above.size == 0 or above[0] == 0:
         return np.nan
@@ -136,6 +139,7 @@ def greenup_doy(
     min_amplitude: float = 0.10,
     savgol_window: int = 31,
     whittaker_lambda: float = 200.0,
+    relative_to: str = "amplitude",
 ) -> float:
     doy = np.asarray(doy)
     keep = (doy >= window[0]) & (doy <= window[1])
@@ -154,7 +158,7 @@ def greenup_doy(
             return np.nan
     else:
         raise ValueError(f"unknown smoother {smoother!r}")
-    return crossing(grid, curve, baseline, fraction, min_amplitude)
+    return crossing(grid, curve, baseline, fraction, min_amplitude, relative_to)
 
 
 def dormant_baseline(doy: np.ndarray, ndvi: np.ndarray, exclude: tuple[int, int] = (150, 250), percentile: float = 5) -> float:

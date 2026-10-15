@@ -68,17 +68,33 @@ def pixel_greenup(masks: list[str], smoother_list: list[str], fractions: list[fl
     return out
 
 
+def yearly_baselines(daily: pd.DataFrame, pooled: pd.Series, min_obs: int = 5) -> pd.Series:
+    """Per pixel-year dormant baseline, falling back to the pooled value when a year has too few observations."""
+    cfg = config.load()["phenology"]
+    lo, hi = cfg["baseline_exclude_doy"]
+    sel = daily[daily["ndvi"].notna() & ((daily["doy"] < lo) | (daily["doy"] > hi))]
+    g = sel.groupby(["pixel_id", "year"])["ndvi"]
+    per_year = g.quantile(cfg["baseline_percentile"] / 100).where(g.count() >= min_obs)
+    idx = pd.MultiIndex.from_frame(daily[["pixel_id", "year"]].drop_duplicates())
+    per_year = per_year.reindex(idx)
+    return per_year.fillna(pd.Series(idx.get_level_values(0).map(pooled), index=idx))
+
+
 def primary_variant(daily: pd.DataFrame, baseline_percentile: float | None = None, workers: int = 8,
-                    **extra) -> pd.DataFrame:
+                    smoother: str | None = None, yearly_baseline: bool = False, **extra) -> pd.DataFrame:
     """Pixel green-up under the primary specification with one or more parameters overridden."""
     cfg = config.load()["phenology"]
     p = cfg["primary"]
     base = baselines(daily, baseline_percentile)
-    items = list(_pixel_years(daily, base))
+    if yearly_baseline:
+        yb = yearly_baselines(daily, base)
+        items = [(pid, yr, d, n, s_, yb.get((pid, yr), b)) for pid, yr, d, n, s_, b in _pixel_years(daily, base)]
+    else:
+        items = list(_pixel_years(daily, base))
     chunks = [items[i::workers] for i in range(workers)]
+    args = [(c, smoother or p["smoother"], p["fraction"], cfg, extra) for c in chunks]
     with ProcessPoolExecutor(max_workers=workers) as pool:
-        rows = [r for part in pool.map(_fit_chunk, [(c, p["smoother"], p["fraction"], cfg, extra) for c in chunks])
-                for r in part]
+        rows = [r for part in pool.map(_fit_chunk, args) for r in part]
     return pd.DataFrame(rows)
 
 

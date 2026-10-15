@@ -44,9 +44,11 @@ def snow_flag(image: ee.Image) -> ee.Image:
     return _bit(state, INTERNAL_SNOW).Or(_bit(state, MOD35_SNOW)).rename("snow")
 
 
-def clear_mask(image: ee.Image, level: str) -> ee.Image:
+def clear_mask(image: ee.Image, level: str, skip_zenith: bool = False) -> ee.Image:
     """Boolean image of snow-free, cloud-free pixels at the requested strictness."""
-    opts = config.load()["masks"][level]
+    opts = dict(config.load()["masks"][level])
+    if skip_zenith:
+        opts.pop("max_sensor_zenith_deg", None)
     state = image.select("state_1km")
     cloud_state = _bits(state, *CLOUD_STATE)
     ok = cloud_state.eq(0).Or(cloud_state.eq(3))
@@ -75,6 +77,17 @@ def daily_ndvi(image: ee.Image) -> ee.Image:
     return (
         ndvi.updateMask(clear_mask(image, "strict")).rename("ndvi_strict")
         .addBands(ndvi.updateMask(clear_mask(image, "lenient")).rename("ndvi_lenient"))
+        .addBands(snow_flag(image))
+        .copyProperties(image, ["system:time_start"])
+    )
+
+
+def daily_ndvi_zenith(image: ee.Image) -> ee.Image:
+    """Strict-mask NDVI without the view-angle filter, plus sensor zenith (degrees), for the zenith sensitivity check."""
+    ndvi = image.normalizedDifference(["sur_refl_b02", "sur_refl_b01"])
+    return (
+        ndvi.updateMask(clear_mask(image, "strict", skip_zenith=True)).rename("ndvi_strict_anyzenith")
+        .addBands(image.select("SensorZenith").multiply(0.01).rename("sensor_zenith"))
         .addBands(snow_flag(image))
         .copyProperties(image, ["system:time_start"])
     )
