@@ -62,5 +62,42 @@ def main() -> None:
     _save(fig, "autoresearch_dynamics")
 
 
+CATEGORY_LABELS = {
+    "snow_and_melt": "Snow and melt handling",
+    "smoother": "Smoother settings",
+    "amplitude": "Amplitude estimate",
+    "crossing_rule": "Crossing rule",
+    "ensemble": "Combining extractors",
+    "outlier_filter": "Outlier filter",
+    "validity_threshold": "Validity thresholds",
+    "line_count": "Line-count cleanup",
+    "no_edit": "No edit",
+}
+
+
+def attempts() -> None:
+    """Each iteration placed by the kind of change the agent attempted (coded from its rationales)."""
+    rows = pd.read_csv(HERE / "iteration_coding.csv")
+    order = list(CATEGORY_LABELS)
+    y = {c: i for i, c in enumerate(reversed(order))}
+    fig, ax = plt.subplots(figsize=(9, 3.6))
+    for outcome, style in {
+        "reverted": dict(color=GRID, edgecolor=INK_2, linewidth=0.7, s=42, marker="o", label="Reverted"),
+        "kept": dict(color=SERIES[1], edgecolor=SURFACE, linewidth=1, s=56, marker="o", label="Kept"),
+        "no edit": dict(color=INK_2, s=40, marker="x", label="No edit"),
+    }.items():
+        sub = rows[rows["outcome"] == outcome]
+        ax.scatter(sub["iteration"], sub["category"].map(y), zorder=3, **style)
+    ax.set_yticks(list(y.values()), [CATEGORY_LABELS[c] for c in y])
+    ax.set_xlabel("Iteration")
+    ax.set_xlim(0, 34)
+    ax.grid(axis="x", visible=False)
+    ax.set_title("What the agent tried, by iteration")
+    ax.legend(frameon=False, fontsize=8, loc="upper center", bbox_to_anchor=(0.5, -0.2), ncol=3)
+    fig.tight_layout()
+    _save(fig, "autoresearch_attempts")
+
+
 if __name__ == "__main__":
     main()
+    attempts()

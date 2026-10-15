@@ -147,6 +147,10 @@ Everything above this section is unchanged since then.
    The entry criteria for the agent's candidate were fixed above, but the operational definition of "plausibility of the snow-off lag" was not.
    It was implemented as the share of pixel-years whose green-up precedes the pixel's own MODIS melt,
    and its melt definition was corrected once after the first run; the candidate had already failed another criterion.
-6. **Timeline and AI use.**
+6. **Agent study as a co-equal part of the report.**
+   The report now presents the autoresearch loop as Part II, with three exploratory research questions (RQ1–RQ3).
+   Only the candidate's entry criteria were fixed above; the research questions, the ablation, and the coding of iterations
+   (`autoresearch/iteration_coding.csv`) are post hoc.
+7. **Timeline and AI use.**
    Extraction finished at 23:08:41 UTC, this file was committed at 23:12:06 UTC, and the confirmatory run started at 23:12:10 UTC,
    all within one working session by an AI coding agent (Claude Code) under the author's direction.

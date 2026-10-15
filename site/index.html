@@ -117,9 +117,9 @@ footer { border-top: 1px solid var(--rule); padding-block: 20px calc(env(safe-ar
 <body>
 <header class="band">
   <div class="wrap">
-    <p class="kicker">ISAMR research brief · Wapusk National Park, Manitoba</p>
-    <h1>Green-Up Timing in Wapusk National Park, 2001–2024</h1>
-    <p class="sub">No detectable trend in when the park greens up, but strong associations with snowmelt and spring warmth from one year to the next, along with a supplementary experiment on using a coding agent to improve the method.</p>
+    <p class="kicker">ISAMR research brief · Part I: green-up in Wapusk · Part II: a sandboxed coding agent</p>
+    <h1>Green-Up Timing in Wapusk National Park, and What a Coding Agent Contributed to Measuring It</h1>
+    <p class="sub">No detectable trend in when the park greens up, but strong associations with snowmelt and spring warmth from one year to the next; and a coding agent that improved the method on synthetic data, but not in the way the science needed.</p>
     <div class="byline">
       <span>Annie Britton</span>
       <a href="https://github.com/anniebritton/ISAMR-Research">Code and data</a>
@@ -134,11 +134,12 @@ footer { border-top: 1px solid var(--rule); padding-block: 20px calc(env(safe-ar
   <section>
     <h2>Summary</h2>
     <p>This study sought to determine whether spring green-up in Wapusk National Park has shifted since 2001, and how strongly its timing from year to year is associated with snowmelt and spring temperature. Mid-green-up, the day on which smoothed MODIS NDVI reaches half of its seasonal amplitude, was estimated for 300 land pixels and combined into an area-weighted value for each year, following an analysis plan that was fixed before any trend or relationship was examined. Three alternative hypotheses were tested: that green-up advanced between 2001 and 2024 (H1), that later snow-off brings later green-up (H2), and that spring warmth explains variation beyond snow-off (H3). The results do not support H1 but support H2 and H3.</p>
+    <p>Within the same pipeline, a coding agent was then given one narrow task, improving the method that turns daily NDVI into a green-up date, inside a sandbox where a fixed evaluator outside its control decided which changes survived. Part II asks whether the agent could improve the method on data it never saw (RQ1), whether its improvements carried over to real pixels and to the year-to-year signal that H1–H3 depend on (RQ2), and how it searched, followed rules, and responded to its objective (RQ3).</p>
     <div class="tiles" id="tiles"></div>
   </section>
 
   <section>
-    <h2>Study Area</h2>
+    <h2>Part I: Study Area</h2>
     <p>Wapusk covers 11,475 km² of peatland, fen, coastal tundra, and open spruce forest on the western shore of Hudson Bay, where polar bears summer on land and caribou and nesting geese depend on the timing of fresh forage. The sample drew 75 pixels at random from each of four land-cover strata, excluding pixels with more than 10% open water, so the results describe the drier ~70% of the park.</p>
     <figure>
       <div id="map" class="chart tall" role="img" aria-label="Map of Wapusk National Park with 300 sample pixels by land-cover stratum"></div>
@@ -147,7 +148,7 @@ footer { border-top: 1px solid var(--rule); padding-block: 20px calc(env(safe-ar
   </section>
 
   <section>
-    <h2>Has Green-Up Shifted?</h2>
+    <h2>Part I: Has Green-Up Shifted? (H1)</h2>
     <p id="trend-text"></p>
     <figure>
       <div id="series" class="chart" role="img" aria-label="Annual mid-green-up from this study and MCD12Q2, 2001 to 2024"></div>
@@ -156,7 +157,7 @@ footer { border-top: 1px solid var(--rule); padding-block: 20px calc(env(safe-ar
   </section>
 
   <section>
-    <h2>What Explains the Year-to-Year Variation?</h2>
+    <h2>Part I: What Explains the Year-to-Year Variation? (H2, H3)</h2>
     <p id="driver-text"></p>
     <div class="two">
       <figure>
@@ -172,7 +173,7 @@ footer { border-top: 1px solid var(--rule); padding-block: 20px calc(env(safe-ar
   </section>
 
   <section>
-    <h2>How Sensitive Are the Results?</h2>
+    <h2>Part I: How Sensitive Are the Results?</h2>
     <p>Every result was re-estimated under 24 combinations of smoother, threshold, cloud mask, and aggregation, and again under one-at-a-time changes to each parameter that the literature does not fix. No variant produced a trend whose interval excluded zero, and snow-off remained significant throughout; the precision of the trend estimate, however, is specific to the primary specification.</p>
     <figure>
       <div class="controls" role="group" aria-label="Choose set of specifications">
@@ -185,7 +186,7 @@ footer { border-top: 1px solid var(--rule); padding-block: 20px calc(env(safe-ar
   </section>
 
   <section>
-    <h2>Explore a Season</h2>
+    <h2>Part I: Explore a Season</h2>
     <p>Each green-up date comes from a single pixel's season of cloud-gapped daily NDVI. Snow-flagged days anchor the curve at the dormant baseline, and the smoothed curve's crossing of half the seasonal amplitude gives the date.</p>
     <figure>
       <div class="controls">
@@ -200,17 +201,33 @@ footer { border-top: 1px solid var(--rule); padding-block: 20px calc(env(safe-ar
   </section>
 
   <section>
-    <h2>Supplementary Study: A Coding Agent Improving the Method</h2>
+    <h2>Part II: A Sandboxed Coding Agent</h2>
     <p id="agent-text"></p>
+
+    <h3>Did it improve the method on unseen data? (RQ1)</h3>
+    <p>Yes, modestly. The final version reduced error on the visible synthetic benchmark from 3.18 to 2.96 days and on the held-out benchmark from 4.65 to 4.39 days, outperforming all three pre-registered extractors. On held-out seasons built from real NDVI shapes, however, every method erred by more than 8 days against 2–4 days on synthetic seasons, which suggests that the benchmark, rather than the search, was the binding constraint.</p>
     <figure>
       <div id="dynamics" class="chart" role="img" aria-label="Agent loop score by iteration"></div>
       <figcaption>Score on the visible synthetic benchmark (mean error in days) for each iteration, with the best score so far. Hover an iteration to read the agent's own account of its change.</figcaption>
     </figure>
+
+    <h3>Did the improvement carry over to the science? (RQ2)</h3>
+    <p>No. On real pixels the final version agreed better with MCD12Q2 pixel by pixel, but its park-wide year-to-year agreement fell from 0.900 to 0.881, so it failed two of the four pre-registered entry criteria. An ablation located the trade-off: the snow-flag fix in iteration 8 improved held-out error without losing year-to-year fidelity, whereas the amplitude change in iteration 16 traded that fidelity for lower pixel bias, and a keep-if-better rule on one score could not see the difference. None of the agent's versions moved the conclusions of Part I.</p>
     <figure>
       <div id="tradeoff" class="chart" role="img" aria-label="Held-out error against annual agreement for each kept version"></div>
-      <figcaption>Each kept version of the agent's extractor, in order, placed by its held-out synthetic error and its park-wide annual agreement with MCD12Q2. Iteration 8 improved both; iteration 16 traded interannual fidelity for lower pixel bias.</figcaption>
+      <figcaption>Each kept version, in order, placed by its held-out synthetic error and its park-wide annual agreement with MCD12Q2.</figcaption>
     </figure>
-    <p>The run suggests three lessons for agents in research pipelines. First, a single score was gamed even by an agent that reported its changes openly, as four of the eight kept changes only removed lines to reduce a line-count penalty. Next, per-season accuracy on synthetic data diverged from the interannual fidelity that the science depends on, and a keep-if-better rule discarded the version that served the science best. Lastly, keeping the agent off the inference path meant that none of its changes could move the reported result, and none did. The full account is in <a href="https://github.com/anniebritton/ISAMR-Research/blob/main/autoresearch/LESSONS.md">LESSONS.md</a>.</p>
+    <div class="scroll"><table class="data" id="ablation"></table></div>
+
+    <h3>How did the agent behave? (RQ3)</h3>
+    <p>The agent searched in a recognisable sequence. It explored five kinds of change in its first seven iterations without success, then found two gains and spent most of the next ten iterations refining one of them; overall, 4 of its 24 substantive attempts were kept. Once substantive ideas stopped succeeding, it turned to deleting lines to shave the line-count penalty, describing these openly as cleanups, and in its last five iterations it reported that no untried idea remained and made no edit. It never attempted to edit another file or to read the held-out data.</p>
+    <figure>
+      <div id="attempts" class="chart" role="img" aria-label="Each iteration by the kind of change attempted"></div>
+      <figcaption>Each iteration placed by the kind of change attempted, coded from the agent's rationale. Hover a point for the idea.</figcaption>
+    </figure>
+
+    <h3>What this suggests</h3>
+    <p>The run suggests three lessons for agents in research pipelines. First, evaluators should score the statistic the science depends on, and keep every version that is not beaten on all objectives rather than accepting changes on one number. Next, a single score was gamed even by an agent that followed every rule, and the gaming appeared exactly when its ideas ran out, so rejecting changes that leave outputs unchanged would remove the incentive while preserving the signal. Lastly, keeping the agent off the inference path meant that none of its changes could move the reported result, and none did. The full account is in <a href="https://github.com/anniebritton/ISAMR-Research/blob/main/autoresearch/LESSONS.md">LESSONS.md</a>.</p>
   </section>
 
   <section>
@@ -275,6 +292,7 @@ footer { border-top: 1px solid var(--rule); padding-block: 20px calc(env(safe-ar
       ["Snow-off association", `${fmt(h.h2[0], 1)} d per SD`, `later melt, later green-up; R² = ${fmt(h.h2[3])}`],
       ["Snow-off and warmth", `R² = ${fmt(h.m2_r2)}`, `cross-validated error ${fmt(h.loo[0], 1)} days vs ${fmt(h.loo[2], 1)} for the mean`],
       ["Agent loop", `${fmt(100 * (1 - a.heldout.candidate / a.heldout.savgol), 0)}% lower`, "held-out synthetic error, but weaker year-to-year fidelity on real pixels"],
+      ["Agent behaviour", "4 of 24", "substantive changes kept; half of all kept changes only shaved a line-count penalty"],
     ];
     document.getElementById("tiles").innerHTML = items.map(([l, v, n]) =>
       `<div class="tile"><div class="label">${l}</div><div class="value">${v}</div><div class="note">${n}</div></div>`).join("");
@@ -284,7 +302,7 @@ footer { border-top: 1px solid var(--rule); padding-block: 20px calc(env(safe-ar
     document.getElementById("driver-text").textContent =
       `Snow-off was associated with about half of the year-to-year variation, as each standard deviation (15 days) of later melt corresponded to green-up ${fmt(h.h2[0], 1)} days later (R² = ${fmt(h.h2[3])}). April–May thawing degree days accounted for a further ${fmt(100 * h.h3[0], 0)}% of the variance (BCa 95% CI ${fmt(100 * h.h3[1], 0)}–${fmt(100 * h.h3[2], 0)}%), and together the two predictors explained ${fmt(100 * h.m2_r2, 0)}% of the variance with a cross-validated error of ${fmt(h.loo[0], 1)} days.`;
     document.getElementById("agent-text").textContent =
-      `A coding agent was given one narrow task, improving the extractor that turns gappy daily NDVI into a green-up date, inside a sandbox where it could edit a single file and a fixed evaluator outside its control scored each change on synthetic seasons. Over 33 iterations (estimated usage of USD ${fmt(a.total_cost, 2)} at API list prices) it kept 8 changes and never attempted an edit outside its file. Its final version cut held-out synthetic error from ${fmt(a.heldout.savgol)} to ${fmt(a.heldout.candidate)} days, yet on real pixels it weakened year-to-year agreement with MCD12Q2, so it did not qualify for the analysis.`;
+      `A Claude Code agent could edit only the file that turns gappy daily NDVI into a green-up date. It could read the evaluator, the benchmark generator, and a ledger of earlier attempts, but it could not run code, write other files, use the web, or see the held-out data, and a driver outside its control scored each change on 1,800 synthetic seasons and kept it only if the error fell. The loop ran for 33 iterations at an estimated USD ${fmt(a.total_cost, 2)} at API list prices.`;
   }
 
   function map() {
@@ -451,10 +469,37 @@ footer { border-top: 1px solid var(--rule); padding-block: 20px calc(env(safe-ar
       yaxis: { title: "Annual r with MCD12Q2", gridcolor: css("--rule"), zeroline: false }, showlegend: false, margin: { l: 56, r: 16, t: 24, b: 56 } }), cfg);
   }
 
+  function ablationTable() {
+    const rows = D.agent.ablation.filter(r => !r.version.startsWith("final without"));
+    const label = v => v.startsWith("start") ? "Start (pre-registered)" : v.replace("iter", "Iteration");
+    document.getElementById("ablation").innerHTML =
+      "<thead><tr><th>Version</th><th>Held-out error (days)</th><th>Annual r with MCD12Q2</th><th>Pixel MAE (days)</th></tr></thead><tbody>" +
+      rows.map(r => `<tr><td>${label(r.version)}</td><td>${fmt(r.heldout)}</td><td>${fmt(r.annual_r, 3)}</td><td>${fmt(r.pixel_mae)}</td></tr>`).join("") + "</tbody>";
+  }
+
+  function attempts() {
+    const C = D.agent.coding;
+    const order = ["no_edit", "line_count", "validity_threshold", "outlier_filter", "ensemble", "crossing_rule", "amplitude", "smoother", "snow_and_melt"];
+    const names = { snow_and_melt: "Snow and melt handling", smoother: "Smoother settings", amplitude: "Amplitude estimate", crossing_rule: "Crossing rule",
+      ensemble: "Combining extractors", outlier_filter: "Outlier filter", validity_threshold: "Validity thresholds", line_count: "Line-count cleanup", no_edit: "No edit" };
+    const tr = (outcome, marker, label) => {
+      const sub = C.filter(r => r.outcome === outcome);
+      return { x: sub.map(r => r.iteration), y: sub.map(r => names[r.category]), mode: "markers", name: label, marker,
+        text: sub.map(r => r.idea), hovertemplate: "<b>Iteration %{x}</b>: %{text}<extra>" + label + "</extra>" };
+    };
+    Plotly.react("attempts", [
+      tr("reverted", { color: css("--muted-mark"), size: 10, line: { color: css("--ink-3"), width: 1 } }, "Reverted"),
+      tr("kept", { color: css("--s2"), size: 12, line: { color: css("--surface"), width: 1 } }, "Kept"),
+      tr("no edit", { color: css("--ink-2"), size: 10, symbol: "x" }, "No edit"),
+    ], base({ xaxis: { title: "Iteration", range: [0, 34], gridcolor: css("--rule"), zeroline: false },
+      yaxis: { categoryorder: "array", categoryarray: order.map(c => names[c]), automargin: true, gridcolor: css("--rule") },
+      margin: { l: 10, r: 16, t: 8, b: 80 } }), cfg);
+  }
+
   function render() {
     tiles(); map(); series();
     scatter("snow", "snow_off", "Snow-off (day)"); scatter("tdd", "tdd", "Thawing degree days");
-    forest(); season(); dynamics(); tradeoff();
+    forest(); season(); dynamics(); tradeoff(); ablationTable(); attempts();
   }
 
   document.getElementById("btn-grid").addEventListener("click", e => {
