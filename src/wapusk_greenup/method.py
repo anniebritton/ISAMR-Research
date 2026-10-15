@@ -50,8 +50,9 @@ def greenup_doy(doy: np.ndarray, ndvi: np.ndarray, snow: np.ndarray, baseline: f
     resid = y - np.interp(t, grid, first_fit)
     keep = ~(resid < -3 * 1.4826 * np.median(np.abs(resid[y > baseline])))
     first_fit = savgol_filter(np.interp(grid, t[keep], y[keep]), window_length=31, polyorder=2, mode="nearest")
-    amp, amp0 = curve.max() - baseline, first_fit.max() - baseline
-    scale = min(1.0, max(amp0, 0.0) / amp) if amp > 0 else 1.0
+    # Ratio of unlifted to enveloped amplitude, capped at 1. A non-positive enveloped amplitude gives
+    # NaN in crossing() before the scale is used, so no separate guard is needed for it.
+    scale = min(1.0, max(first_fit.max() - baseline, 0.0) / (curve.max() - baseline))
     # The pre-registered 0.10 amplitude floor rejects weak but real seasons (small amplitudes, or a
     # peak trimmed by early senescence). After smoothing, a 0.05 rise is still well above clear-sky
     # noise, and 0.05 is the floor used to define a resolvable season, so only flatter curves give NaN.
