@@ -231,6 +231,28 @@ footer { border-top: 1px solid var(--rule); padding-block: 20px calc(env(safe-ar
   </section>
 
   <section>
+    <h2>How to Use These Findings</h2>
+    <h3>For park managers and ecologists</h3>
+    <p>The timing of fresh forage in Wapusk appears to be predictable from conditions in a given spring rather than from a long-term trend. Monitoring and planning that depend on forage timing, such as caribou and goose surveys or fieldwork on breeding success, could therefore use snow-off and April–May warmth as early indicators; in 20 of the 24 years both were available by the end of May, about a month before mid-green-up, and together they predicted it to within about four days. The absence of a detectable trend should not be read as stability, however, since advances of the size reported nearby for 2004–2016 cannot be excluded.</p>
+    <h3>For analysts applying the method elsewhere</h3>
+    <p>The pipeline is configured rather than hard-coded, so it can be applied to another park by replacing the boundary GeoJSON, the station climate IDs, and the seasonal windows in <code>config.yaml</code>, then running <code>wapusk sample</code> and <code>wapusk all</code>; outside Canada, ERA5-Land degree days can replace the station series. Three design choices are likely to transfer to other high-latitude sites: estimating phenology per pixel on a fixed stratified sample, anchoring snow-covered days at a dormant baseline, and defining green-up relative to the seasonal amplitude rather than the annual maximum.</p>
+    <h3>For teams building agent loops</h3>
+    <p>The loop in <code>autoresearch/</code> can be reused for any method that fits in one function with a measurable error. The run suggests five design rules:</p>
+    <ol class="limits">
+      <li>Score the statistic the science depends on, not only per-sample accuracy.</li>
+      <li>Keep every version that is not beaten on all objectives, and choose among them at the end.</li>
+      <li>Reject changes whose outputs are identical to the current version, which removes the incentive to game penalties while keeping gaming as a signal that the search is exhausted.</li>
+      <li>Build benchmarks from real data where possible, and hold out a family derived from real data.</li>
+      <li>Enforce every rule in code outside the agent, test that code with scripted rule-breaking agents, and keep the agent away from inference.</li>
+    </ol>
+  </section>
+
+  <section>
+    <h2>Next Steps</h2>
+    <p>The highest-value next step is to validate the green-up dates against ground phenology from the Churchill area, such as plot records from the Churchill Northern Studies Centre or the long-term goose research at La Pérouse Bay, since every comparison so far is between MODIS products. Next, extending the record with Landsat and Sentinel-2 imagery would increase sensitivity to trends and cover the wetter margins of the park. Furthermore, testing whether spring snow-off and warmth predict the arrival of caribou and geese would connect these results directly to management. Lastly, a second agent loop that applies the five design rules above, and compares several models on the same task, would show whether the behaviours observed here are general.</p>
+  </section>
+
+  <section>
     <h2>Methods in Brief</h2>
     <p>Daily MOD09GA collection 6.1 reflectance was quality masked using the state and quality bits, and NDVI was computed for each pixel between 2001 and 2024. For each pixel, a dormant baseline was set at the 5th percentile of snow-free NDVI outside the growing season; each season was smoothed with a Savitzky–Golay filter fitted to the upper envelope, and mid-green-up was taken as the first day the curve reached half of its amplitude. Snow-off came from park-mean ERA5-Land snow cover and thawing degree days from the Churchill climate station, and trends were estimated with Theil–Sen slopes and Mann–Kendall tests, while associations were estimated with standardized least squares, a nested F-test, and commonality analysis. The peer-reviewed basis for each choice, and the sensitivity test behind each parameter, are documented in the <a href="https://github.com/anniebritton/ISAMR-Research/blob/main/docs/methods_justification.md">methods justification</a>.</p>
   </section>

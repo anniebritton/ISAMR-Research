@@ -34,6 +34,16 @@ Written for the [International Student-led Arctic Monitoring and Research (ISAMR
 
 ![Annual mid-green-up, 2001–2024](results/figures/greenup_series.png)
 
+## Using These Findings
+
+* **Park managers and ecologists:** snow-off and April–May warmth, both known by the end of May in 20 of 24 years,
+  predicted mid-green-up to within about four days; there is no detectable long-term trend, but moderate advances cannot be excluded.
+* **Applying the method to another park:** replace the boundary GeoJSON, station climate IDs, and seasonal windows in
+  [`config.yaml`](config.yaml), then run `uv run wapusk sample` and `uv run wapusk all`.
+  Outside Canada, use ERA5-Land degree days (`tdd_era5`) in place of the station series.
+* **Building agent loops:** reuse [`autoresearch/`](autoresearch/) for any method that fits in one function with a measurable error;
+  the five design rules are in the report's Applications section and [`autoresearch/LESSONS.md`](autoresearch/LESSONS.md).
+
 ## Repository Layout
 
 * [`config.yaml`](config.yaml): datasets, masks, windows, and the pre-registered primary specification
