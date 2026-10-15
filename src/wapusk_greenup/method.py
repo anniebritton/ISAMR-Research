@@ -15,13 +15,46 @@ Contract, fixed by autoresearch/evaluate.py:
 Allowed imports: numpy, scipy. The function must be deterministic and take under 50 ms per call.
 """
 
-from __future__ import annotations
-
 import numpy as np
+from scipy.signal import savgol_filter
 
-from .smoothers import greenup_doy as _baseline_greenup
+from .smoothers import crossing, prepare, savgol
 
 
 def greenup_doy(doy: np.ndarray, ndvi: np.ndarray, snow: np.ndarray, baseline: float, fraction: float = 0.5) -> float:
-    # Starting point: identical to the pre-registered Savitzky-Golay baseline.
-    return _baseline_greenup(doy, ndvi, snow, baseline, smoother="savgol", fraction=fraction)
+    # Pre-registered Savitzky-Golay baseline, except that only the persistent winter snowpack
+    # becomes dormant pseudo-observations. prepare() turns every snow flag before the first clear
+    # observation into a baseline value. When clouds hide the weeks after melt, a brief late
+    # snowfall would then pin the curve to the dormant level partway up the rise. A transient
+    # snowfall hides the canopy but doesn't make it dormant, so flags after melt are cleared here.
+    snow = np.array(snow, dtype=float)
+    valid = ~np.isnan(np.asarray(ndvi, dtype=float))
+    if valid.sum() < 15 or np.isnan(baseline):
+        return np.nan
+    # Clear flags from melt (first snow-free day) up to the first clear observation. The guard above
+    # guarantees a clear observation exists, so argmax(valid) is always a real index.
+    if (snow == 0).any():
+        snow[np.argmax(snow == 0) : np.argmax(valid)] = 0
+    t, y = prepare(doy, ndvi, snow, baseline)
+    grid = np.asarray(doy, dtype=float)
+    curve = savgol(t, y, grid)
+    # The upper envelope is kept for the curve's shape, since it undoes cloud dips on the rise. But
+    # lifting every point below the fit also keeps only the positive half of clear-sky noise, so the
+    # enveloped peak sits above the canopy's real maximum and raises the 50% threshold, giving late
+    # crossings. The first, unlifted fit has no such selection; its peak sets the amplitude instead.
+    # The threshold is only ever lowered, and crossing() still searches the enveloped curve.
+    # Without the envelope, residual cloud near the peak drags that fit down. Cloud only lowers NDVI,
+    # so the fit is redone once without observations more than 3 robust sigma below the unlifted fit
+    # (MAD over clear observations above the baseline; clipped and snow points sit on it). Symmetric
+    # clear-sky noise is kept, so this doesn't recreate the envelope's upward bias. If no such points
+    # exist, NaN keeps everything.
+    resid = y - np.interp(t, grid, savgol_filter(np.interp(grid, t, y), window_length=31, polyorder=2, mode="nearest"))
+    keep = ~(resid < -3 * 1.4826 * np.median(np.abs(resid[y > baseline])))
+    first_fit = savgol_filter(np.interp(grid, t[keep], y[keep]), window_length=31, polyorder=2, mode="nearest")
+    # Ratio of unlifted to enveloped amplitude, capped at 1. A non-positive enveloped amplitude gives
+    # NaN in crossing() before the scale is used, so no separate guard is needed for it.
+    scale = min(1.0, max(first_fit.max() - baseline, 0.0) / (curve.max() - baseline))
+    # The pre-registered 0.10 amplitude floor rejects weak but real seasons (small amplitudes, or a
+    # peak trimmed by early senescence). After smoothing, a 0.05 rise is still well above clear-sky
+    # noise, and 0.05 is the floor used to define a resolvable season, so only flatter curves give NaN.
+    return crossing(grid, curve, baseline, fraction * scale, min_amplitude=0.05)

@@ -1,0 +1,114 @@
+{
+  "mode": "final",
+  "loc": 18,
+  "visible": {
+    "mean_capped_error": 2.9590650164755123,
+    "median_abs_error": 2.08541301986169,
+    "bias_days": 0.26701641030896817,
+    "fail_rate": 0.0,
+    "ms_per_call": 0.25195388888985487,
+    "by_family": {
+      "double_logistic": 3.5062662522128365,
+      "step_ramp": 2.977826821733673,
+      "two_stage": 2.393101975480026
+    }
+  },
+  "score": 2.977065016475512,
+  "heldout": {
+    "mean_capped_error": 4.392632504457566,
+    "median_abs_error": 2.3892369623442278,
+    "bias_days": 2.368733558038594,
+    "fail_rate": 0.0,
+    "ms_per_call": 0.25048206000064965,
+    "by_family": {
+      "template": 8.38791887694428,
+      "double_logistic": 4.029315023492437,
+      "step_ramp": 2.917396126099503,
+      "two_stage": 2.235899991294047
+    }
+  },
+  "heldout_score": 4.410632504457566,
+  "baselines": {
+    "savgol": {
+      "visible": {
+        "mean_capped_error": 3.1773784828368146,
+        "median_abs_error": 2.1792915371916166,
+        "bias_days": 0.8816986057388114,
+        "fail_rate": 0.0011111111111111111,
+        "ms_per_call": 0.15108995388598284,
+        "by_family": {
+          "double_logistic": 3.5956986782954528,
+          "step_ramp": 3.408006701715106,
+          "two_stage": 2.528430068499885
+        }
+      },
+      "heldout": {
+        "mean_capped_error": 4.654713453151595,
+        "median_abs_error": 2.529583338769143,
+        "bias_days": 2.9583874049027754,
+        "fail_rate": 0.0011111111111111111,
+        "ms_per_call": 0.1658448149990161,
+        "by_family": {
+          "template": 8.538592793858564,
+          "double_logistic": 4.378993231657049,
+          "step_ramp": 3.309646455268792,
+          "two_stage": 2.391621331821973
+        }
+      }
+    },
+    "double_logistic": {
+      "visible": {
+        "mean_capped_error": 5.114621964821947,
+        "median_abs_error": 3.0291741065157396,
+        "bias_days": 4.314982202797805,
+        "fail_rate": 0.01,
+        "ms_per_call": 2.3188058794443753,
+        "by_family": {
+          "double_logistic": 5.708249008612233,
+          "step_ramp": 5.433286139686112,
+          "two_stage": 4.202330746167497
+        }
+      },
+      "heldout": {
+        "mean_capped_error": 6.870583546668283,
+        "median_abs_error": 3.790238727849868,
+        "bias_days": 6.181381984415962,
+        "fail_rate": 0.015,
+        "ms_per_call": 2.439556180551234,
+        "by_family": {
+          "template": 10.9303472655053,
+          "double_logistic": 6.829767816550281,
+          "step_ramp": 5.399543672241577,
+          "two_stage": 4.322675432375968
+        }
+      }
+    },
+    "whittaker": {
+      "visible": {
+        "mean_capped_error": 3.219933480884693,
+        "median_abs_error": 2.153385816766786,
+        "bias_days": 1.343824677608153,
+        "fail_rate": 0.0016666666666666668,
+        "ms_per_call": 0.5534799538872903,
+        "by_family": {
+          "double_logistic": 3.8038730099490565,
+          "step_ramp": 3.475995695496196,
+          "two_stage": 2.3799317372088273
+        }
+      },
+      "heldout": {
+        "mean_capped_error": 4.807487325746699,
+        "median_abs_error": 2.571527721509824,
+        "bias_days": 3.4382664748309404,
+        "fail_rate": 0.0022222222222222222,
+        "ms_per_call": 0.5469894905561685,
+        "by_family": {
+          "template": 8.916741680254123,
+          "double_logistic": 4.616501555147049,
+          "step_ramp": 3.388723127175672,
+          "two_stage": 2.307982940409956
+        }
+      }
+    }
+  }
+}
